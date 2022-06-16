@@ -1,0 +1,23 @@
+.navbar-expand-lg {
+    background-color: #1b396a;
+}
+
+.navbar-expand-lg .navbar-brand {
+    color: white;
+}
+
+.navbar-expand-lg .navbar-brand:hover {
+    color: white;
+    border-bottom: 2px solid #c7c7c7;
+    /**padding: 5px 10px;*/
+}
+
+.navbar-expand-lg .dropdown .dropdown-toggle {
+    color: white;
+}
+
+.navbar-expand-lg .dropdown .dropdown-toggle:hover {
+    color: white;
+    border-bottom: 2px solid #c7c7c7;
+    /* padding: 5px 10px;*/
+}

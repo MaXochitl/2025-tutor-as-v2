@@ -1,0 +1,64 @@
+.mayus_min {
+    text-transform: capitalize;
+}
+
+.minus {
+    text-transform: lowercase;
+}
+
+.mayus {
+    text-transform: uppercase;
+}
+
+.text-left {
+    text-align: left;
+}
+
+.img-fond {
+    background: url('/tutores/fondo_2.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.img-fond-home {
+    background: url('/tutores/home_itsta.jpg') no-repeat center center fixed;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+}
+
+.oneline {
+    display: inline;
+}
+
+.img-font-all {
+    background: no-repeat;
+    margin: auto;
+    background-size: 100% 100%;
+}
+
+.icon-menu {
+    background-image: url('/tutores/logo.png');
+    background: no-repeat;
+}
+
+
+
+.btn.btn-primary.seg {
+    padding: 1px;
+}
+/*
+.btn.btn-danger {
+    padding: 1px;
+}
+
+
+* svg{
+    width: 40px;
+    height: 40px;
+}
+
+*/

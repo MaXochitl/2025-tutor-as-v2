@@ -1,0 +1,107 @@
+* {
+    box-sizing: border-box;
+}
+
+.sidebar {
+    border-radius: 10px;
+    position: fixed;
+    width: 200px;
+    height: 100%;
+    background: rgb(87, 87, 87);
+    box-shadow: black;
+    left: -200px;
+    transition: all 500ms linear;
+}
+
+.menu {
+    padding: 0;
+}
+
+.enlaces {
+    color: #000;
+    text-decoration: none;
+}
+
+.modal-bar {
+    color: #000;
+    text-decoration: none;
+}
+
+.sidebar.active {
+    left: 0px;
+}
+
+.sidebar ul li {
+    list-style: none;
+    padding: 0;
+    text-align: center;
+}
+
+.sidebar .menu li a {
+    color: rgb(67, 67, 67);
+    display: block;
+    padding: 5px;
+    background: rgb(255, 255, 255);
+}
+
+.sidebar .menu li a:hover {
+    background: #1b396a;
+    color: rgb(255, 255, 255);
+}
+
+.sidebar .menu .icono {
+    font-size: 14px;
+    line-height: 16px;
+}
+
+.sidebar .menu .icono.derecha {
+    float: right;
+    margin-right: 10px;
+}
+
+.sidebar .menu .icono.izquierda {
+    /*acomoda a la redecha*/
+    float: left;
+    margin-left: 10px;
+}
+
+.sidebar .menu ul li a {
+    background: rgb(87, 87, 87);
+    color: white;
+}
+
+.sidebar .menu .activado>a {
+    background: #1b396a;
+    color: white;
+}
+
+.sidebar .menu ul {
+    /*oculta de la pantalla */
+    display: none;
+}
+
+.sidebar .toggle-btn {
+    position: absolute;
+    padding: 2px;
+    border-radius: 100%;
+    left: 200px;
+    top: 90px;
+    cursor: pointer;
+    color: white;
+    background: gray;
+}
+
+.cont {
+    margin-left: 0px;
+    transition: all 500ms linear;
+}
+
+.mov {
+    margin-left: 0px;
+    transition: all 500ms linear;
+}
+
+.move {
+    margin-left: 200px;
+    transition: all 500ms linear;
+}

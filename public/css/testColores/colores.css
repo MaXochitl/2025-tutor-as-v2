@@ -1,0 +1,25 @@
+.sortable {
+    padding: 10px;
+}
+
+.tamanio {
+    height: 100px;
+    width: 80px;
+    padding: 5px;
+    margin: 10px;
+}
+
+.line {
+    margin: 10px;
+    height: 20px;
+    border-radius: 10px;
+    background: linear-gradient(to left, red, rgb(0, 255, 0));
+}
+
+.emojis-h {
+    text-align: left;
+}
+
+.emojis-d {
+    text-align: right;
+}

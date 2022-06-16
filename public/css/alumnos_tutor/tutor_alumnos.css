@@ -1,0 +1,24 @@
+.head-alumnos-tutor {
+    margin: 0px;
+}
+
+.row-tutor {
+    margin: 5px;
+}
+
+.label-blue {
+    color: rgb(1, 118, 228);
+}
+
+thead {
+    background: rgb(82, 82, 82);
+    color: white;
+}
+
+.overflow-scroll {
+    margin-top: 5px;
+}
+
+.btn-regresar {
+    margin-top: 5px;
+}

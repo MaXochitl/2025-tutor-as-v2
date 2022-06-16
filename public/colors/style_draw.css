@@ -1,0 +1,10 @@
+.tamanio {
+    outline: none;
+    width: 100px;
+    height: 150px;
+    color: white;
+    text-align: center;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    border: 0;
+    border-radius: 5px;
+}
