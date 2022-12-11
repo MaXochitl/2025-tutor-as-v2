@@ -16,7 +16,8 @@
         setlocale(LC_ALL, 'es_ES');
         $diassemana = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado'];
         $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-        $hoy = $diassemana[date('w')] . ' ' . date('d') . ' de ' . $meses[date('n') - 1] . ' del ' . date('Y');
+      //  $hoy = $diassemana[date('w')] . ' ' . date('d') . ' de ' . $meses[date('n') - 1] . ' del ' . date('Y');
+      $hoy = date('d') . ' días del mes de ' . $meses[date('n') - 1] . ' del año ' . date('Y');
         $inicio = $meses[date('n', strtotime($periodo->inicio)) - 1] . '  ' . date('Y', strtotime($periodo->inicio));
         $fin = $meses[date('n', strtotime($periodo->fin)) - 1] . '  ' . date('Y', strtotime($periodo->fin));
         
@@ -24,6 +25,7 @@
     @foreach ($tutores as $item)
         <div style="text-align: center; padding-left: 60px; padding-top: 30px; height: 1000px; font-size: 15px">
             <div style="text-align: left">
+                <img style="" src="./tutores/encabezado.jpg" height="60px" width="600px" alt="">
             </div>
             <div style="width: 600px; font-family: Arial, Helvetica, sans-serif; font-size: 16px">
                 <div style="text-align: left; margin-top: 30px">
@@ -33,18 +35,16 @@
 
                 </div>
                 <div style="text-align: justify; margin-top: 40px">
-                    &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; El suscrito, Coordinador del programa
-                    institucional
-                    de tutorías del Instituto Tecnológico Superior de Tantoyuca, Veracruz. <br>
+                    &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; El suscrito, Coordinador del programa institucional de tutorías del Instituto Tecnológico Superior de Tantoyuca, Veracruz. <br>
 
                     <br>
-                    <div style="text-align: center; margin-top: 60px">
+                    <div style="text-align: center; margin-top: 10px">
                         <p style="font-size: 20px"> <b>H A C E &nbsp;&nbsp; C O N S T A R</b> </p>
                     </div>
 
                 </div>
-                <div style="text-align: justify; margin-top: 50px">
-                    &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; Que el (la)
+                <div style="text-align: justify; margin-top: 10px">
+                    Que el (la)
                     @php
                         $name = $item->nombre . ' ' . $item->ap_paterno . ' ' . $item->ap_materno;
                         echo $name;
@@ -80,14 +80,15 @@
                     deserción del 0%.
                 </div>
 
-                <div style="margin-top: 30px; text-align: left">
-                    Sin otro particular, aprovecho la ocasión para enviarle un cordial saludo.
+                <div style="margin-top: 10px; text-align: justify">
+                    Se extiende la presente, para los fines legales que al interesado convengan, en la ciudad de Tantoyuca, Veracruz, a los 
+                    {{ $hoy.'.' }}
                 </div>
-                <div style="margin-top: 70px">
-                    {{ $hoy }} <br>
+                <div style="margin-top: 30px">
+                     <br>
 
                 </div>
-                <div style="margin-top: 90px">
+                <div style="margin-top: 10px">
                     <table style="margin: auto; text-align: center">
                         <tr style="height: 100px;">
                             <td colspan="2">
@@ -122,7 +123,32 @@
                     </table>
                 </div>
             </div>
+
+            <div style="width: 95%; margin-top: 150px; font-size: 15px;background: rgb(211, 211, 211)">
+                <table style="margin: auto; text-align: center">
+                    <tr style="height: 100px;">
+                        <td style="text-align: left">
+    
+                            <img src="./tutores/logo.png" height="100px" width="100px" width="400px" alt="">
+    
+                        </td>
+                        <td>
+                            Desv. Lindero – Tametate S/N, Col. La Morita <br>
+                            CP 92100, Tantoyuca, Veracruz <br>
+                            Tel. (01 789) 8931680, 8931552 <br>
+                            https://itsta.edu.mx
+    
+                        </td>
+                        <td style="text-align: right">
+                            <img src="./tutores/logo2.png" height="100px" width="100px" width="600px" alt="">
+    
+                        </td>
+                    </tr>
+                </table>
+            </div>
         </div>
+
+        
     @endforeach
 
 </body>

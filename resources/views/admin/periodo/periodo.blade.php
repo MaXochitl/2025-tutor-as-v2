@@ -155,7 +155,8 @@
 
                                     </td>
                                     <td>
-                                        <form action="{{ route('periodo-tutorado.destroy', $item->id) }} " method="POST">
+                                        <form action="{{ route('periodo-tutorado.destroy', $item->id) }} "
+                                            method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger">
@@ -177,10 +178,11 @@
 
 
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
     @include('modal.periodo.activar_desactivar_p')
     <script>
         const periodo = @json($altera_entrega);
-        const ruta='{{ route('entrega.store') }}';
+        const ruta = '{{ route('entrega.store') }}';
     </script>
     <script type="text/javascript" src="{{ URL::asset('js/periodo.js') }}"></script>
 @endsection

@@ -43,7 +43,7 @@ class AlteraEntregaController extends Controller
         $altera->mes_4 = $request->mes_4;
         $altera->mes_5 = $request->mes_5;
         $altera->save();
-        return $request;
+        return "ok";
     }
 
     /**

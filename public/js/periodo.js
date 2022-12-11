@@ -5,10 +5,16 @@ document.addEventListener('DOMContentLoaded', function () {
             method: "POST",
             body: new FormData(formulario)
         }).then(response => response.text()).then(response => {
-            console.log(response);
+            if (response === "ok") {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Realizado Con Exito',
+                    showConfirmButton: false,
+                    timer: 1500
+                })
+            }
         })
     });
-
 
 
     function selectActives() {
