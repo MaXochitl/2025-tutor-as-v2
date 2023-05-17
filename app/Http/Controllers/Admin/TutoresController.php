@@ -135,7 +135,7 @@ class TutoresController extends Controller
     {
 
         Tutor::find($id)->delete();
-        return back();
+        return back()->with('eliminar','ok');
     }
     public function resetPass($id)
     {
@@ -143,6 +143,6 @@ class TutoresController extends Controller
         $user = User::find($tutor->user->id);
         $user->password = Hash::make('tutor123');
         $user->save();
-        return back();
+        return back()->with('reset','ok');
     }
 }

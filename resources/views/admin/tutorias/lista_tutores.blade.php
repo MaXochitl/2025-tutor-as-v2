@@ -4,7 +4,7 @@
 @section('structure-content')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
 
-    <div class="container" style="pagind:1px">
+    <div class="container" >
         <div style="text-align: right;">
             <a href="{{ route('carrera.index') }} ">
                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40   " fill="currentColor"
@@ -169,7 +169,6 @@
             confirmButtonText: 'Si!'
         }).then((result) => {
             if (result.isConfirmed) {
-
                 this.submit();
             }
         })
