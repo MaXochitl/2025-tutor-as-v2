@@ -169,7 +169,7 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
 
         </div>
     </div>
-    
+
 
 </div>
 
@@ -202,11 +202,5 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
 
     });
 
-    Swal.fire({
-        title: '¡Hola!',
-        text: 'Este es un mensaje de ejemplo',
-        icon: 'success',
-        confirmButtonText: 'Aceptar'
-    });
 </script>
 @endsection

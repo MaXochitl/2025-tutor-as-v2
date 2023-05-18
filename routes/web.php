@@ -16,6 +16,7 @@ use App\Http\Controllers\Admin\PeriodoTutoradoController;
 use App\Http\Controllers\Admin\PreguntasController;
 use App\Http\Controllers\Examenes\TestColoresController;
 use App\Http\Controllers\Admin\TutoresController;
+use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\AlumnosController;
 use App\Http\Controllers\ArchivoController;
 use App\Http\Controllers\AvisosController;
@@ -40,7 +41,12 @@ App::setLocale('es');
 
 require __DIR__ . '/auth.php';
 
-//solo admin
+//----------------------------------------------------------solo admin
+
+Route::resource('usersAdmin',UsersController::class)->names('usersAdmin');
+
+
+
 Route::get('/', function () {
     //return view('welcome');
     return redirect()->route('orientacion.index');

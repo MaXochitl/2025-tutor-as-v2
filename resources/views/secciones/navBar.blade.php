@@ -10,6 +10,8 @@
         @endcan
         @can('solo.admin')
             <a class="navbar-brand" href="{{ route('evaluacion.index') }} ">Nuevo Ingreso</a>
+            <a class="navbar-brand" href="{{ route('usersAdmin.index') }} ">Usuarios</a>
+
         @endcan
 
         @can('solo.tutor')
