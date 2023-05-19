@@ -16,7 +16,7 @@
 
                     <div class="form-group">
                         <label for="nombre" class="form-label">Nombre</label>
-                        <input name="nombre" type="text" class="form-control" id="nombre" required>
+                        <input name="nombre" type="text" class="form-control" id="nombre" required autofocus>
                     </div>
 
                     <div class="form-group">
@@ -33,6 +33,26 @@
                     <div class="form-group">
                         <label for="matricula" class="form-label">Matricula</label>
                         <input name="matricula" type="text" class="form-control" id="matricula" required>
+                    </div>
+
+                    <div>
+                        <label for="telefono" class="form-label">Telefono</label>
+                        <input id="telefono" name="telefono" class="form-control" required>
+                    </div>
+
+                    <div>
+                        <x-label for="sexo" value="Sexo" />
+                        <select name="sexo" class="form-select" aria-label="Default select example">
+                            <option value="F">Femenino</option>
+                            <option value="M">Masculino</option>
+                        </select>
+                    </div>
+
+                    <div>
+                        <x-label for="domicilio" value="Domicilio" />
+
+                        <x-input id="domicilio" class="form-control mayus_min" type="text" name="domicilio"
+                            required />
                     </div>
 
                     <div class="form-group">

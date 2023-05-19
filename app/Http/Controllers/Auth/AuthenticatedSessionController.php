@@ -43,7 +43,7 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
         $user = $request->user();
-        if ($user->can('tutorias.home')) {
+        if ($user->can('tutorias.home')||$user->can('auditor') ) {
             return redirect()->route('orientacion.index');
         } else {
 

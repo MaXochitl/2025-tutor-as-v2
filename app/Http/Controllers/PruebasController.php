@@ -86,6 +86,23 @@ class PruebasController extends Controller
     public function create()
     {
 
+        //$role_auditor=Role::create(['name'=>'auditor']);
+        //Permission::create(['name'=>'auditor'])->syncRoles([$role_auditor]);
+        $permiso=Permission::whereIn('name', ['admin.tutor'])->get();
+        $role=Role::find(3);
+//        return $role;
+
+        $permiso->syncRoles([$role]);
+        return 'success';
+//        $permisos = Permission::whereIn('name', ['tutorias.home', 'show.date'])->get();
+
+
+        $roles=Role::all();
+        $permissions=Permission::all();
+        $permisos = Permission::whereIn('name', ['tutorias.home', 'show.date'])->get();
+
+
+  //      return $permisos;
         /*
         Tutor::create([
             'matricula'=>'Admin001',
@@ -227,7 +244,7 @@ class PruebasController extends Controller
         //return $tutor;
 
         /*
-       
+
         DB::insert("insert into posiciones(
             alumno_id,
             color_id,
@@ -244,7 +261,7 @@ class PruebasController extends Controller
 */
         /*
         $positions = Posicion::all()->where('alumno_id','173S0019')->sortBy('posicion');
-        
+
         return view('test.testcolores',compact('positions'));
     */
         $evalua = Evaluacion_respuesta::all();

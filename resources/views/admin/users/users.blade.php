@@ -89,4 +89,15 @@
                 });
             </script>
         @endif
+
+        @if (session('create') == 'ok')
+            <script>
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Creado',
+                    text: 'Usuario Creado Exitosamente',
+                    confirmButtonText: 'Aceptar'
+                });
+            </script>
+        @endif
     @endsection
