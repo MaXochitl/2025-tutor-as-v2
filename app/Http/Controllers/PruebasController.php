@@ -87,12 +87,14 @@ class PruebasController extends Controller
     {
 
         //$role_auditor=Role::create(['name'=>'auditor']);
+        $permiso_admin_auditor=Permission::create(['name'=>'auditor.admin']);
         //Permission::create(['name'=>'auditor'])->syncRoles([$role_auditor]);
-        $permiso=Permission::whereIn('name', ['admin.tutor'])->get();
+        //$permiso=Permission::whereIn('name', ['admin.tutor'])->get();
         $role=Role::find(3);
+        $role->givePermissionTo($permiso_admin_auditor);
 //        return $role;
 
-        $permiso->syncRoles([$role]);
+        //$permiso->syncRoles([$role]);
         return 'success';
 //        $permisos = Permission::whereIn('name', ['tutorias.home', 'show.date'])->get();
 

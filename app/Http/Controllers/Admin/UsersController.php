@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Tutor;
 use App\Models\User;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Role;
@@ -20,7 +21,9 @@ class UsersController extends Controller
     {
         //
         $busqueda = $request->busqueda;
-        $users = User::where('name', 'LIKE', '%' . $busqueda . '%')->paginate(2);
+        $users = User::where('name', 'LIKE', '%' . $busqueda . '%')
+            ->orderBy('name')
+            ->paginate(2);
         $roles = Role::all();
         //return $users;
         return view('admin.users.users', compact('users', 'roles'));
@@ -50,24 +53,28 @@ class UsersController extends Controller
         if ($tutor != null) {
             return back()->with('create', 'no');
         } else {
+            try {
+                $tutor = Tutor::create([
+                    'id' => $request->matricula,
+                    'nombre' => $request->nombre,
+                    'ap_paterno' => $request->ap_paterno,
+                    'ap_materno' => $request->ap_materno,
+                    'telefono' => $request->telefono,
+                    'sexo' => $request->sexo,
+                    'domicilio' => $request->domicilio,
+                    'foto' => '/tutores/tutor-20220226-220319.png'
+                ]);
+                $user = User::create([
+                    'name' => $request->nombre,
+                    'email' => $request->correo,
+                    'password' => Hash::make($request->password),
+                    'tutor_id' => $request->matricula //$tutor_b[0]->id
+                ])->assignRole('auditor');
 
-            $tutor = Tutor::create([
-                'id' => $request->matricula,
-                'nombre' => $request->nombre,
-                'ap_paterno' => $request->ap_paterno,
-                'ap_materno' => $request->ap_materno,
-                'telefono' => $request->telefono,
-                'sexo' => $request->sexo,
-                'domicilio' => $request->domicilio,
-                'foto' => '/tutores/tutor-20220226-220319.png'
-            ]);
-            $user = User::create([
-                'name' => $request->nombre,
-                'email' => $request->correo,
-                'password' => Hash::make($request->password),
-                'tutor_id' => $request->matricula //$tutor_b[0]->id
-            ])->assignRole('auditor');
-            return back()->with('create','ok');
+                return back()->with('create', 'ok');
+            } catch (Exception) {
+                return back('create', 'no');
+            }
         }
     }
 

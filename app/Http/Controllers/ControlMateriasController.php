@@ -79,12 +79,12 @@ class ControlMateriasController extends Controller
      */
     public function show($id)
     {
-        
+
         $periodo_tutorado = Periodo_tutorado::find($id);
 
         $materias = Materia::where('carrera_id', $periodo_tutorado->alumno->carrera_id)
             ->orderby('semestre', 'asc')->get();
-        
+
         $semaforo = Semaforo::where('id', '<', 5)->get();
 
 

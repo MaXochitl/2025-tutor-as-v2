@@ -41,10 +41,9 @@ App::setLocale('es');
 
 require __DIR__ . '/auth.php';
 
-//----------------------------------------------------------solo admin
+/**________________________________________----------------------------___________________________________________________------------------------SOLO ADMIN */
 
-Route::resource('usersAdmin',UsersController::class)->names('usersAdmin');
-
+Route::resource('usersAdmin', UsersController::class)->names('usersAdmin')->middleware(['auth', 'can:solo.admin']);
 
 
 Route::get('/', function () {
@@ -59,10 +58,7 @@ Route::put('/seguimientoOE-alumno/{id}/{mes}', [
 Route::resource('preguntas', PreguntasController::class)->middleware(['auth', 'can:solo.admin'])->names('preguntas');
 Route::resource('habilidades', HabilidadesMentalesController::class)->middleware(['auth', 'can:solo.admin'])->names('habilidades');
 Route::resource('colores', TestColoresController::class)->middleware(['auth', 'can:solo.admin'])->names('colores');
-
-
 Route::resource('carrera', CarreraController::class)->middleware(['auth', 'can:solo.admin'])->names('carrera');
-Route::resource('orientacion', OrientacionController::class)->middleware(['auth'])->names('orientacion');
 Route::resource('materia', MateriasController::class)->middleware(['auth'])->names('materia');
 Route::resource('periodo-tutorado', PeriodoTutoradoController::class)->middleware(['auth', 'can:solo.admin'])->names('periodo-tutorado');
 Route::resource('historial', HistorialController::class)->middleware(['auth', 'can:solo.admin'])->names('historial');
@@ -74,16 +70,18 @@ Route::resource('datospdf', ArchivoController::class)->middleware(['auth', 'can:
 Route::resource('asignaciones', AsignacionesController::class)->middleware(['auth', 'can:solo.admin'])->names('asignaciones');
 Route::resource('memorandum', MemorandumController::class)->names('memorandum');
 Route::resource('alumnos_examenes', AlumnosExamenController::class)->middleware(['auth', 'can:solo.admin'])->names('alumnos_examenes');
+Route::resource('entrega', AlteraEntregaController::class)->names('entrega')->middleware(['auth', 'can:solo.admin']);
 
-//__________________________________________________________________
-Route::resource('entrega', AlteraEntregaController::class)->names('entrega');
-//__________________________________________________________________
 
+
+
+/**________________________________________----------------------------___________________________________________________------------------------SOLO AUTH */
+Route::resource('orientacion', OrientacionController::class)->middleware(['auth'])->names('orientacion');
 Route::post('importExcel', [AlumnosExamenController::class, 'importExcel'])->middleware(['auth'])->name('importExcel');
 Route::post('importAlumnos', [AlumnosController::class, 'importAlumnos'])->middleware(['auth'])->name('importAlumnos');
 
 
-//solo tutor
+/*________________________________________----------------------------___________________________________________________------------------------SOLO TUTOR*/
 Route::put('/seguimiento-alumno/{id}/{mes}', [
     TutoriasController::class, 'seguimiento'
 ])->middleware(['auth'])->name('seguimiento-alumno.seguimiento');
@@ -101,7 +99,7 @@ Route::resource('reporte', ControlMateriasController::class)->middleware(['auth'
 
 
 
-//ambos acceden a la ruta
+/**  ________________________________________----------------------------___________________________________________________------------------------TUTOR Y ADMIN */
 Route::resource('alumnos-tutor', TutoriasController::class)->middleware(['auth'])->names('alumnos-tutor');
 
 Route::put('/addAlumno/{tipo}', [
@@ -115,7 +113,7 @@ Route::resource('alumnos', AlumnosController::class)->middleware(['auth'])->name
 Route::resource('tutor', TutoresController::class)->middleware(['auth'])->names('tutor');
 Route::get('resetPass/{id}', [TutoresController::class, 'resetPass'])->name('resetPass');
 
-//alumno
+/**________________________________________----------------------------___________________________________________________------------------------_-__-_- LIBRE ALUMNOS */
 Route::get('test_socioeconomico/{alumno}', [TestEconomicoController::class, 'testEconomico'])->name('test_socioeconomico.testEconomico');
 Route::post('guardar_examen/{num_control}', [TestEconomicoController::class, 'guardarRespuestas'])->name('guardar_examen.guardarRespuestas');
 Route::get('examen_habilidades/{alumno}', [ExamenHabilidadesController::class, 'examenHabilidades'])->name('examen_habilidades.examenHabilidades');
@@ -133,13 +131,13 @@ Route::resource('test_colores', OrderController::class)->names('test_colores');
 
 
 
-//test
+/**________________________________________----------------------------___________________________________________________------------------------DESCOMENTAR PARA TEST */
 Route::resource('test', PruebasController::class)->names('tests');
 
-
+/*
 Route::get('probar', function () {
     return view('docente_tutor.reportes_t_d');
 });
-
+*/
 Route::resource('reportes_tutor', ReportesController::class)->names('reportes_tutor');
 //Auth::routes(['register' => false]);

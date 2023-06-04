@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', function () {
         mes_3.value = periodo['mes_3'];
         mes_4.value = periodo['mes_4'];
         mes_5.value = periodo['mes_5'];
-
     }
     selectActives();
 

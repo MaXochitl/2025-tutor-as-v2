@@ -130,7 +130,7 @@
                     </div>
                     <div class="form-group row">
                         <div style="text-align: center">
-                            <a href="{{ route('alumnos-tutor.show', $periodo_tutorado->tutor_id) }}" type="buutton"
+                            <a href="{{ route('reportes_tutor.show', $periodo_tutorado->tutor_id) }}" type="buutton"
                                 class="btn btn-danger" style="margin-top: 20px">Cancelar</a>
                             <button type="submit" class="btn btn-primary" style="margin-top: 20px">Guardar</button>
                         </div>

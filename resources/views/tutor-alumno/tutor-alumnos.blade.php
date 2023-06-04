@@ -36,7 +36,7 @@
         @else
             @php
                 date_default_timezone_set('America/Mexico_City');
-                
+
                 $inicio = strtotime($periodo[0]->inicio);
                 $fin = strtotime($periodo[0]->fin);
                 $mes_1 = strtotime($periodo[0]->mes_1);
@@ -45,14 +45,14 @@
                 $mes_4 = strtotime($periodo[0]->mes_4);
                 $entrega_final = strtotime($periodo[0]->reporte_final);
                 $fecha_actual = strtotime(date('Y-m-d', time()));
-                
+
             @endphp
 
             <div class="row img-font-all"
                 style="border-radius: 10px;margin-top: 30px;background-image: url({{ $alumnos_tutor[0]->tutor->carrera->fondo }});">
                 <div class="col-5" style="border-radius: 10px; background: white; margin: 5px">
                     <p class="head-alumnos-tutor"><b>Nombre Tutor de grupo: </b>
-                        {{ $alumnos_tutor[0]->tutor->nombre .' ' .$alumnos_tutor[0]->tutor->ap_paterno .' ' .$alumnos_tutor[0]->tutor->ap_materno }}
+                        {{ $alumnos_tutor[0]->tutor->nombre . ' ' . $alumnos_tutor[0]->tutor->ap_paterno . ' ' . $alumnos_tutor[0]->tutor->ap_materno }}
                     </p>
                     <p class="head-alumnos-tutor"><b>Carrera: </b> {{ $alumnos_tutor[0]->tutor->carrera->nombre_carrera }}
                     </p>
@@ -141,8 +141,8 @@
                         Agregar
                     </a>
 
-                    <a href="" type="button" class="btn alert-warning" data-bs-toggle="modal" data-bs-target="#avisos-modal"
-                        data-bs-whatever="@mdo">
+                    <a href="" type="button" class="btn alert-warning" data-bs-toggle="modal"
+                        data-bs-target="#avisos-modal" data-bs-whatever="@mdo">
                         Avisos
                     </a>
                     @if (session('hay_alumnos') == 'si')
@@ -212,15 +212,22 @@
                                     <div>
                                         {{ $alumnos->oe_1 }}
                                     </div>
-                                    <div class="d-grid gap-2">
-                                        <a href="" type="button" class="btn btn-primary seg" data-bs-toggle="modal"
-                                            data-bs-target="#oe1Modal{{ $alumnos->id }}" data-bs-whatever="@mdo">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
-                                              </svg>
-                                        </a>
-                                    </div>
-                                    @include('modal.orientacion.mes1')
+                                    @can('solo.admin')
+                                        <div class="d-grid gap-2">
+                                            <a href="" type="button" class="btn btn-primary seg" data-bs-toggle="modal"
+                                                data-bs-target="#oe1Modal{{ $alumnos->id }}" data-bs-whatever="@mdo">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+                                                </svg>
+                                            </a>
+                                        </div>
+
+
+                                        @include('modal.orientacion.mes1')
+                                    @endcan
+
                                 </td>
 
                                 <td>
@@ -240,15 +247,20 @@
                                     <div>
                                         {{ $alumnos->oe_2 }}
                                     </div>
-                                    <div class="d-grid gap-2">
-                                        <a href="" type="button" class="btn btn-primary seg" data-bs-toggle="modal"
-                                            data-bs-target="#oe2Modal{{ $alumnos->id }}" data-bs-whatever="@mdo">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
-                                              </svg>
-                                        </a>
-                                    </div>
-                                    @include('modal.orientacion.mes2')
+                                    @can('solo.admin')
+                                        <div class="d-grid gap-2">
+                                            <a href="" type="button" class="btn btn-primary seg"
+                                                data-bs-toggle="modal" data-bs-target="#oe2Modal{{ $alumnos->id }}"
+                                                data-bs-whatever="@mdo">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+                                                </svg>
+                                            </a>
+                                        </div>
+                                        @include('modal.orientacion.mes2')
+                                    @endcan
                                 </td>
 
                                 <td>
@@ -268,15 +280,21 @@
                                     <div>
                                         {{ $alumnos->oe_3 }}
                                     </div>
-                                    <div class="d-grid gap-2">
-                                        <a href="" type="button" class="btn btn-primary seg" data-bs-toggle="modal"
-                                            data-bs-target="#oe3Modal{{ $alumnos->id }}" data-bs-whatever="@mdo">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
-                                              </svg>
-                                        </a>
-                                    </div>
-                                    @include('modal.orientacion.mes3')
+                                    @can('solo.admin')
+                                        <div class="d-grid gap-2">
+                                            <a href="" type="button" class="btn btn-primary seg"
+                                                data-bs-toggle="modal" data-bs-target="#oe3Modal{{ $alumnos->id }}"
+                                                data-bs-whatever="@mdo">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+                                                </svg>
+                                            </a>
+                                        </div>
+                                        @include('modal.orientacion.mes3')
+                                    @endcan
+
                                 </td>
 
                                 <td>
@@ -296,15 +314,22 @@
                                     <div>
                                         {{ $alumnos->oe_4 }}
                                     </div>
-                                    <div class="d-grid gap-2">
-                                        <a href="" type="button" class="btn btn-primary seg" data-bs-toggle="modal"
-                                            data-bs-target="#oe4Modal{{ $alumnos->id }}" data-bs-whatever="@mdo">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
-                                                <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
-                                              </svg>
-                                        </a>
-                                    </div>
-                                    @include('modal.orientacion.mes4')
+
+                                    @can('solo.admin')
+                                        <div class="d-grid gap-2">
+                                            <a href="" type="button" class="btn btn-primary seg"
+                                                data-bs-toggle="modal" data-bs-target="#oe4Modal{{ $alumnos->id }}"
+                                                data-bs-whatever="@mdo">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z" />
+                                                </svg>
+                                            </a>
+                                        </div>
+                                        @include('modal.orientacion.mes4')
+                                    @endcan
+
                                 </td>
 
                                 <td>
@@ -313,8 +338,9 @@
                                     </div>
 
                                     <div class="d-grid gap-2">
-                                        <a href="" type="button" class="btn btn-primary seg" data-bs-toggle="modal"
-                                            data-bs-target="#endMatter{{ $alumnos->id }}" data-bs-whatever="@mdo">
+                                        <a href="" type="button" class="btn btn-primary seg"
+                                            data-bs-toggle="modal" data-bs-target="#endMatter{{ $alumnos->id }}"
+                                            data-bs-whatever="@mdo">
                                             Materias
                                         </a>
 
@@ -322,32 +348,36 @@
                                     @include('modal.materia.resultado-materia')
                                 </td>
                                 <td>
-                                    <div>
-                                        <form action="{{ route('alumnos-tutor.destroy', $alumnos->id) }} "
-                                            class="formulario-eliminar" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                            <div class="btn-group">
-                                                <button type="submit" class="btn btn-danger dropdown-toggle"
-                                                    data-bs-toggle="dropdown" aria-expanded="false">
-                                                    Opciones
-                                                </button>
-                                                <ul class="dropdown-menu">
 
-                                                    <li>
-                                                        <a class="dropdown-item"
-                                                            href="{{ route('baja', [$alumnos->id, 2, 5]) }}">Baja
-                                                            Temporal</a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="dropdown-item"
-                                                            href="{{ route('baja', [$alumnos->id, 3, 6]) }} ">Baja
-                                                            Definitiva</a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </form>
-                                    </div>
+                                    @can('solo.admin')
+                                        <div>
+                                            <form action="{{ route('alumnos-tutor.destroy', $alumnos->id) }} "
+                                                class="formulario-eliminar" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <div class="btn-group">
+                                                    <button type="submit" class="btn btn-danger dropdown-toggle"
+                                                        data-bs-toggle="dropdown" aria-expanded="false">
+                                                        Opciones
+                                                    </button>
+                                                    <ul class="dropdown-menu">
+
+                                                        <li>
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('baja', [$alumnos->id, 2, 5]) }}">Baja
+                                                                Temporal</a>
+                                                        </li>
+                                                        <li>
+                                                            <a class="dropdown-item"
+                                                                href="{{ route('baja', [$alumnos->id, 3, 6]) }} ">Baja
+                                                                Definitiva</a>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    @endcan
+
                                 </td>
 
                             </tr>
