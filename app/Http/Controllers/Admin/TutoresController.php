@@ -58,9 +58,13 @@ class TutoresController extends Controller
      */
     public function show($id)
     {
-        //
-        $tutores = Tutor::all()->where('carrera_id', $id);
-        return view('admin.tutorias.home', compact('tutores'));
+        $carrera = $id;
+        $palabra = '';
+        //el $id es el id de la carrera al que pertenecen los tutores
+        //$tutores = Tutor::all()->where('carrera_id', $id);
+        $tutores = Tutor::where('carrera_id', $id)->paginate(15);
+
+        return view('admin.tutorias.home', compact('tutores', 'carrera','palabra'));
     }
 
     /**
@@ -71,9 +75,10 @@ class TutoresController extends Controller
      */
     public function edit($id)
     {
+
         $user = User::find(Auth::user()->id);
         $id = $user->tutor_id;
-        
+
         $tutores = Tutor::find($id);
         $carreras = Carrera::orderBy('id', 'desc')->get();
         return view('admin.tutorias.editar', compact('tutores', 'carreras'));
@@ -91,7 +96,7 @@ class TutoresController extends Controller
 
         $user = User::find(Auth::user()->id);
         $id = $user->tutor_id;
-        
+
         $tutores = Tutor::find($id);
         //$tutores->id = $request->input('matricula');
         $tutores->carrera_id = $request->input('carrera');
@@ -135,7 +140,7 @@ class TutoresController extends Controller
     {
 
         Tutor::find($id)->delete();
-        return back()->with('eliminar','ok');
+        return back()->with('eliminar', 'ok');
     }
     public function resetPass($id)
     {
@@ -143,6 +148,17 @@ class TutoresController extends Controller
         $user = User::find($tutor->user->id);
         $user->password = Hash::make('tutor123');
         $user->save();
-        return back()->with('reset','ok');
+        return back()->with('reset', 'ok');
+    }
+
+    public function searchTutor(Request $request, $carrera)
+    {
+        $tutores = Tutor::where('carrera_id', $carrera)
+            ->where('nombre', 'LIKE', '%' . $request->search_tutor . '%')
+            ->paginate(15);
+
+        $palabra = $request->search_tutor;
+
+        return view('admin.tutorias.home', compact('tutores', 'carrera', 'palabra'));
     }
 }

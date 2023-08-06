@@ -77,6 +77,7 @@
                 </div>
                 <div class="col-2" style="border-radius: 10px; background: white; margin: 5px">
 
+
                     <table>
                         <tbody>
                             <tr class="new-row">
@@ -128,38 +129,39 @@
     </div>
 
     <div class="row row-tutor">
-        <div class="col d-flex flex-column flex-shrink-0" style="padding: 20px;">
-            @can('mes.tutor')
-                <div class="col-5">
-                    <a href="{{ route('alumnos-tutor.create') }} " type="button" class="btn btn-primary"
-                        data-bs-toggle="modal" data-bs-target="#exampleModal" data-bs-whatever="@mdo">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
-                            class="bi bi-calendar-plus-fill" viewBox="0 0 16 16">
-                            <path
-                                d="M4 .5a.5.5 0 0 0-1 0V1H2a2 2 0 0 0-2 2v1h16V3a2 2 0 0 0-2-2h-1V.5a.5.5 0 0 0-1 0V1H4V.5zM16 14V5H0v9a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2zM8.5 8.5V10H10a.5.5 0 0 1 0 1H8.5v1.5a.5.5 0 0 1-1 0V11H6a.5.5 0 0 1 0-1h1.5V8.5a.5.5 0 0 1 1 0z" />
-                        </svg>
-                        Agregar
-                    </a>
 
-                    <a href="" type="button" class="btn alert-warning" data-bs-toggle="modal"
-                        data-bs-target="#avisos-modal" data-bs-whatever="@mdo">
-                        Avisos
-                    </a>
-                    @if (session('hay_alumnos') == 'si')
-                        <div class="alert alert-danger">
-                            Ya esta registrado!
+
+
+        <div class="overflow-scroll">
+
+            <div class="col d-flex flex-column flex-shrink-0" style="padding: 20px;">
+                <!--____________________________ codigo de barra de busqueda-->
+                <div class="container m-3">
+                    <div class="row justify-content-end">
+                        <div class="col-md-6 offset-md-3">
+                            <form class="input-group" method="POST"
+                                action="{{ route('searchAluTutor', $alumnos_tutor[0]->tutor->id) }} ">
+                                @csrf
+                                <input name="search_tutor" type="text" class="form-control" placeholder="Bucar"
+                                    aria-label="Buscar" id="search-input" value="{{ $palabra }} ">
+                                <div class="input-group-append">
+                                    <!-- Botón de buscar -->
+                                    <button class="btn btn-primary" type="submit" id="search-btn">Buscar</button>
+                                    <!-- Botón de borrar datos -->
+                                    <a href="{{ route('alumnos-tutor.show', $alumnos_tutor[0]->tutor->id) }} "
+                                        class="btn btn-danger" type="button" id="clear-btn">Borrar</a>
+                                </div>
+                            </form>
                         </div>
-                    @endif
-                    <br>
+                    </div>
                 </div>
-                @include('modal.avisos.avisos')
-            @endcan
 
-            <div class="overflow-scroll">
+                <!--  _________________________________  fin de la barra de busqueda-->
+
+
                 <table class="table text-center table-striped" style="font-size: 11px">
                     <thead>
                         <tr>
-                            <th class="title-table" scope="col">N°</th>
                             <th class="title-table" scope="col">N° CONTROL</th>
                             <th class="title-table" scope="col">NOMBRE COMPLETO</th>
                             <th class="title-table" scope="col">TELEFONO</th>
@@ -176,14 +178,9 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @php
-                            $contador = 1;
-                        @endphp
                         @foreach ($alumnos_tutor as $alumnos)
                             <tr>
-                                <th scope="row">
-                                    {{ $contador++ }}
-                                </th>
+
                                 <td style="background: {{ $alumnos->semaforo->fondo }} ">
                                     <p>{{ $alumnos->alumno->id }} </p>
                                 </td>
@@ -385,6 +382,7 @@
                     </tbody>
                 </table>
             </div>
+            {{ $alumnos_tutor->links('pagination::bootstrap-4') }}
 
             <div class="btn-regresar">
                 @can('mes.admin')

@@ -140,7 +140,7 @@ class TutoriasController extends Controller
      */
     public function show($id)
     {
-
+        $palabra = '';
         $periodo = Periodo::orderby('id', 'desc')->get();
         $alumnos_tutor = [];
 
@@ -150,9 +150,10 @@ class TutoriasController extends Controller
                 ->where('periodo_id', $periodo[0]->id)
                 ->where('tipo', 1)
                 ->orderby('semaforo_id', 'desc')
-                ->get();
+                ->paginate(15);
         }
 
+       // return $alumnos_tutor;
         $semaforo = Semaforo::where('id', '<', 5)->get();
 
         $asignado = Asignacion_tutor::where('periodo_id', $periodo->max('id'))
@@ -162,7 +163,7 @@ class TutoriasController extends Controller
         if (count($alumnos_tutor) == 0) {
             $tutor = Tutor::find($id);
             $id_carrera = $tutor->carrera->id;
-            return view('tutor-alumno.tutor-alumnos', compact('alumnos_tutor', 'id_carrera', 'periodo'));
+            return view('tutor-alumno.tutor-alumnos', compact('alumnos_tutor', 'id_carrera', 'periodo', 'palabra'));
         } else {
             $hombres = $this->cuentaSexo($id, 'M', $periodo[0]->id);
             $mujeres = $this->cuentaSexo($id, 'F', $periodo[0]->id);
@@ -176,9 +177,61 @@ class TutoriasController extends Controller
             if (count($asignado) == 0) {
                 $asigno = 0;
             }
-            return view('tutor-alumno.tutor-alumnos', compact('alumnos_tutor', 'semaforo', 'hombres', 'mujeres', 'baja', 'temporal', 'avisos', 'verde', 'naranja', 'rojo', 'periodo', 'asignado', 'asigno'));
+            return view('tutor-alumno.tutor-alumnos', compact('alumnos_tutor', 'semaforo', 'hombres', 'mujeres', 'baja', 'temporal', 'avisos', 'verde', 'naranja', 'rojo', 'periodo', 'asignado', 'asigno', 'palabra'));
         }
     }
+
+
+
+    public function searchAlumnoTutorado(Request $request, $id)
+    {
+        //return $request;
+
+        $palabra = $request->search_tutor;
+        $periodo = Periodo::orderby('id', 'desc')->get();
+        $alumnos_tutor = [];
+
+
+        if (count($periodo) > 0) {
+            $alumnos_tutor = Periodo_tutorado::where('tutor_id', $id)
+                ->where('periodo_id', $periodo[0]->id)
+                ->where('tipo', 1)
+                ->whereHas('alumno', function ($query) use ($palabra) {
+                    $query->where('nombre', 'like', '%' . $palabra . '%');
+                })
+                ->orderby('semaforo_id', 'desc')
+                ->paginate(15);
+        }
+
+        $semaforo = Semaforo::where('id', '<', 5)->get();
+
+        $asignado = Asignacion_tutor::where('periodo_id', $periodo->max('id'))
+            ->where('tutor_id', $id)
+            ->get();
+
+        if (count($alumnos_tutor) == 0) {
+            $tutor = Tutor::find($id);
+            $id_carrera = $tutor->carrera->id;
+            return view('tutor-alumno.tutor-alumnos', compact('alumnos_tutor', 'id_carrera', 'periodo', 'palabra'));
+        } else {
+            $hombres = $this->cuentaSexo($id, 'M', $periodo[0]->id);
+            $mujeres = $this->cuentaSexo($id, 'F', $periodo[0]->id);
+            $temporal = $this->cuentaBajas($id, 2, $periodo[0]->id);
+            $baja = $this->cuentaBajas($id, 3, $periodo[0]->id);
+            $verde = $this->cuentaColores($id, 1, $periodo[0]->id);
+            $naranja = $this->cuentaColores($id, 2, $periodo[0]->id);
+            $rojo = $this->cuentaColores($id, 3, $periodo[0]->id);
+            $avisos = Aviso::all();
+            $asigno = 1;
+            if (count($asignado) == 0) {
+                $asigno = 0;
+            }
+            return view('tutor-alumno.tutor-alumnos', compact('alumnos_tutor', 'semaforo', 'hombres', 'mujeres', 'baja', 'temporal', 'avisos', 'verde', 'naranja', 'rojo', 'periodo', 'asignado', 'asigno', 'palabra'));
+        }
+    }
+
+
+
 
     public function cuentaSexo($id, $sex, $periodo)
     {

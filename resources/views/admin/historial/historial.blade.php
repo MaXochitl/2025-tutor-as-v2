@@ -2,10 +2,10 @@
 @section('structure-content')
     <link rel="stylesheet" href="https://cdn.datatables.net/1.11.3/css/dataTables.bootstrap5.min.css">
     @php
-    date_default_timezone_set('America/Mexico_City');
-    setlocale(LC_ALL, 'es_ES');
-    $diassemana = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado'];
-    $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        date_default_timezone_set('America/Mexico_City');
+        setlocale(LC_ALL, 'es_ES');
+        $diassemana = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado'];
+        $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
 
     @endphp
 
@@ -40,7 +40,8 @@
                                     $inicio = $meses[date('n', strtotime($item->inicio)) - 1] . '  ' . date('Y', strtotime($item->inicio));
                                     $fin = $meses[date('n', strtotime($item->fin)) - 1] . '  ' . date('Y', strtotime($item->fin));
                                 @endphp
-                                <option @if ($periodo_actual == $item->id){{ 'selected' }}@endif value="{{ $item->id }} ">
+                                <option @if ($periodo_actual == $item->id) {{ 'selected' }} @endif
+                                    value="{{ $item->id }} ">
                                     {{ $inicio . ' - ' . $fin }}
                                 </option>
                             @endforeach
@@ -57,7 +58,8 @@
                             @endforeach
                         @else
                             @foreach ($carreras as $item)
-                                <option @if ($carrera_select == $item->id){{ 'selected' }}@endif value="{{ $item->id }} ">{{ $item->nombre_carrera }}
+                                <option @if ($carrera_select == $item->id) {{ 'selected' }} @endif
+                                    value="{{ $item->id }} ">{{ $item->nombre_carrera }}
                                 </option>
                             @endforeach
                         @endif
@@ -85,11 +87,9 @@
                     ups! No se encontraron registros!
                 </div>
             @else
-
                 <table id="table" class="table text-center table-striped" style="font-size: 12px">
                     <thead>
                         <tr>
-                            <th scope="col">N°</th>
                             <th scope="col">N° CONTROL</th>
                             <th scope="col">Carrera</th>
                             <th scope="col">NOMBRE COMPLETO</th>
@@ -110,14 +110,10 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @php
-                            $contador = 1;
-                        @endphp
+
                         @foreach ($historial as $item)
                             <tr>
-                                <th scope="row">
-                                    {{ $contador++ }}
-                                </th>
+
                                 <td style="background: {{ $item->semaforo->fondo }} ">
                                     <p>{{ $item->alumno->id }} </p>
                                 </td>
@@ -173,6 +169,9 @@
             @endif
 
         </div>
+        <div id="pagination-container">
+            {{ $historial->links('pagination::bootstrap-4') }}
+        </div>
 
         <div class="btn-regresar">
             <a class="btn btn-secondary" href="{{ route('orientacion.index') }}">
@@ -191,8 +190,9 @@
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
     <script>
+        /*
         $(document).ready(function() {
-            $('#table').DataTable({
+            var table = $('#table').DataTable({
                 //para cambiar el lenguaje a español
                 "language": {
                     "lengthMenu": "Mostrar _MENU_ registros",
@@ -208,9 +208,20 @@
                         "sPrevious": "Anterior"
                     },
                     "sProcessing": "Procesando...",
+                },
+                "drawCallback": function() {
+                    // Obtenemos el HTML de la paginación generada por Laravel
+                    var pagination = $("#pagination-container ul.pagination").clone();
+
+                    // Vaciamos el contenedor de paginación actual del DataTable
+                    $("#table_paginate").empty();
+
+                    // Insertamos la paginación en el lugar deseado dentro del DataTable
+                    $("#table_paginate").append(pagination);
                 }
             });
         });
+        */
     </script>
     @include('modal.alumno.add-alumno')
 

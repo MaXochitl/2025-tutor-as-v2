@@ -25,10 +25,32 @@
 
                 <div class="row row-tutor">
 
+                    <!--____________________________ codigo de barra de busqueda-->
+                    <div class="container m-3">
+                        <div class="row justify-content-end">
+                            <div class="col-md-6 offset-md-3">
+                                <form class="input-group" method="POST" action="{{ route('searchTutor', $carrera) }}">
+                                    @csrf
+                                    <input name="search_tutor" type="text" class="form-control" placeholder="Bucar"
+                                        aria-label="Buscar" id="search-input" value="{{ $palabra }}">
+                                    <div class="input-group-append">
+                                        <!-- Botón de buscar -->
+                                        <button class="btn btn-primary" type="submit" id="search-btn">Buscar</button>
+                                        <!-- Botón de borrar datos -->
+                                        <a href="{{ route('tutor.show', $carrera) }}" class="btn btn-danger" type="button"
+                                            id="clear-btn">Borrar</a>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--  _________________________________  fin de la barra de busqueda-->
+
+
                     <table id="table" class="table table-striped">
                         <thead>
                             <tr>
-                                <th scope="col">N°</th>
                                 <th scope="col">Foto</th>
                                 <th scope="col">Matricula</th>
                                 <th scope="col">Carrera</th>
@@ -40,13 +62,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @php
-                                $contador = 1;
-                            @endphp
+
                             @foreach ($tutores as $item)
                                 @if ($item->carrera_id != null)
                                     <tr>
-                                        <td>{{ $contador++ }}</td>
                                         <td>
                                             <img src="{{ $item->foto }} " alt="" height="50px" width="50px"
                                                 class="img-icon" style="border-radius: 40px; padding: 0px ">
@@ -79,6 +98,7 @@
                     </table>
                 </div>
             </div>
+            {{ $tutores->links('pagination::bootstrap-4') }}
         </div>
 
     </div>
@@ -86,25 +106,27 @@
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
     <script>
-        $(document).ready(function() {
-            $('#table').DataTable({
-                //para cambiar el lenguaje a español
-                "language": {
-                    "lengthMenu": "Mostrar _MENU_ registros",
-                    "zeroRecords": "No se encontraron resultados",
-                    "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sSearch": "Buscar:",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": "Siguiente",
-                        "sPrevious": "Anterior"
-                    },
-                    "sProcessing": "Procesando...",
-                }
-            });
-        });
+        /*
+                                                $(document).ready(function() {
+                                                    $('#table').DataTable({
+                                                        //para cambiar el lenguaje a español
+                                                        "language": {
+                                                            "lengthMenu": "Mostrar _MENU_ registros",
+                                                            "zeroRecords": "No se encontraron resultados",
+                                                            "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                                                            "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                                            "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                                                            "sSearch": "Buscar:",
+                                                            "oPaginate": {
+                                                                "sFirst": "Primero",
+                                                                "sLast": "Último",
+                                                                "sNext": "Siguiente",
+                                                                "sPrevious": "Anterior"
+                                                            },
+                                                            "sProcessing": "Procesando...",
+                                                        }
+                                                    });
+                                                });
+                                                */
     </script>
 @endsection

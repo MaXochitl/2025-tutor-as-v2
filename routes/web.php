@@ -101,6 +101,8 @@ Route::resource('reporte', ControlMateriasController::class)->middleware(['auth'
 
 /**  ________________________________________----------------------------___________________________________________________------------------------TUTOR Y ADMIN */
 Route::resource('alumnos-tutor', TutoriasController::class)->middleware(['auth'])->names('alumnos-tutor');
+Route::post('searchAluTutor/{id}', [TutoriasController::class, 'searchAlumnoTutorado'])->name('searchAluTutor');
+
 
 Route::put('/addAlumno/{tipo}', [
     TutoriasController::class, 'inserAlumno'
@@ -111,6 +113,7 @@ Route::get('bajaAlumno/{id}/{status}/{color}', [TutoriasController::class, 'baja
 Route::resource('alumnos', AlumnosController::class)->middleware(['auth'])->names('alumnos');
 
 Route::resource('tutor', TutoresController::class)->middleware(['auth'])->names('tutor');
+Route::post('searchTutor/{carrera}', [TutoresController::class, 'searchTutor'])->name('searchTutor')->middleware(['auth']);
 Route::get('resetPass/{id}', [TutoresController::class, 'resetPass'])->name('resetPass');
 
 /**________________________________________----------------------------___________________________________________________------------------------_-__-_- LIBRE ALUMNOS */

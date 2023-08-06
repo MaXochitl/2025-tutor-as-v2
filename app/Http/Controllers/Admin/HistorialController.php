@@ -30,7 +30,7 @@ class HistorialController extends Controller
             ->orderBy('tutor_id', 'asc')
             ->orderBy('alumnos.carrera_id', 'asc')
             ->orderBy('semaforo_id', 'desc')
-            ->get();
+            ->paginate(15);
         $periodo_actual = 0;
         $carrera_select = 0;
         return view('admin.historial.historial', compact('historial', 'carreras', 'periodos', 'control_materias', 'periodo_actual', 'carrera_select'));
