@@ -21,9 +21,9 @@
                     <label for="ncontrol" class="form-label">Numero Control</label>
                     <input name="ncontrol" type="text" class="form-control" id="ncontrol">
                 </div>
-                
 
-                
+
+
                 <div class="form-group row">
                     <label for="semestre" class="form-label">Semestre</label>
 

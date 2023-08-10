@@ -174,26 +174,34 @@
                             <th scope="col">MES<br>4</th>
                             <th scope="col">O.E.<br>4</th>
                             <th scope="col">RESULTADOS</th>
-                            <th scope="col">OPCIONES</th>
+                            @can('solo.admin')
+                                <th scope="col">OPCIONES</th>
+                            @endcan
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($alumnos_tutor as $alumnos)
                             <tr>
-
                                 <td style="background: {{ $alumnos->semaforo->fondo }} ">
                                     <p>{{ $alumnos->alumno->id }} </p>
                                 </td>
+
                                 <td>{{ $alumnos->alumno->nombre . ' ' . $alumnos->alumno->ap_paterno . ' ' . $alumnos->alumno->ap_paterno }}
                                 </td>
                                 <td>
                                     {{ $alumnos->alumno->telefono }}
                                 </td>
-                                <td>
-                                    <div>
-                                        {{ $alumnos->mes_1 }}
-                                    </div>
-                                    <div class="d-grid gap-2">
+
+                                <td class="p-0">
+
+                                    <div class="d-grid gap-2" style="padding: 0%">
+                                        <div
+                                            style="pading: 0; height: 5px; background:{{ $alumnos->lights[0]->semaforos[0]->fondo }}; ">
+                                        </div>
+                                        <div>
+                                            {{ $alumnos->mes_1 }}
+                                        </div>
+
                                         @if ($alumnos->entrega_1 != null)
                                             <b>
                                                 @php
@@ -205,12 +213,12 @@
                                     </div>
                                 </td>
 
-                                <td>
+                                <td class="p-0 align-bottom">
                                     <div>
                                         {{ $alumnos->oe_1 }}
                                     </div>
                                     @can('solo.admin')
-                                        <div class="d-grid gap-2">
+                                        <div class="d-grid gap-2 align-bottom">
                                             <a href="" type="button" class="btn btn-primary seg" data-bs-toggle="modal"
                                                 data-bs-target="#oe1Modal{{ $alumnos->id }}" data-bs-whatever="@mdo">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -227,7 +235,9 @@
 
                                 </td>
 
-                                <td>
+                                <td class="p-0">
+                                    <div style="height: 5px; background:{{ $alumnos->lights[1]->semaforos[0]->fondo }}; ">
+                                    </div>
                                     <div>
                                         {{ $alumnos->mes_2 }}
                                     </div>
@@ -240,12 +250,13 @@
                                     @endif
                                 </td>
 
-                                <td>
+                                <td class="p-0 align-bottom">
+
                                     <div>
                                         {{ $alumnos->oe_2 }}
                                     </div>
                                     @can('solo.admin')
-                                        <div class="d-grid gap-2">
+                                        <div class="d-grid gap-2 align-bottom">
                                             <a href="" type="button" class="btn btn-primary seg"
                                                 data-bs-toggle="modal" data-bs-target="#oe2Modal{{ $alumnos->id }}"
                                                 data-bs-whatever="@mdo">
@@ -260,7 +271,9 @@
                                     @endcan
                                 </td>
 
-                                <td>
+                                <td class="p-0">
+                                    <div style="height: 5px; background:{{ $alumnos->lights[2]->semaforos[0]->fondo }}; ">
+                                    </div>
                                     <div>
                                         {{ $alumnos->mes_3 }}
                                     </div>
@@ -273,12 +286,12 @@
                                     @endif
                                 </td>
 
-                                <td>
+                                <td class="p-0 align-bottom">
                                     <div>
                                         {{ $alumnos->oe_3 }}
                                     </div>
                                     @can('solo.admin')
-                                        <div class="d-grid gap-2">
+                                        <div class="d-grid gap-2 align-bottom">
                                             <a href="" type="button" class="btn btn-primary seg"
                                                 data-bs-toggle="modal" data-bs-target="#oe3Modal{{ $alumnos->id }}"
                                                 data-bs-whatever="@mdo">
@@ -294,7 +307,9 @@
 
                                 </td>
 
-                                <td>
+                                <td class="p-0">
+                                    <div style="height: 5px; background:{{ $alumnos->lights[3]->semaforos[0]->fondo }}; ">
+                                    </div>
                                     <div>
                                         {{ $alumnos->mes_4 }}
                                     </div>
@@ -307,7 +322,7 @@
                                     @endif
                                 </td>
 
-                                <td>
+                                <td class="p-0 align-bottom">
                                     <div>
                                         {{ $alumnos->oe_4 }}
                                     </div>
@@ -329,7 +344,7 @@
 
                                 </td>
 
-                                <td>
+                                <td class="p-0 align-bottom">
                                     <div>
                                         {{ $alumnos->reporte_final }}
                                     </div>

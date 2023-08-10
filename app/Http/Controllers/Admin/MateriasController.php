@@ -17,10 +17,11 @@ class MateriasController extends Controller
     public function index()
     {
         //
+        $palabra = '';
         $materias = Materia::orderby('carrera_id', 'asc')
             ->orderby('semestre', 'asc')
             ->paginate(5);
-        return view('admin.materias.materias', compact('materias'));
+        return view('admin.materias.materias', compact('materias','palabra'));
     }
 
     /**
@@ -105,5 +106,15 @@ class MateriasController extends Controller
         //
         Materia::destroy($id);
         return redirect()->route('materia.index')->with('eliminar', 'ok');
+    }
+
+    public function searchMateria(Request $request)
+    {
+        $palabra = $request->busqueda;
+        $materias = Materia::where('nombre', 'LIKE', '%' . $palabra . '%')
+            ->orderby('carrera_id', 'asc')
+            ->orderby('semestre', 'asc')
+            ->paginate(5);
+        return view('admin.materias.materias', compact('materias', 'palabra'));
     }
 }

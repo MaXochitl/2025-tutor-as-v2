@@ -8,6 +8,7 @@ use App\Models\Carrera;
 use App\Models\Evaluacion_respuesta;
 use App\Models\Materia;
 use App\Models\Periodo;
+use App\Models\Periodo_semaforo;
 use App\Models\Periodo_tutor;
 use App\Models\Periodo_tutorado;
 use App\Models\Posicion;
@@ -31,51 +32,38 @@ class PruebasController extends Controller
      */
     public function index()
     {
-        $alumno = Alumno::where('id','173s0019')->get();
-        return $alumno[0]->carrera->nombre_carrera;
 
-        return storage_path();
+        //  $periodo = Periodo_tutorado::max('id');
         /*
+        Periodo_semaforo::create([
+            'periodo_id' => $periodo,
+            'semaforo_id' => 8,
+            'semestre' => 4
+        ]);
+*/
 
-        if (Auth::user()->hasRoles('admin')) {
-            return 'hola';
-        }else{
-            return 'not';
-        }
-        */
-        //date_default_timezone_set('America/Mexico_City');
-        //$fecha = date('m-d-Y H:i:s' , time()); // DateTime();
+        $alumnos = Periodo_tutorado::all();
 
-        //format('Y-m-d H:i:s', $fecha);
-        //return $fecha;
-
-        $date2 = "2017-07-17";
-        $date3 = "2017-08-15 12:10:00"; //numero intermedio
-        $date1 = "2017-09-25";
-
-        $number1 = strtotime($date1);
-        $number2 = strtotime($date2);
-        $number3 = strtotime($date3);
-
-        if (($number1 >= $number3) && ($number2 <= $number3)) {
-            return 1;
-        } else {
-            return 0;
+        foreach ($alumnos as $value) {
+            $this->addIndications($value->id);
         }
 
+        return view('test.test', compact('alumnos'));
+    }
 
+    public function addIndications($periodo_id)
+    {
+        $registros = [];
 
+        for ($i = 0; $i < 5; $i++) {
+            $registros[] = [
+                'periodo_id' => $periodo_id,
+                'semaforo_id' => 4,
+                'semestre' => $i + 1
+            ];
+        }
 
-        return view('test.testFecha');
-        $carreras = Carrera::all(); //->pluck('id','nombre_carrera');
-        $preguntas = Pregunta::all()->where('evaluacion_id', 1);
-        $respuestas = Respuesta::all();
-        $periodo_tutor = Periodo_tutorado::all();
-        //return view('test.test', compact('carreras', 'preguntas', 'respuestas', 'periodo_tutor'));
-        $alumnos = Alumno::all(); //->periodo_eval()->where('periodo_eval_id',3);
-
-        return view('test.testCheck', compact('alumnos'));
-        // return $periodo_tutor[0]->semaforos[0]->nombre;
+        Periodo_semaforo::insert($registros);
     }
 
     /**
@@ -86,25 +74,26 @@ class PruebasController extends Controller
     public function create()
     {
 
+
         //$role_auditor=Role::create(['name'=>'auditor']);
-        $permiso_admin_auditor=Permission::create(['name'=>'auditor.admin']);
+        $permiso_admin_auditor = Permission::create(['name' => 'auditor.admin']);
         //Permission::create(['name'=>'auditor'])->syncRoles([$role_auditor]);
         //$permiso=Permission::whereIn('name', ['admin.tutor'])->get();
-        $role=Role::find(3);
+        $role = Role::find(3);
         $role->givePermissionTo($permiso_admin_auditor);
-//        return $role;
+        //        return $role;
 
         //$permiso->syncRoles([$role]);
         return 'success';
-//        $permisos = Permission::whereIn('name', ['tutorias.home', 'show.date'])->get();
+        //        $permisos = Permission::whereIn('name', ['tutorias.home', 'show.date'])->get();
 
 
-        $roles=Role::all();
-        $permissions=Permission::all();
+        $roles = Role::all();
+        $permissions = Permission::all();
         $permisos = Permission::whereIn('name', ['tutorias.home', 'show.date'])->get();
 
 
-  //      return $permisos;
+        //      return $permisos;
         /*
         Tutor::create([
             'matricula'=>'Admin001',

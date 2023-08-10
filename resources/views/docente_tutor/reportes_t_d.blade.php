@@ -2,10 +2,10 @@
 @section('structure-content')
     @if (count($periodo) > 0)
         @php
-            
+
             date_default_timezone_set('America/Mexico_City');
             setlocale(LC_ALL, 'es_ES');
-            
+
             $inicio = strtotime($periodo[0]->inicio);
             $fin = strtotime($periodo[0]->fin);
             $mes_1 = strtotime($periodo[0]->mes_1);
@@ -14,20 +14,21 @@
             $mes_4 = strtotime($periodo[0]->mes_4);
             $entrega_final = strtotime($periodo[0]->reporte_final);
             $fecha_actual = strtotime(date('Y-m-d', time()));
-            
+
             $diassemana = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado'];
             $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
             $inicio_p = $meses[date('n', $inicio) - 1] . '  ' . date('Y', $inicio);
             $fin_p = $meses[date('n', $fin) - 1] . '  ' . date('Y', $fin);
-            
+
         @endphp
 
         <div class="container text-center">
             <div style="text-align: left">
-                <a href="" type="button" class="btn btn-warning m-2" data-bs-toggle="modal" data-bs-target="#avisos-modal"
-                    data-bs-whatever="@mdo" data-bs-toggle="tooltip" data-bs-placement="bottom" title="Avisos">
-                    <svg style="color: white" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
-                        class="bi bi-chat-square-text-fill" viewBox="0 0 16 16">
+                <a href="" type="button" class="btn btn-warning m-2" data-bs-toggle="modal"
+                    data-bs-target="#avisos-modal" data-bs-whatever="@mdo" data-bs-toggle="tooltip" data-bs-placement="bottom"
+                    title="Avisos">
+                    <svg style="color: white" xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+                        fill="currentColor" class="bi bi-chat-square-text-fill" viewBox="0 0 16 16">
                         <path
                             d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
                     </svg>
@@ -98,8 +99,11 @@
                     <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
                         <a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab"
                             aria-controls="nav-home" aria-selected="true">Orientación</a>
-                        <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab"
-                            aria-controls="nav-profile" aria-selected="false">Tutor</a>
+                        <!--
+                                <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab"
+                                aria-controls="nav-profile" aria-selected="false">Tutor</a>
+    -->
+
                         <a class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" href="#nav-contact" role="tab"
                             aria-controls="nav-contact" aria-selected="false">Docente</a>
                     </div>

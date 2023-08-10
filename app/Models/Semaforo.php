@@ -18,4 +18,6 @@ class Semaforo extends Model
         //pertenece a muchos periodos  el segundo paramentro es el nombre de la clase
         return $this->hasOne(Periodo_tutorado::class);//->using(periodo_tutor_semaforo::class);
     }
+
+
 }

@@ -27,7 +27,6 @@
             <table class="table text-center table-striped" style="font-size: 12px">
                 <thead>
                     <tr>
-                        <th class="title-table" scope="col">N°</th>
                         <th class="title-table" scope="col">N° CONTROL</th>
                         <th class="title-table" scope="col">NOMBRE COMPLETO</th>
                         <th class="title-table" scope="col">TELEFONO</th>
@@ -46,13 +45,11 @@
                 <tbody>
                     @php
                         $contador = 1;
-                        
+
                     @endphp
                     @foreach ($alumnos_tutor as $alumnos)
                         <tr>
-                            <th scope="row">
-                                {{ $contador++ }}
-                            </th>
+
                             <td style="background: {{ $alumnos->semaforo->fondo }} ">
                                 <p>{{ $alumnos->alumno->id }} </p>
                             </td>
@@ -67,7 +64,7 @@
                                     <br>
                                 </div>
                                 <div class="d-grid gap-2">
-                                    @if ($fecha_actual >= $inicio && $fecha_actual <= $mes_1 || $altera_entrega->mes_1)
+                                    @if (($fecha_actual >= $inicio && $fecha_actual <= $mes_1) || $altera_entrega->mes_1)
                                         <a href="" type="button" class="btn btn-primary" data-bs-toggle="modal"
                                             data-bs-target="#month1Modal{{ $alumnos->id }} "
                                             data-bs-id="{{ $alumnos->id }}">
@@ -109,7 +106,7 @@
                                 <div>
                                     {{ $alumnos->mes_3 }}
                                 </div>
-                                @if ($fecha_actual >= $mes_2 && $fecha_actual <= $mes_3 || $altera_entrega->mes_3)
+                                @if (($fecha_actual >= $mes_2 && $fecha_actual <= $mes_3) || $altera_entrega->mes_3)
                                     <div class="d-grid gap-2">
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                             data-bs-target="#month3Modal{{ $alumnos->id }} "
@@ -130,7 +127,7 @@
                                 <div>
                                     {{ $alumnos->mes_4 }}
                                 </div>
-                                @if ($fecha_actual >= $mes_3 && $fecha_actual <= $mes_4 || $altera_entrega->mes_4)
+                                @if (($fecha_actual >= $mes_3 && $fecha_actual <= $mes_4) || $altera_entrega->mes_4)
                                     <div class="d-grid gap-2">
                                         <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                             data-bs-target="#month4Modal{{ $alumnos->id }} "
@@ -153,7 +150,7 @@
                                 <div>
                                     {{ $alumnos->reporte_final }}
                                 </div>
-                                @if ($fecha_actual >= $mes_4 && $fecha_actual <= $entrega_final || $altera_entrega->mes_5)
+                                @if (($fecha_actual >= $mes_4 && $fecha_actual <= $entrega_final) || $altera_entrega->mes_5)
                                     <div class="d-grid gap-2">
                                         <a href="{{ route('reporte.show', $alumnos->id) }} " type="button"
                                             class="btn btn-primary">

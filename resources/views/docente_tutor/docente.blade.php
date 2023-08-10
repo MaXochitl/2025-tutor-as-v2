@@ -50,7 +50,7 @@
                     @php
                         $contador = 1;
                         $tutor_id = Auth::user()->tutor->id;
-                        
+
                     @endphp
                     @foreach ($docente_alumno as $alumnos)
                         @if ($alumnos->tutor_id == $tutor_id)
@@ -72,8 +72,8 @@
                                     </div>
                                     <div class="d-grid gap-2">
                                         @if ($fecha_actual >= $inicio && $fecha_actual <= $mes_1)
-                                            <a href="" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#month1Modal{{ $alumnos->id }} "
+                                            <a href="" type="button" class="btn btn-primary"
+                                                data-bs-toggle="modal" data-bs-target="#month1Modal{{ $alumnos->id }} "
                                                 data-bs-id="{{ $alumnos->id }}">
                                                 Seguimiento
                                             </a>
@@ -99,8 +99,9 @@
                                     </div>
                                     @can('mes.admin', Model::class)
                                         <div class="d-grid gap-2">
-                                            <a href="" type="button" class="btn btn-primary seg" data-bs-toggle="modal"
-                                                data-bs-target="#oe1Modal{{ $alumnos->id }}" data-bs-whatever="@mdo">
+                                            <a href="" type="button" class="btn btn-primary seg"
+                                                data-bs-toggle="modal" data-bs-target="#oe1Modal{{ $alumnos->id }}"
+                                                data-bs-whatever="@mdo">
                                                 Seguimiento
                                             </a>
                                         </div>
@@ -262,8 +263,9 @@
 
                                     @can('mes.admin')
                                         <div class="d-grid gap-2">
-                                            <a href="" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#endMatter{{ $alumnos->id }}" data-bs-whatever="@mdo">
+                                            <a href="" type="button" class="btn btn-primary"
+                                                data-bs-toggle="modal" data-bs-target="#endMatter{{ $alumnos->id }}"
+                                                data-bs-whatever="@mdo">
                                                 Materias
                                             </a>
 
@@ -300,5 +302,6 @@
                 </tbody>
             </table>
         </div>
+
     </div>
 </div>

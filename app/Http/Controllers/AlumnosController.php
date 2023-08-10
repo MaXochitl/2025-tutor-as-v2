@@ -27,8 +27,12 @@ class AlumnosController extends Controller
     public function index()
     {
         //
-        $alumnos = Alumno::orderBy('carrera_id')->orderBy('grupo', 'asc')->get();
-        return view('alumnos.alumnos', compact('alumnos'));
+        $palabra = '';
+        $alumnos = Alumno::orderBy('carrera_id')
+            ->orderBy('grupo', 'asc')
+            ->paginate(20);
+
+        return view('alumnos.alumnos', compact('alumnos','palabra'));
     }
 
     /**
@@ -100,6 +104,7 @@ class AlumnosController extends Controller
     public function show($id)
     {
         //
+
     }
 
     /**
@@ -139,7 +144,7 @@ class AlumnosController extends Controller
         $alumnos->correo = $request->input('correo');
         $alumnos->grupo = $request->grupo;
         $alumnos->sexo = $request->sexo;
-        $alumnos->estado=$request->estado;
+        $alumnos->estado = $request->estado;
         $alumnos->carrera_id = $request->carrera;
 
         $alumnos->save();
@@ -165,5 +170,16 @@ class AlumnosController extends Controller
         $file = $request->file('file');
         Excel::import(new ImportAlumnos, $file);
         return back();
+    }
+
+    public function searchAlumno(Request $request)
+    {
+        $palabra = $request->busqueda;
+        $alumnos = Alumno::where('nombre', 'LIKE', '%' . $palabra . '%')
+            ->orderBy('carrera_id')
+            ->orderBy('grupo', 'asc')
+            ->paginate(20);
+
+        return view('alumnos.alumnos', compact('alumnos','palabra'));
     }
 }

@@ -31,7 +31,9 @@ use App\Http\Controllers\PruebasController;
 use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\TutoriasController;
 use App\Models\Altera_entrega;
+use App\Models\Alumno;
 use App\Models\File_format;
+use App\Models\Materia;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -59,7 +61,10 @@ Route::resource('preguntas', PreguntasController::class)->middleware(['auth', 'c
 Route::resource('habilidades', HabilidadesMentalesController::class)->middleware(['auth', 'can:solo.admin'])->names('habilidades');
 Route::resource('colores', TestColoresController::class)->middleware(['auth', 'can:solo.admin'])->names('colores');
 Route::resource('carrera', CarreraController::class)->middleware(['auth', 'can:solo.admin'])->names('carrera');
+
 Route::resource('materia', MateriasController::class)->middleware(['auth'])->names('materia');
+Route::get('searchMateria', [MateriasController::class, 'searchMateria'])->middleware(['auth'])->name('searchMateria');
+
 Route::resource('periodo-tutorado', PeriodoTutoradoController::class)->middleware(['auth', 'can:solo.admin'])->names('periodo-tutorado');
 Route::resource('historial', HistorialController::class)->middleware(['auth', 'can:solo.admin'])->names('historial');
 Route::resource('aviso', AvisosController::class)->middleware(['auth', 'can:solo.admin'])->names('aviso');
@@ -111,6 +116,8 @@ Route::put('/addAlumno/{tipo}', [
 Route::get('bajaAlumno/{id}/{status}/{color}', [TutoriasController::class, 'baja'])->middleware(['auth'])->name('baja');
 
 Route::resource('alumnos', AlumnosController::class)->middleware(['auth'])->names('alumnos');
+Route::get('searchAlumno', [AlumnosController::class, 'searchAlumno'])->middleware(['auth'])->name('searchAlumno');
+
 
 Route::resource('tutor', TutoresController::class)->middleware(['auth'])->names('tutor');
 Route::post('searchTutor/{carrera}', [TutoresController::class, 'searchTutor'])->name('searchTutor')->middleware(['auth']);
@@ -142,5 +149,5 @@ Route::get('probar', function () {
     return view('docente_tutor.reportes_t_d');
 });
 */
-Route::resource('reportes_tutor', ReportesController::class)->names('reportes_tutor');
+Route::resource('reportes_tutor', ReportesController::class)->names('reportes_tutor')->middleware(['auth']);
 //Auth::routes(['register' => false]);

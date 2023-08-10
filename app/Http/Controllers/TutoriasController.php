@@ -19,6 +19,7 @@ use App\Http\Requests\Auth\LoginRequest;
 use App\Models\Asignacion_tutor;
 use App\Models\Aviso;
 use App\Models\Periodo_eval;
+use App\Models\Periodo_semaforo;
 use App\Providers\RouteServiceProvider;
 
 class TutoriasController extends Controller
@@ -126,11 +127,13 @@ class TutoriasController extends Controller
                 'semaforo_id' => 4
 
             ]);
+            $this->addIndications($alumno_add->id);
             return redirect()->route('reportes_tutor.show', $id_tutor);
         }
 
         return redirect()->route('reportes_tutor.show', $id_tutor)->with('hay_alumnos', 'si');
     }
+
 
     /**
      * Display the specified resource.
@@ -153,7 +156,7 @@ class TutoriasController extends Controller
                 ->paginate(15);
         }
 
-       // return $alumnos_tutor;
+        // return $alumnos_tutor;
         $semaforo = Semaforo::where('id', '<', 5)->get();
 
         $asignado = Asignacion_tutor::where('periodo_id', $periodo->max('id'))
@@ -331,6 +334,8 @@ class TutoriasController extends Controller
         $tutorias->semaforo_id = $request->color;
         $tutorias->save();
 
+        $this->saveHistLights($id, $mesSelect, $request->color);
+
         $id_tutor = Auth::user()->tutor->id;
         return redirect()->route('reportes_tutor.show', $id_tutor);
     }
@@ -360,7 +365,24 @@ class TutoriasController extends Controller
 
         $tutorias->save();
 
+
         return redirect()->route('alumnos-tutor.show', $tutorias->tutor_id);
+    }
+
+
+    public function saveHistLights($periodo_tutor, $semestre, $color)
+    {
+        $semaforo_update = Periodo_semaforo::where('periodo_id', $periodo_tutor)
+            ->where('semestre', $semestre)
+            ->first();
+
+        if ($semaforo_update) {
+            $semaforo_update->semaforo_id = $color; // Reemplaza con el nuevo valor
+            $semaforo_update->save();
+            echo "Registro actualizado correctamente.";
+        } else {
+            echo "No se encontró el registro con los valores proporcionados.";
+        }
     }
 
     /**
@@ -372,6 +394,7 @@ class TutoriasController extends Controller
     public function destroy($id)
     {
         $id_tutor = Auth::user()->tutor->id;
+        $this->deleteHistLight($id);
         Periodo_tutorado::find($id)->delete();
         return redirect()->route('reportes_tutor.show', $id_tutor)->with('eliminar', 'ok');
     }
@@ -386,5 +409,40 @@ class TutoriasController extends Controller
         $tutorias->semaforo_id = $color;
         $tutorias->save();
         return redirect()->route('alumnos-tutor.show', $tutorias->tutor_id);
+    }
+
+    public function addIndications($periodo_id)
+    {
+        $registros = [];
+
+        for ($i = 0; $i < 5; $i++) {
+            $registros[] = [
+                'periodo_id' => $periodo_id,
+                'semaforo_id' => 4,
+                'semestre' => $i + 1
+            ];
+        }
+
+        Periodo_semaforo::insert($registros);
+    }
+
+
+    public function deleteHistLight($periodo_tutor)
+    {
+
+        $registrosAEliminar = Periodo_semaforo::where('periodo_id', $periodo_tutor)->get();
+
+        if ($registrosAEliminar->count() > 0) {
+            // Eliminar los registros encontrados
+            foreach ($registrosAEliminar as $registro) {
+                $registro->delete();
+            }
+
+            // Mensaje de éxito
+            echo "Registros eliminados correctamente.";
+        } else {
+            // No se encontraron registros para eliminar
+            echo "No se encontraron registros con el periodo_id proporcionado.";
+        }
     }
 }

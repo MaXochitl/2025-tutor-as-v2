@@ -49,8 +49,8 @@
                                 </div>
                                 <div class="col">
                                     <button class="btn btn-success" type="submit">
-                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
-                                            class="bi bi-cloud-arrow-up-fill" viewBox="0 0 16 16">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+                                            fill="currentColor" class="bi bi-cloud-arrow-up-fill" viewBox="0 0 16 16">
                                             <path
                                                 d="M8 2a5.53 5.53 0 0 0-3.594 1.342c-.766.66-1.321 1.52-1.464 2.383C1.266 6.095 0 7.555 0 9.318 0 11.366 1.708 13 3.781 13h8.906C14.502 13 16 11.57 16 9.773c0-1.636-1.242-2.969-2.834-3.194C12.923 3.999 10.69 2 8 2zm2.354 5.146a.5.5 0 0 1-.708.708L8.5 6.707V10.5a.5.5 0 0 1-1 0V6.707L6.354 7.854a.5.5 0 1 1-.708-.708l2-2a.5.5 0 0 1 .708 0l2 2z" />
                                         </svg>
@@ -64,6 +64,29 @@
 
 
                 <div class="table-responsive">
+                    <div class="d-md-flex justify-content-md-end">
+                        <form method="GET" action="{{ route('searchAlumno') }} ">
+                            @csrf
+                            <div class="btn-group">
+                                <input name="busqueda" type="text" id="searchInput" class="form-control"
+                                    placeholder="Buscar por nombre" value="{{ $palabra }}">
+                                <button class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                        height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                        <path
+                                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                    </svg></button>
+                                <a href="{{ route('alumnos.index') }} " class="btn btn-success">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
+                                        fill="currentColor" class="bi bi-arrow-clockwise" viewBox="0 0 16 16">
+                                        <path fill-rule="evenodd"
+                                            d="M8 3a5 5 0 1 0 4.546 2.914.5.5 0 0 1 .908-.417A6 6 0 1 1 8 2v1z" />
+                                        <path
+                                            d="M8 4.466V.534a.25.25 0 0 1 .41-.192l2.36 1.966c.12.1.12.284 0 .384L8.41 4.658A.25.25 0 0 1 8 4.466z" />
+                                    </svg>
+                                </a>
+                            </div>
+                        </form>
+                    </div>
 
                     <table id="table" class="table table-striped text-center" style="font-size: 13px">
                         <thead>
@@ -71,7 +94,6 @@
 
                                 <th scope="col">EDITAR</th>
 
-                                <th scope="col">N°</th>
                                 <th scope="col">N° CONTROL</th>
                                 <th scope="col">NOMBRE COMPLETO</th>
                                 <th scope="col">SEXO</th>
@@ -108,9 +130,7 @@
                                         @include('modal.alumno.editar')
                                     </th>
 
-                                    <td>
-                                        {{ $contador++ }}
-                                    </td>
+
                                     <td>{{ $alum->id }} </td>
                                     <td>{{ $alum->nombre . ' ' . $alum->ap_paterno . ' ' . $alum->ap_materno }} </td>
                                     <td>{{ $alum->sexo }} </td>
@@ -160,6 +180,7 @@
 
             </div>
         </div>
+        {{ $alumnos->links('pagination::bootstrap-4') }}
 
     </div>
     @can('solo.tutor')
@@ -202,29 +223,33 @@
         });
     </script>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+
     <script>
-        $(document).ready(function() {
-            $('#table').DataTable({
-                //para cambiar el lenguaje a español
-                "language": {
-                    "lengthMenu": "Mostrar _MENU_ registros",
-                    "zeroRecords": "No se encontraron resultados",
-                    "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sSearch": "Buscar:",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": "Siguiente",
-                        "sPrevious": "Anterior"
-                    },
-                    "sProcessing": "Procesando...",
-                }
-            });
-        });
+        /*
+    <script src="https://code.jquery.com/jquery-3.5.1.js">
+
+                                $(document).ready(function() {
+                                    $('#table').DataTable({
+                                        //para cambiar el lenguaje a español
+                                        "language": {
+                                            "lengthMenu": "Mostrar _MENU_ registros",
+                                            "zeroRecords": "No se encontraron resultados",
+                                            "info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                                            "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                                            "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                                            "sSearch": "Buscar:",
+                                            "oPaginate": {
+                                                "sFirst": "Primero",
+                                                "sLast": "Último",
+                                                "sNext": "Siguiente",
+                                                "sPrevious": "Anterior"
+                                            },
+                                            "sProcessing": "Procesando...",
+                                        }
+                                    });
+                                });
+                                */
     </script>
 @endsection

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Periodo_tutorado extends Model
 {
     use HasFactory;
-    
+
     protected $table = 'periodo_tutorado';
     protected $primarykey = 'id';
     protected $fillable = [
@@ -50,8 +50,14 @@ class Periodo_tutorado extends Model
     {
         return $this->belongsTo(Alumno::class);
     }
-    public function semaforo(){
+    public function semaforo()
+    {
         //return $this->belongsToMany(Semaforo::class)->using(periodo_tutor_semaforo::class);
         return $this->belongsTo(Semaforo::class);
+    }
+
+    public function lights()
+    {
+        return $this->hasMany(Periodo_semaforo::class,'periodo_id');
     }
 }
