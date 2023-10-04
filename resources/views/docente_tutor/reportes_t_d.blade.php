@@ -99,10 +99,10 @@
                     <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
                         <a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab"
                             aria-controls="nav-home" aria-selected="true">Orientación</a>
-                        <!--
+
                                 <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab"
                                 aria-controls="nav-profile" aria-selected="false">Tutor</a>
-    -->
+
 
                         <a class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" href="#nav-contact" role="tab"
                             aria-controls="nav-contact" aria-selected="false">Docente</a>

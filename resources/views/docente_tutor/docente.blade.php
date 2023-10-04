@@ -43,7 +43,7 @@
                         <th scope="col">DOCENTE<br>4</th>
                         <th scope="col">TUTOR<br>4</th>
                         <th scope="col">RESULTADOS</th>
-                        <th scope="col">TUTOR</th>
+                        <th scope="col">OPCIONES</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -71,7 +71,7 @@
                                         {{ $alumnos->mes_1 }}
                                     </div>
                                     <div class="d-grid gap-2">
-                                        @if ($fecha_actual >= $inicio && $fecha_actual <= $mes_1)
+                                        @if (($fecha_actual >= $inicio && $fecha_actual <= $mes_1)|| $altera_entrega->mes_1)
                                             <a href="" type="button" class="btn btn-primary"
                                                 data-bs-toggle="modal" data-bs-target="#month1Modal{{ $alumnos->id }} "
                                                 data-bs-id="{{ $alumnos->id }}">
@@ -115,7 +115,7 @@
                                         {{ $alumnos->mes_2 }}
                                     </div>
                                     @can('mes.tutor')
-                                        @if ($fecha_actual == $mes_2 || ($fecha_actual >= $mes_1 && $fecha_actual <= $mes_2))
+                                        @if ( ($fecha_actual >= $mes_1 && $fecha_actual <= $mes_2) || $altera_entrega->mes_2)
                                             <div class="d-grid gap-2">
                                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                                     data-bs-target="#month2Modal{{ $alumnos->id }}" data-bs-id="">
@@ -157,7 +157,7 @@
                                         {{ $alumnos->mes_3 }}
                                     </div>
                                     @can('mes.tutor')
-                                        @if ($fecha_actual >= $mes_2 && $fecha_actual <= $mes_3)
+                                        @if (($fecha_actual >= $mes_2 && $fecha_actual <= $mes_3)|| $altera_entrega->mes_3)
                                             <div class="d-grid gap-2">
                                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                                     data-bs-target="#month3Modal{{ $alumnos->id }} "
@@ -206,7 +206,7 @@
                                         {{ $alumnos->mes_4 }}
                                     </div>
                                     @can('mes.tutor')
-                                        @if ($fecha_actual >= $mes_3 && $fecha_actual <= $mes_4)
+                                        @if (($fecha_actual >= $mes_3 && $fecha_actual <= $mes_4)|| $altera_entrega->mes_4)
                                             <div class="d-grid gap-2">
                                                 <button type="button" class="btn btn-primary" data-bs-toggle="modal"
                                                     data-bs-target="#month4Modal{{ $alumnos->id }} "
@@ -251,7 +251,7 @@
                                         {{ $alumnos->reporte_final }}
                                     </div>
                                     @can('mes.tutor')
-                                        @if ($fecha_actual >= $mes_4 && $fecha_actual <= $entrega_final)
+                                        @if (($fecha_actual >= $mes_4 && $fecha_actual <= $entrega_final|| $altera_entrega->mes_4))
                                             <div class="d-grid gap-2">
                                                 <a href="{{ route('reporte.show', $alumnos->id) }} " type="button"
                                                     class="btn btn-primary">
