@@ -17,7 +17,7 @@
                     <table class="table table-striped text-heigth">
                         <thead>
                             <tr>
-                                <th>N°</th>
+
                                 <th scope="col" class="text-center">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                                         class="bi bi-check-circle-fill" viewBox="0 0 16 16">
@@ -34,7 +34,7 @@
                             @foreach ($carreras as $item)
                                 <tr>
 
-                                    <th style="width: 2%">{{ $item->id }}</th>
+
                                     <th scope="row" style="width: 20px">
                                         <a>
                                             <img src="{{asset($item->icono) }} " alt="" height="50px"

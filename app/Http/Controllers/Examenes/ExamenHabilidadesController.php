@@ -56,7 +56,7 @@ class ExamenHabilidadesController extends Controller
         $alumno = Alumno::find($num_control);
 
         $resultado = Resultado::where('alumno_id', $num_control)->where('periodo_eval_id', $periodo_evaluacion[0]->id)->get(); //;
-        $resultado=Resultado::fund($resultado[0]->id);
+        $resultado=Resultado::find($resultado[0]->id);
         $puntos = Evaluacion_respuesta::where('alumno_id', $alumno->id)
             ->join('respuestas', 'respuestas.id', '=', 'evaluacion_respuesta.respuesta_id')
             ->join('preguntas', 'preguntas.id', '=', 'evaluacion_respuesta.pregunta_id')

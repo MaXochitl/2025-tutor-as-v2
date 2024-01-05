@@ -4,8 +4,12 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="carrera-modal">
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <div>
+
             </div>
+
             <div class="modal-body">
+                <h1>Crear nuevo Usuario</h1>
                 @if (count($errors) > 0)
                     @include('secciones.errores')
                 @endif

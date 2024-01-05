@@ -23,7 +23,7 @@ class UsersController extends Controller
         $busqueda = $request->busqueda;
         $users = User::where('name', 'LIKE', '%' . $busqueda . '%')
             ->orderBy('name')
-            ->paginate(2);
+            ->paginate(8);
         $roles = Role::all();
         //return $users;
         return view('admin.users.users', compact('users', 'roles'));

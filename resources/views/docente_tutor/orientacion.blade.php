@@ -58,7 +58,10 @@
                             <td>
                                 {{ $alumnos->alumno->telefono }}
                             </td>
-                            <td>
+                            <td class="p-0">
+                                <div
+                                    style="pading: 0; height: 5px; background:{{ $alumnos->lights[0]->semaforos[0]->fondo }}; ">
+                                </div>
                                 <div>
                                     {{ $alumnos->mes_1 }}
                                     <br>
@@ -81,7 +84,8 @@
                                 </div>
                             </td>
 
-                            <td>
+                            <td class="p-0">
+                                <div style="height: 5px; background:{{ $alumnos->lights[1]->semaforos[0]->fondo }}; ">
                                 <div>
                                     {{ $alumnos->mes_2 }}
                                     <br>
@@ -102,7 +106,8 @@
                                 </div>
                             </td>
 
-                            <td>
+                            <td class="p-0">
+                                <div style="height: 5px; background:{{ $alumnos->lights[2]->semaforos[0]->fondo }}; ">
                                 <div>
                                     {{ $alumnos->mes_3 }}
                                 </div>
@@ -123,7 +128,8 @@
                                 <div>{{ $alumnos->oe_3 }}</div>
                             </td>
 
-                            <td>
+                            <td class="p-0">
+                                <div style="height: 5px; background:{{ $alumnos->lights[3]->semaforos[0]->fondo }}; ">
                                 <div>
                                     {{ $alumnos->mes_4 }}
                                 </div>

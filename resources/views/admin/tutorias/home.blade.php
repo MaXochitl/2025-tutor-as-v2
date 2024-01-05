@@ -18,9 +18,14 @@
 
             <div class="col d-flex flex-column flex-shrink-0" style="padding: 20px;">
                 <div style="text-align: center">
+                    @if (count($tutores)==0)
+                        <div class="alert alert-danger" >Actualmente no hay tutores de esta carrera</div>
+                    @else
                     <h1>
-                        Lista de Tutores
+                        Tutores de la carrera: <br> {{ $tutores[0]->carrera->nombre_carrera }}
                     </h1>
+
+                    @endif
                 </div>
 
                 <div class="row row-tutor">

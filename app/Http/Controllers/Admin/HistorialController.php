@@ -33,6 +33,7 @@ class HistorialController extends Controller
             ->paginate(15);
         $periodo_actual = 0;
         $carrera_select = 0;
+
         return view('admin.historial.historial', compact('historial', 'carreras', 'periodos', 'control_materias', 'periodo_actual', 'carrera_select'));
     }
 
@@ -65,7 +66,7 @@ class HistorialController extends Controller
             ->orderBy('alumnos.carrera_id', 'asc')
             ->where('alumnos.carrera_id', $request->carrera)
             ->Where('periodo_id', $request->periodo)
-            ->get();
+            ->paginate(15);
 
         $periodo_actual = $request->periodo;
         $carrera_select = $request->carrera;
