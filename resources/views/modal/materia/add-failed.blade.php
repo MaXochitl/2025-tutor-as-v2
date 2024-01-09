@@ -1,9 +1,9 @@
 <div class="modal fade" id="materiaFailed" tabindex="-1" aria-labelledby="materiaFailed" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content" style="width: 600px">
             <div class="modal-header">
                 <h5 class="modal-title" id="materiaFailed">
-                    Materias
+                    Materias Reprobadas
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
@@ -12,11 +12,10 @@
                 <form method="POST" action="{{ route('addMateria.addMateria',[$periodo_tutorado->id,0]) }}">
                     @csrf
                     @method('PUT')
-                    <table class="table table-sm table-bordered">
+                    <table id="table_2" class="table table-sm table-bordered">
                         <thead>
                             <tr>
                                 <th scope="col">Materia</th>
-                                <th scope="col">Semestre</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -29,9 +28,7 @@
                                             {{ $item->nombre }}
                                         </label>
                                     </th>
-                                    <td>
-                                        {{ $item->semestre }}
-                                    </td>
+
 
                                 </tr>
                             @endforeach

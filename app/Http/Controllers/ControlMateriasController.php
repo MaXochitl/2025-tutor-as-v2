@@ -82,8 +82,9 @@ class ControlMateriasController extends Controller
 
         $periodo_tutorado = Periodo_tutorado::find($id);
 
-        $materias = Materia::where('carrera_id', $periodo_tutorado->alumno->carrera_id)
-            ->orderby('semestre', 'asc')->get();
+        // $materias = Materia::where('carrera_id', $periodo_tutorado->alumno->carrera_id)
+        //     ->orderby('semestre', 'asc')->get();
+        $materias=Materia::orderby('nombre','asc')->get();
 
         $semaforo = Semaforo::where('id', '<', 5)->get();
 

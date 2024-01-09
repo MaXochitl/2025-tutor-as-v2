@@ -38,8 +38,8 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="btn btn-outline-danger">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
-                                                            fill="currentColor" class="bi bi-x-square-fill"
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="25"
+                                                            height="25" fill="currentColor" class="bi bi-x-square-fill"
                                                             viewBox="0 0 16 16">
                                                             <path
                                                                 d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
@@ -48,11 +48,9 @@
                                                 </form>
                                             </td>
                                         </tr>
-
                                     @endforeach
                                 </tbody>
                             </table>
-
                         @endif
                         @include('modal.materia.add-approved')
 
@@ -67,7 +65,6 @@
                             Agregar
                         </a>
                         @if (count($materia_reprobadas) != 0)
-
                             <table class="table table-sm table-bordered">
                                 <thead>
                                     <tr>
@@ -90,8 +87,8 @@
                                                     @method('DELETE')
 
                                                     <button type="submit" class="btn btn-outline-danger">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
-                                                            fill="currentColor" class="bi bi-x-square-fill"
+                                                        <svg xmlns="http://www.w3.org/2000/svg" width="25"
+                                                            height="25" fill="currentColor" class="bi bi-x-square-fill"
                                                             viewBox="0 0 16 16">
                                                             <path
                                                                 d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
@@ -100,7 +97,6 @@
                                                 </form>
                                             </td>
                                         </tr>
-
                                     @endforeach
                                 </tbody>
                             </table>
@@ -116,8 +112,7 @@
 
                     <div>
                         <label for="seguimiento">Describe Reporte</label>
-                        <textarea style="text-align: left" name="seguimiento" class="form-control"
-                            placeholder="Describe reporte"
+                        <textarea style="text-align: left" name="seguimiento" class="form-control" placeholder="Describe reporte"
                             id="seguimiento">{{ $periodo_tutorado->reporte_final }}</textarea>
                     </div>
                     <div>
@@ -143,4 +138,52 @@
 
         </div>
     </div>
+    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#table').DataTable({
+                //para cambiar el lenguaje a español
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "zeroRecords": "No se encontraron resultados",
+                    //"info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "info": "Selecciona Materias",
+                    "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sSearch": "Buscar:",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": ">",
+                        "sPrevious": "<"
+                    },
+                    "sProcessing": "Procesando...",
+                }
+            });
+        });
+
+        $(document).ready(function() {
+            $('#table_2').DataTable({
+                //para cambiar el lenguaje a español
+                "language": {
+                    "lengthMenu": "Mostrar _MENU_ registros",
+                    "zeroRecords": "No se encontraron resultados",
+                    //"info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
+                    "info": "Selecciona Materias",
+                    "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
+                    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
+                    "sSearch": "Buscar:",
+                    "oPaginate": {
+                        "sFirst": "Primero",
+                        "sLast": "Último",
+                        "sNext": ">",
+                        "sPrevious": "<"
+                    },
+                    "sProcessing": "Procesando...",
+                }
+            });
+        });
+    </script>
+
 @endsection

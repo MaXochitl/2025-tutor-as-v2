@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
     //  mes1 = document.getElementById('bbb');
+    //var mes_1=document.getElementById('mes_1');
     btn_ok.addEventListener("click", () => {
         fetch(ruta, {
             method: "POST",
@@ -15,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         })
     });
-
 
     function selectActives() {
         mes_1.value = periodo['mes_1'];
