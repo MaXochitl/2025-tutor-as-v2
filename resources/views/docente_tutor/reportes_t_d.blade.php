@@ -144,6 +144,7 @@
         if (activeTab==null) {
             const defaultTab = '#nav-home-tab'; // Cambia esto a la pestaña por defecto que desees
             localStorage.setItem('activeTab', defaultTab);
+            activeTab = localStorage.getItem('activeTab');
         }
 
         // Activar la pestaña almacenada en localStorage y desactivar las demás
