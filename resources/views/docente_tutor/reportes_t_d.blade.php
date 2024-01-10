@@ -97,14 +97,14 @@
             <div class="bd-example">
                 <nav>
                     <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
-                        <a class="nav-link active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab"
-                            aria-controls="nav-home" aria-selected="true">Orientación</a>
+                        <a class="nav-link tabs_s show active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab"
+                            aria-controls="nav-home" aria-selected="false">Orientación</a>
 
-                                <a class="nav-link" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab"
-                                aria-controls="nav-profile" aria-selected="false">Tutor</a>
+                                <a class="nav-link tabs_s" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab"
+                                aria-controls="nav-profile" aria-selected="true">Tutor</a>
 
 
-                        <a class="nav-link" id="nav-contact-tab" data-bs-toggle="tab" href="#nav-contact" role="tab"
+                        <a class="nav-link tabs_s" id="nav-contact-tab" data-bs-toggle="tab" href="#nav-contact" role="tab"
                             aria-controls="nav-contact" aria-selected="false">Docente</a>
                     </div>
                 </nav>
@@ -135,5 +135,43 @@
     @endif
     @include('modal.alumno.add-alumno')
     @include('modal.alumno.add-alumno2')
+
+    <script>
+        // Obtener el valor almacenado en localStorage
+        const activeTab = localStorage.getItem('activeTab');
+
+        // Si no hay un valor almacenado, establecer una pestaña por defecto y almacenarla en localStorage
+        if (activeTab==null) {
+            const defaultTab = '#nav-home-tab'; // Cambia esto a la pestaña por defecto que desees
+            localStorage.setItem('activeTab', defaultTab);
+        }
+
+        // Activar la pestaña almacenada en localStorage y desactivar las demás
+        const tabs = document.querySelectorAll('.tabs_s');
+        tabs.forEach(tab => {
+            const tabId = `#${tab.id}`;
+            if (activeTab === tabId) {
+                tab.classList.add('active');
+                const tabPane = document.querySelector(activeTab.replace('-tab', ''));
+                if (tabPane) {
+                    tabPane.classList.add('active', 'show');
+                }
+            } else {
+                tab.classList.remove('active');
+                const tabPane = document.querySelector(tabId.replace('-tab', ''));
+                if (tabPane) {
+                    tabPane.classList.remove('active', 'show');
+                }
+            }
+        });
+
+        // Agregar un evento de clic a cada pestaña para guardar la selección en localStorage
+        tabs.forEach(tab => {
+            tab.addEventListener('click', function () {
+                // Guardar la pestaña activa en localStorage
+                localStorage.setItem('activeTab', `#${this.id}`);
+            });
+        });
+    </script>
 
 @endsection

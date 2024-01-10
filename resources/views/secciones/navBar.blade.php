@@ -14,10 +14,7 @@
 
         @endcan
 
-        @can('solo.tutor')
-            <a class="navbar-brand" href="{{ route('alumnos.index') }}">Alumnos</a>
-            <a class="navbar-brand" href="{{ route('materia.index') }}">Materias</a>
-        @endcan
+
 
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
         </div>

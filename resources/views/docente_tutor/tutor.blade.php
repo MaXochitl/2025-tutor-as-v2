@@ -1,6 +1,6 @@
 <div class="row row-tutor">
     <div class="col d-flex flex-column flex-shrink-0" style="padding: 20px;">
-
+    Lista de alumnos a tu cargo como Tutor que su docente a reportado
         @if (session('hay_alumnos') == 'si')
             <div class="alert alert-danger">
                 Ya esta registrado!
@@ -32,7 +32,7 @@
                         $contador = 1;
                         $tutor_id = Auth::user()->tutor->id;
 
-                        
+
                     @endphp
                     @if ($tutorado != null)
                         @foreach ($docente_alumno as $alumnos)
