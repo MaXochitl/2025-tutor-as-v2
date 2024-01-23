@@ -1,7 +1,7 @@
 <div class="row row-tutor">
     <div class="col d-flex flex-column flex-shrink-0" style="padding: 20px;">
 
-        <div class="col-5">
+        <div class="col-6">
             <a href="{{ route('alumnos-tutor.create') }} " type="button" class="btn btn-primary" data-bs-toggle="modal"
                 data-bs-target="#add-alumno-2" data-bs-whatever="@mdo">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
@@ -11,7 +11,7 @@
                         d="M13.5 5a.5.5 0 0 1 .5.5V7h1.5a.5.5 0 0 1 0 1H14v1.5a.5.5 0 0 1-1 0V8h-1.5a.5.5 0 0 1 0-1H13V5.5a.5.5 0 0 1 .5-.5z" />
                 </svg>
 
-            </a> Aqui puedes reportar un alumno en tu cargo como Docente
+            </a> Canalización  de alumnos que NO SON MIS TUTORADOS y presentan irregularidades en las materias que imparto
             <br>
         </div>
 

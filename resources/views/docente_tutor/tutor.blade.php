@@ -1,6 +1,6 @@
 <div class="row row-tutor">
     <div class="col d-flex flex-column flex-shrink-0" style="padding: 20px;">
-    Lista de alumnos a tu cargo como Tutor que su docente a reportado
+        Lista de alumnos canalizados por los docentes que le imparten clases
         @if (session('hay_alumnos') == 'si')
             <div class="alert alert-danger">
                 Ya esta registrado!
