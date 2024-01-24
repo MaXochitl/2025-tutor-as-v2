@@ -15,6 +15,7 @@ use App\Models\Registro;
 
         <li><a class="dropdown-item" href="{{ url('/logout') }}" onclick="event.preventDefault();
                     document.getElementById('logout-form').submit();">Cerrar Sesión</a>
+
         </li>
         <form id="logout-form" action="{{ url('/logout') }}" method="POST" style="display: none;">
             {{ csrf_field() }}

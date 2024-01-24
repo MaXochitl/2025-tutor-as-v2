@@ -142,7 +142,7 @@ Route::resource('test_colores', OrderController::class)->names('test_colores');
 
 
 /**________________________________________----------------------------___________________________________________________------------------------DESCOMENTAR PARA TEST */
-Route::resource('test', PruebasController::class)->names('tests');
+//Route::resource('test', PruebasController::class)->names('tests');
 
 /*
 Route::get('probar', function () {
