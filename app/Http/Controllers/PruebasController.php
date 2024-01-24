@@ -74,13 +74,17 @@ class PruebasController extends Controller
     public function create()
     {
 
+        /**Para creat el rol y asignarse usa
+         *
+         * <a href="{{ route('tests.create') }}">make now</a>
+         */
 
-        //$role_auditor=Role::create(['name'=>'auditor']);
+        $role_auditor=Role::create(['name'=>'auditor']);
         $permiso_admin_auditor = Permission::create(['name' => 'auditor.admin']);
-        //Permission::create(['name'=>'auditor'])->syncRoles([$role_auditor]);
+        Permission::create(['name'=>'auditor'])->syncRoles([$role_auditor]);
         //$permiso=Permission::whereIn('name', ['admin.tutor'])->get();
-        $role = Role::find(3);
-        $role->givePermissionTo($permiso_admin_auditor);
+        //$role = Role::find(3);
+        $role_auditor->givePermissionTo($permiso_admin_auditor);
         //        return $role;
 
         //$permiso->syncRoles([$role]);

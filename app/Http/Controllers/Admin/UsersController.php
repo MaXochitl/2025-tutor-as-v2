@@ -47,6 +47,7 @@ class UsersController extends Controller
      */
     public function store(Request $request)
     {
+        //return $request;
 
         $tutor = Tutor::find($request->matricula);
 
@@ -67,7 +68,7 @@ class UsersController extends Controller
                 $user = User::create([
                     'name' => $request->nombre,
                     'email' => $request->correo,
-                    'password' => Hash::make($request->password),
+                    'password' => Hash::make($request->pass),
                     'tutor_id' => $request->matricula //$tutor_b[0]->id
                 ])->assignRole('auditor');
 
