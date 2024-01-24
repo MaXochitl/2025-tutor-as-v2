@@ -1,0 +1,205 @@
+<project version="2.9.6" format="2" commercial="17">
+	<plugins bundle="none">
+		<plugin name="Gocad" version="2.9.6" build-identifier="20170323-cl684429" option="viewer|Base|Surface|Volume|GenDataAnalysis|Geostat|BasicVelModeling|TimeDepth"/>
+		<plugin name="Filters" version="2.9.6" build-identifier="20170323-cl684429" option=""/>
+		<plugin name="PluginFoundations" version="2.9.6" build-identifier="20170323-cl684429" option="SeismicAttributes|SeismicFaciesClassification|PFFilters|AdvancedPropagator||SKUAUnstructFSG25D"/>
+		<plugin name="GraphableObjectViewer" version="2.9.6" build-identifier="20170323-cl684429" option="gov"/>
+		<plugin name="WorkflowFoundations" version="2.9.6" build-identifier="20170323-cl684429" option="cmw"/>
+		<plugin name="Tessellations" version="2.9.6" build-identifier="20170323-cl684429" option="|"/>
+		<plugin name="XMLWorkflow" version="2.9.6" build-identifier="20170323-cl684429" option=""/>
+		<plugin name="Views2D" version="2.9.6" build-identifier="20170323-cl684429" option="Views2dMapViewer|Views2dXSectionViewer|Views2dLogViewer|Correlation|Correlation"/>
+		<plugin name="VolumeExplorer" version="2.9.6" build-identifier="20170323-cl684429" option="VolumeExplorer"/>
+		<plugin name="InGrid" version="2.9.6" build-identifier="20170323-cl684429" option="InGridViewer|InGridStruct|InGridStrati|InGridSGrid"/>
+		<plugin name="PropertyModeling" version="2.9.6" build-identifier="20170323-cl684429" option="Geostat|PMWCategorical|Geostat|PMWContinuous|PMWPostProcessing"/>
+		<plugin name="Jacta" version="2.9.6" build-identifier="20170323-cl684429" option="|JactaCluster"/>
+		<plugin name="InterpreterAssistant" version="2.9.6" build-identifier="20170323-cl684429" option="SeismicInterpretation"/>
+		<plugin name="InGridUncertainty" version="2.9.6" build-identifier="20170323-cl684429" option="InGridUncertainty"/>
+		<plugin name="UpscalingTools" version="2.9.6" build-identifier="20170323-cl684429" option="UpscalingBasic|UpscalingBasic|UpscalingDynamic|UpscalingBasic"/>
+		<plugin name="Kine3D1" version="2.9.6" build-identifier="20170323-cl684429" option="Kine3D1"/>
+		<plugin name="StratigraphicModeling" version="2.9.6" build-identifier="20170323-cl684429" option="StratiModel"/>
+		<plugin name="StructuralModeling" version="2.9.6" build-identifier="20170323-cl684429" option="StructFramework|StructLayer"/>
+		<plugin name="JactaPM" version="2.9.6" build-identifier="20170323-cl684429" option=""/>
+		<plugin name="Kine3D3" version="2.9.6" build-identifier="20170323-cl684429" option="Kine3D3"/>
+		<plugin name="JactaFrontSim" version="2.9.6" build-identifier="20170323-cl684429" option=""/>
+		<plugin name="IDP" version="2.9.6" build-identifier="20170323-cl684429" option="WellPlanning|PlatformPlanning|DrillingUncertainty|AntiCollision|SideTrackPlanning"/>
+		<plugin name="Stereonet" version="2.9.6" build-identifier="20170323-cl684429" option="Stereonet"/>
+		<plugin name="AbaqusConnector" version="2.9.6" build-identifier="20170323-cl684429" option=""/>
+		<plugin name="FilterIsatis" version="2.9.6" build-identifier="20170323-cl684429" option=""/>
+		<plugin name="KivSimEiBase" version="2.9.6" build-identifier="20170323-cl684429" option="KivSimEiBase"/>
+		<plugin name="Alea" version="2.9.6" build-identifier="20170323-cl684429" option=""/>
+		<plugin name="InGridInterpretation" version="2.9.6" build-identifier="20170323-cl684429" option="|SeismicPaleoRestoration"/>
+		<plugin name="Jacta3dsl" version="2.9.6" build-identifier="20170323-cl684429" option=""/>
+		<plugin name="JactaInGrid" version="2.9.6" build-identifier="20170323-cl684429" option=""/>
+		<plugin name="DataAnalysisWorkflow" version="2.9.6" build-identifier="20170323-cl684429" option="|DAWBlocking|"/>
+		<plugin name="FracMV" version="2.9.6" build-identifier="20170323-cl684429" option=""/>
+		<plugin name="TessellationsWorkflow" version="2.9.6" build-identifier="20170323-cl684429" option="TessellationsWorkflow"/>
+		<plugin name="FluidSaturationWorkflow" version="2.9.6" build-identifier="20170323-cl684429" option=""/>
+		<plugin name="ReScaling" version="2.9.6" build-identifier="20170323-cl684429" option="RescalingWF|RescalingUtils|LGR|Downscaler|Upscaler"/>
+		<plugin name="Kine3D2" version="2.9.6" build-identifier="20170323-cl684429" option="Kine3D12Surface"/>
+		<plugin name="Boolx" version="2.9.6" build-identifier="20170323-cl684429" option=""/>
+		<plugin name="MultipointSimulation" version="2.9.6" build-identifier="20170323-cl684429" option="MultipointSimulationFunction1"/>
+		<plugin name="Go4space" version="2.9.6" build-identifier="20170323-cl684429" option="Go4space"/>
+	</plugins>
+	<objects>
+		<object>
+			<name><![CDATA[style_catalog]]></name>
+		</object>
+		<object>
+			<name><![CDATA[style_template_mgr]]></name>
+		</object>
+		<object>
+			<name><![CDATA[SismicaCG]]></name>
+		</object>
+		<object>
+			<name><![CDATA[L-1]]></name>
+		</object>
+		<object>
+			<name><![CDATA[L-1 1]]></name>
+		</object>
+		<object>
+			<name><![CDATA[BulkCopyObjects]]></name>
+		</object>
+		<object>
+			<name><![CDATA[AssignRandomColors]]></name>
+		</object>
+		<object>
+			<name><![CDATA[BulkRenameObjects]]></name>
+		</object>
+		<object>
+			<name><![CDATA[ComputeCurvesDipAndAzimuth]]></name>
+		</object>
+		<object>
+			<name><![CDATA[ComputeDistanceToCurves]]></name>
+		</object>
+		<object>
+			<name><![CDATA[ComputeDistanceToWells]]></name>
+		</object>
+		<object>
+			<name><![CDATA[ComputeGeologicalCurvature]]></name>
+		</object>
+		<object>
+			<name><![CDATA[CreateIndexPropertiesOnGrid]]></name>
+		</object>
+		<object>
+			<name><![CDATA[ExamplesDataSelectionandUI]]></name>
+		</object>
+		<object>
+			<name><![CDATA[RescaleProperty]]></name>
+		</object>
+		<object>
+			<name><![CDATA[SubstitutePropertyValues]]></name>
+		</object>
+		<object>
+			<name><![CDATA[TransferRegionsBetweenGrids]]></name>
+		</object>
+		<object>
+			<name><![CDATA[WellsClassification]]></name>
+		</object>
+		<object>
+			<name><![CDATA[ExtractMapPropertiesAtWellLocations]]></name>
+		</object>
+		<object>
+			<name><![CDATA[2DMappingFromInterpretation]]></name>
+		</object>
+		<object>
+			<name><![CDATA[EZModelBuildingFromSurfacesAndWells]]></name>
+		</object>
+		<object>
+			<name><![CDATA[Favorites]]></name>
+		</object>
+		<object>
+			<name><![CDATA[application_objects]]></name>
+		</object>
+		<object>
+			<name><![CDATA[geobaselib]]></name>
+		</object>
+		<object>
+			<name><![CDATA[geologic_features]]></name>
+		</object>
+		<object>
+			<name><![CDATA[viewer_entity_mgr]]></name>
+		</object>
+		<object>
+			<name><![CDATA[entity_view_settings_catalog]]></name>
+		</object>
+		<object>
+			<name><![CDATA[colormap_entity_mgr]]></name>
+		</object>
+		<object>
+			<name><![CDATA[fluid_component_mgr]]></name>
+		</object>
+		<object>
+			<name><![CDATA[gpg_well_list_settings_catalog]]></name>
+		</object>
+		<object>
+			<name><![CDATA[XMLParameters]]></name>
+		</object>
+		<object>
+			<name><![CDATA[DataAnalysisWorkflowViewerLib]]></name>
+		</object>
+		<object>
+			<name><![CDATA[3D Viewer]]></name>
+		</object>
+		<object>
+			<name><![CDATA[3D Viewer 1]]></name>
+		</object>
+		<object>
+			<name><![CDATA[xm_mainwindow]]></name>
+		</object>
+		<object>
+			<name><![CDATA[symbol_entity_mgr]]></name>
+		</object>
+		<object>
+			<name><![CDATA[GOLegend]]></name>
+		</object>
+		<object>
+			<name><![CDATA[GOGrid]]></name>
+		</object>
+		<object>
+			<name><![CDATA[GOPlotWindow]]></name>
+		</object>
+		<object>
+			<name><![CDATA[GOColorbar]]></name>
+		</object>
+		<object>
+			<name><![CDATA[GOPlot]]></name>
+		</object>
+		<object>
+			<name><![CDATA[GOAxis]]></name>
+		</object>
+		<object>
+			<name><![CDATA[GOCurve]]></name>
+		</object>
+		<object>
+			<name><![CDATA[ResourceTablePlotStyleCatalog]]></name>
+		</object>
+		<object>
+			<name><![CDATA[instance]]></name>
+		</object>
+		<object>
+			<name><![CDATA[Views2D]]></name>
+		</object>
+		<object>
+			<name><![CDATA[drillingplannerlib]]></name>
+		</object>
+		<object>
+			<name><![CDATA[DrillingParameterSet]]></name>
+		</object>
+		<object>
+			<name><![CDATA[CostModel]]></name>
+		</object>
+		<object>
+			<name><![CDATA[DrillingParameterRange]]></name>
+		</object>
+		<object>
+			<name><![CDATA[SurveyModel]]></name>
+		</object>
+		<object>
+			<name><![CDATA[CollisionRiskCutoffs]]></name>
+		</object>
+		<object>
+			<name><![CDATA[PlatformSpecs]]></name>
+		</object>
+	</objects>
+	<data/>
+</project>
