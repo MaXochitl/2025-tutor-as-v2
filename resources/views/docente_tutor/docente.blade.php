@@ -61,7 +61,7 @@
                                 <td style="background: {{ $alumnos->semaforo->fondo }} ">
                                     <p>{{ $alumnos->alumno->id }} </p>
                                 </td>
-                                <td>{{ $alumnos->alumno->nombre . ' ' . $alumnos->alumno->ap_paterno . ' ' . $alumnos->alumno->ap_paterno }}
+                                <td>{{ $alumnos->alumno->nombre . ' ' . $alumnos->alumno->ap_paterno . ' ' . $alumnos->alumno->ap_materno }}
                                 </td>
                                 <td>
                                     {{ $alumnos->alumno->telefono }}
