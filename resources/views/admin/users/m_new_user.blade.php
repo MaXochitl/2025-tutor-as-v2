@@ -15,7 +15,7 @@
                 @endif
 
 
-                <form method="POST" action="{{ route('usersAdmin.store', $user->id) }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('usersAdmin.store') }}" enctype="multipart/form-data">
                     @csrf
 
                     <div class="form-group">
