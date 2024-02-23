@@ -187,7 +187,7 @@
 
                                 </td>
 
-                                <td>{{ $alumnos->alumno->nombre . ' ' . $alumnos->alumno->ap_paterno . ' ' . $alumnos->alumno->ap_paterno }}
+                                <td>{{ $alumnos->alumno->nombre . ' ' . $alumnos->alumno->ap_paterno . ' ' . $alumnos->alumno->ap_materno }}
                                 </td>
                                 <td>
                                     {{ $alumnos->alumno->telefono }}
