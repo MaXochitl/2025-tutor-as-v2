@@ -177,9 +177,11 @@ class AlumnosController extends Controller
         $palabra = $request->busqueda;
         $alumnos = Alumno::where('nombre', 'LIKE', '%' . $palabra . '%')
             ->orWhere('id', 'LIKE', '%' . $palabra . '%')
+            ->orWhere('ap_paterno', 'LIKE', '%' . $palabra . '%')
+            ->orWhere('ap_materno', 'LIKE', '%' . $palabra . '%')
             ->orderBy('carrera_id')
             ->orderBy('grupo', 'asc')
-            ->paginate(20);
+            ->paginate(30);
 
         return view('alumnos.alumnos', compact('alumnos','palabra'));
     }
