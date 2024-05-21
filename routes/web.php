@@ -40,6 +40,11 @@ use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Row;
 
 App::setLocale('es');
+/*
+Route::get('dashboard',function(){
+    return redirect()->route('/');
+});
+*/
 
 require __DIR__ . '/auth.php';
 
