@@ -180,7 +180,8 @@
 
             </div>
         </div>
-        {{ $alumnos->links('pagination::bootstrap-4') }}
+    <!--El parametro  de busqueda se debe enviar en los enlaces de la paginacion con appens() -->
+        {{ $alumnos->appends(['busqueda' => request()->get('busqueda')])->links('pagination::bootstrap-4') }}
 
     </div>
     @can('solo.tutor')

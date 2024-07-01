@@ -29,7 +29,7 @@
                         @csrf
                         <div class="btn-group">
                             <input name="busqueda" type="text" id="searchInput" class="form-control"
-                                placeholder="Buscar por nombre" value="{{ $palabra }} ">
+                                placeholder="Buscar por nombre" value="{{ $palabra}}">
                             <button class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="16"
                                     height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                     <path
@@ -104,7 +104,8 @@
                 </table>
 
                 <div style="padding: 20px; text-align: center">
-                    {{ $materias->links('pagination::bootstrap-4') }}
+                    {{ $materias->appends(['busqueda' => request()->get('busqueda')])->links('pagination::bootstrap-4') }}
+
                 </div>
             </div>
         </div>
