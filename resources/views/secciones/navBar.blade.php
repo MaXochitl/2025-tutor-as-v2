@@ -8,6 +8,7 @@
         @can('admin.tutor', Model::class)
             <a class="navbar-brand" href="{{ route('orientacion.index') }}">Tutorias</a>
             <a class="navbar-brand" href="{{ route('alumnos.index') }}">Alumnos</a>
+            <a class="navbar-brand" href="{{ route('materia.index') }}">Materias</a>
         @endcan
         @can('solo.admin')
             <a class="navbar-brand" href="{{ route('evaluacion.index') }} ">Nuevo Ingreso</a>
