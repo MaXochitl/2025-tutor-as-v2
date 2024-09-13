@@ -38,11 +38,11 @@
 
                 <div class="form-group row">
                     <label for="ap_materno" class="form-label">Apellido Materno</label>
-                    <input name="ap_materno" type="text" class="form-control" id="ap_materno" 
+                    <input name="ap_materno" type="text" class="form-control" id="ap_materno"
                     value="{{$alumnos->ap_materno}}">
                 </div>
 
-                
+
                 <div class="form-group row">
                     <label for="carrera" class="form-label">Carrera</label>
                     <select name="carrera" class="form-select" aria-label="Default select example">
@@ -98,7 +98,7 @@
 
                 <div class="form-group row">
                     <label for="telefono" class="form-label">Telefono</label>
-                    <input name="telefono" type="number" class="form-control" id="telefono"
+                    <input name="telefono" type="text" class="form-control" id="telefono"
                     value="{{$alumnos->telefono}}">
                 </div>
 
@@ -107,6 +107,15 @@
                     <label for="correo" class="form-label">Correo</label>
                     <input name="correo" type="email" class="form-control" id="mail"
                     value="{{$alumnos->correo}}">
+                </div>
+
+                <div class="form-group row">
+                    <label for="estado" class="form-label">Estado Actual</label>
+                    <select name="estado" class="form-select" aria-label="Default select example">
+                        <option  @if ($alumnos->estado=='1') {{ 'selected' }} @endif value="1">Activo</option>
+                        <option @if ($alumnos->estado=='2') {{ 'selected' }} @endif value="2">Baja Temporal</option>
+                        <option @if ($alumnos->estado=='3') {{ 'selected' }} @endif value="3">Baja Definitiva</option>
+                        </select>
                 </div>
 
                 <div class="form-group row">
@@ -120,6 +129,6 @@
 
             </form>
         </div>
-    </div> 
+    </div>
 
 @endsection
