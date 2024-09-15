@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Aviso;
 use App\Models\Carrera;
+use App\Models\Periodo;
 use App\Models\Periodo_tutorado;
+use App\Models\Periodo_view;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -24,12 +26,14 @@ class OrientacionController extends Controller
         if ($user->can('solo.tutor')) {
             //return redirect()->route('alumnos-tutor.show', Auth::user()->tutor->id);
             return redirect()->route('reportes_tutor.show', Auth::user()->tutor->id);
-
         }
-        
+
         $carreras = Carrera::orderby('id')->get();
         $avisos = Aviso::all();
-        return view('admin.home.index', compact('carreras', 'avisos'));
+        $periodo_view = Periodo_view::find(1);
+        $periodo_view = $periodo_view->Periodo;
+        $periodos = Periodo::orderBy('id', 'desc')->get();
+        return view('admin.home.index', compact('carreras', 'avisos', 'periodo_view', 'periodos'));
     }
 
     /**
@@ -39,7 +43,9 @@ class OrientacionController extends Controller
      */
     public function create()
     {
-        //
+        $periodo_view = Periodo_view::find(1);
+        $periodo_view = Periodo::find($periodo_view->id);
+        return $periodo_view;
     }
 
     /**
@@ -51,6 +57,10 @@ class OrientacionController extends Controller
     public function store(Request $request)
     {
         //
+        $periodo_view = Periodo_view::find(1);
+        $periodo_view->periodo_id = $request->periodo_select;
+        $periodo_view->save();
+        return redirect()->route('orientacion.index');
     }
 
     /**

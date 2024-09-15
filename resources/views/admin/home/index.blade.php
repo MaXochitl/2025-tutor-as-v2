@@ -3,6 +3,28 @@
 
 @section('structure-content')
 
+    @php
+        date_default_timezone_set('America/Mexico_City');
+        setlocale(LC_ALL, 'es_ES');
+        $diassemana = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado'];
+        $meses = [
+            'Enero',
+            'Febrero',
+            'Marzo',
+            'Abril',
+            'Mayo',
+            'Junio',
+            'Julio',
+            'Agosto',
+            'Septiembre',
+            'Octubre',
+            'Noviembre',
+            'Diciembre',
+        ];
+
+    @endphp
+
+
     <div class="row img-fond-home p-4">
 
         <div class="row mb-9">
@@ -10,6 +32,39 @@
             <div class="row text-center col-md-8 shadow-lg p-3 mb-2"
                 style="margin: auto;border-radius: 17px; background: rgb(0, 26, 130); color: white">
                 <h3>PROGRAMA INSTITUCIONAL DE TUTORIAS </h3>
+                <form method="POST" action="{{ route('orientacion.store') }}" enctype="multipart/form-data">
+                    @csrf
+                    <div class="row  justify-content-center">
+
+                        <div class="col-4">
+                            <select name="periodo_select" class="form-select" aria-label="Default select example">
+                                @foreach ($periodos as $itemx)
+                                    @php
+                                        $inicio =
+                                            $meses[date('n', strtotime($itemx->inicio)) - 1] .
+                                            '  ' .
+                                            date('Y', strtotime($itemx->inicio));
+                                        $fin =
+                                            $meses[date('n', strtotime($itemx->fin)) - 1] .
+                                            '  ' .
+                                            date('Y', strtotime($itemx->fin));
+                                    @endphp
+                                    <option @if ($periodo_view->id == $itemx->id) {{ 'selected' }} @endif
+                                        value="{{ $itemx->id }} ">
+                                        {{ $inicio . ' - ' . $fin }}
+                                    </option>
+                                @endforeach
+
+                            </select>
+                        </div>
+
+
+                        <div class="col-1">
+                            <button type="submit" class="btn btn-success">Establecer</button>
+                        </div>
+                    </div>
+                </form>
+
             </div>
 
             <div class="row col-md-8 shadow-lg p-3 " style="margin: auto;border-radius: 17px;background: white">
@@ -20,8 +75,8 @@
                             <tr>
                                 <th>N°</th>
                                 <th scope="col" class="text-center">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                        class="bi bi-check-circle-fill" viewBox="0 0 16 16">
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="currentColor" class="bi bi-check-circle-fill" viewBox="0 0 16 16">
                                         <path
                                             d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
                                     </svg>
@@ -32,7 +87,6 @@
                         </thead>
                         <tbody>
                             @foreach ($carreras as $item)
-
                                 <tr>
 
                                     <th style="width: 2%">{{ $item->id }}</th>
@@ -46,7 +100,6 @@
                                     </th>
                                     <td>{{ $item->nombre_carrera }}</td>
                                 </tr>
-
                             @endforeach
 
                         </tbody>

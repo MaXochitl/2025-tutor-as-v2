@@ -59,7 +59,8 @@ Route::get('/', function () {
 })->middleware(['auth']);
 
 Route::put('/seguimientoOE-alumno/{id}/{mes}', [
-    TutoriasController::class, 'seguimientoOE'
+    TutoriasController::class,
+    'seguimientoOE'
 ])->name('seguimientoOE-alumno.seguimientoOE');
 
 Route::resource('preguntas', PreguntasController::class)->middleware(['auth', 'can:solo.admin'])->names('preguntas');
@@ -93,15 +94,18 @@ Route::post('importAlumnos', [AlumnosController::class, 'importAlumnos'])->middl
 
 /*________________________________________----------------------------___________________________________________________------------------------SOLO TUTOR*/
 Route::put('/seguimiento-alumno/{id}/{mes}', [
-    TutoriasController::class, 'seguimiento'
+    TutoriasController::class,
+    'seguimiento'
 ])->middleware(['auth'])->name('seguimiento-alumno.seguimiento');
 
 Route::put('/addMateria/{id}/{status}', [
-    ControlMateriasController::class, 'addMateria'
+    ControlMateriasController::class,
+    'addMateria'
 ])->middleware(['auth'])->name('addMateria.addMateria');
 
 Route::delete('/removMateria/{id}/{reporte}', [
-    ControlMateriasController::class, 'removMateria'
+    ControlMateriasController::class,
+    'removMateria'
 ])->middleware(['auth'])->name('removMateria.removMateria');
 
 
@@ -115,7 +119,8 @@ Route::post('searchAluTutor/{id}', [TutoriasController::class, 'searchAlumnoTuto
 
 
 Route::put('/addAlumno/{tipo}', [
-    TutoriasController::class, 'inserAlumno'
+    TutoriasController::class,
+    'inserAlumno'
 ])->middleware(['auth'])->name('addAlumno');
 
 Route::get('bajaAlumno/{id}/{status}/{color}', [TutoriasController::class, 'baja'])->middleware(['auth'])->name('baja');
@@ -147,7 +152,7 @@ Route::resource('test_colores', OrderController::class)->names('test_colores');
 
 
 /**________________________________________----------------------------___________________________________________________------------------------DESCOMENTAR PARA TEST */
-//Route::resource('test', PruebasController::class)->names('tests');
+Route::resource('test', PruebasController::class)->names('tests');
 
 /*
 Route::get('probar', function () {

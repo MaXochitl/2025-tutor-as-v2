@@ -42,7 +42,7 @@
     <title>@yield('titulo', 'itsta')</title>
 </head>
 
-<body class="img-fond-home">
+<body>
 
 
     <script type="text/javascript" src="{{ URL::asset('assets/js/jquery-3.3.1.min.js') }} "></script>
