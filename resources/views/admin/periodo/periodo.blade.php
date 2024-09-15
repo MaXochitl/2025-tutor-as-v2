@@ -6,7 +6,20 @@
         date_default_timezone_set('America/Mexico_City');
         setlocale(LC_ALL, 'es_ES');
         $diassemana = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado'];
-        $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        $meses = [
+            'Enero',
+            'Febrero',
+            'Marzo',
+            'Abril',
+            'Mayo',
+            'Junio',
+            'Julio',
+            'Agosto',
+            'Septiembre',
+            'Octubre',
+            'Noviembre',
+            'Diciembre',
+        ];
 
     @endphp
 
@@ -101,7 +114,8 @@
                                 <tr>
                                     <th scope="row">
                                         <a href="" type="button" class="btn btn-warning" style="color: white"
-                                            data-bs-toggle="modal" data-bs-target="#edit-p-t-modal" data-bs-whatever="@mdo">
+                                            data-bs-toggle="modal" data-bs-target="#edit-p-t-modal{{ $item->id }}"
+                                            data-bs-whatever="@mdo">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
                                                 fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
                                                 <path
@@ -115,32 +129,57 @@
                                     <th>{{ $contador++ }}</th>
                                     <td>
                                         @php
-                                            $inicio = date('d', strtotime($item->inicio)) . ' ' . $meses[date('n', strtotime($item->inicio)) - 1] . '  ' . date('Y', strtotime($item->inicio));
+                                            $inicio =
+                                                date('d', strtotime($item->inicio)) .
+                                                ' ' .
+                                                $meses[date('n', strtotime($item->inicio)) - 1] .
+                                                '  ' .
+                                                date('Y', strtotime($item->inicio));
                                         @endphp
                                         {{ $inicio }}
                                     </td>
                                     <td>
                                         @php
-                                            $fin = date('d', strtotime($item->fin)) . ' ' . $meses[date('n', strtotime($item->fin)) - 1] . '  ' . date('Y', strtotime($item->fin));
+                                            $fin =
+                                                date('d', strtotime($item->fin)) .
+                                                ' ' .
+                                                $meses[date('n', strtotime($item->fin)) - 1] .
+                                                '  ' .
+                                                date('Y', strtotime($item->fin));
                                         @endphp
                                         {{ $fin }}
                                     </td>
                                     <td>
                                         @php
-                                            $mes_1 = date('d', strtotime($item->mes_1)) . ' ' . $meses[date('n', strtotime($item->mes_1)) - 1] . '  ' . date('Y', strtotime($item->mes_1));
+                                            $mes_1 =
+                                                date('d', strtotime($item->mes_1)) .
+                                                ' ' .
+                                                $meses[date('n', strtotime($item->mes_1)) - 1] .
+                                                '  ' .
+                                                date('Y', strtotime($item->mes_1));
                                         @endphp
                                         {{ $mes_1 }}
                                     </td>
                                     <td>
                                         @php
-                                            $mes_2 = date('d', strtotime($item->mes_2)) . ' ' . $meses[date('n', strtotime($item->mes_2)) - 1] . '  ' . date('Y', strtotime($item->mes_2));
+                                            $mes_2 =
+                                                date('d', strtotime($item->mes_2)) .
+                                                ' ' .
+                                                $meses[date('n', strtotime($item->mes_2)) - 1] .
+                                                '  ' .
+                                                date('Y', strtotime($item->mes_2));
                                         @endphp
                                         {{ $mes_2 }}
 
                                     </td>
                                     <td>
                                         @php
-                                            $mes_3 = date('d', strtotime($item->mes_3)) . ' ' . $meses[date('n', strtotime($item->mes_2)) - 1] . '  ' . date('Y', strtotime($item->mes_3));
+                                            $mes_3 =
+                                                date('d', strtotime($item->mes_3)) .
+                                                ' ' .
+                                                $meses[date('n', strtotime($item->mes_3)) - 1] .
+                                                '  ' .
+                                                date('Y', strtotime($item->mes_3));
                                         @endphp
                                         {{ $mes_3 }}
 
@@ -148,20 +187,30 @@
                                     </td>
                                     <td>
                                         @php
-                                            $mes_4 = date('d', strtotime($item->mes_4)) . ' ' . $meses[date('n', strtotime($item->mes_2)) - 1] . '  ' . date('Y', strtotime($item->mes_4));
+                                            $mes_4 =
+                                                date('d', strtotime($item->mes_4)) .
+                                                ' ' .
+                                                $meses[date('n', strtotime($item->mes_4)) - 1] .
+                                                '  ' .
+                                                date('Y', strtotime($item->mes_4));
                                         @endphp
                                         {{ $mes_4 }}
 
                                     </td>
                                     <td>
                                         @php
-                                            $reporte_final = date('d', strtotime($item->reporte_final)) . ' ' . $meses[date('n', strtotime($item->reporte_final)) - 1] . '  ' . date('Y', strtotime($item->reporte_final));
+                                            $reporte_final =
+                                                date('d', strtotime($item->reporte_final)) .
+                                                ' ' .
+                                                $meses[date('n', strtotime($item->reporte_final)) - 1] .
+                                                '  ' .
+                                                date('Y', strtotime($item->reporte_final));
                                         @endphp
                                         {{ $reporte_final }}
 
                                     </td>
                                     <td>
-                                        <form action="{{ route('periodo-tutorado.destroy', $item->id) }} " method="POST">
+                                        <form class="form-delete-x" action="{{ route('periodo-tutorado.destroy', $item->id) }} " method="POST">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger">
@@ -184,10 +233,39 @@
 
     </div>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    @if (session('eliminar') == 'ok')
+        <script>
+            Swal.fire(
+                'Eliminado!',
+                'El Periodo se ha eliminado.',
+                'success'
+            )
+        </script>
+    @endif
+
+
     @include('modal.periodo.activar_desactivar_p')
     <script>
         const periodo = @json($altera_entrega);
         const ruta = '{{ route('entrega.store') }}';
+        $('.form-delete-x').submit(function(e) {
+            e.preventDefault();
+
+
+            Swal.fire({
+                title: 'Estas Seguro de eliminar?',
+                text: "El Periodo se eliminara definitivamente",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Si!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    this.submit();
+                }
+            })
+        });
     </script>
     <script type="text/javascript" src="{{ URL::asset('js/periodo.js') }}"></script>
 @endsection
