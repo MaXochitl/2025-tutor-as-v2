@@ -5,7 +5,7 @@
         <div class="container">
             <div class="m-5 text-center">
                 <h1>Usuarios y Roles</h1>
-                <a href="{{ route('usersAdmin.create') }}">make now</a>
+
             </div>
             <div>
                 <a href="" class="editButton btn btn-primary rounded-circle" data-bs-toggle="modal"
