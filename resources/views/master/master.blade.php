@@ -42,7 +42,7 @@
     <title>@yield('titulo', 'itsta')</title>
 </head>
 
-<body>
+<body class="img-fond-home">
 
 
     <script type="text/javascript" src="{{ URL::asset('assets/js/jquery-3.3.1.min.js') }} "></script>
@@ -52,7 +52,7 @@
     <!--------------------------------------------------------------------INICIO-->
     @include('secciones.menu-bar')
 
-    <div class="content">
+    <div class="content ">
         <div id="cont" class="mov">
             @include('secciones.navBar')
             @yield('structure-content')

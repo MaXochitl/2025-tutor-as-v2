@@ -6,7 +6,8 @@
             El registro se encuentra deshabilidato comunicate con orientacion educativa!
         </div>
     @endif
-    <div class="p-2 text-center" style="background-image: url('/tutores/home_itsta.jpg'); ;">
+
+    <div class="p-5 text-center img-fond-home" style="pading-bottom: 20%">
 
         <div class="row col-md-4" style="margin: auto;background: white; border-radius: 7px; padding: 20px; color: blue">
             <!-- Session Status -->
