@@ -93,7 +93,6 @@ class TutoresController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $user = User::find(Auth::user()->id);
         $id = $user->tutor_id;
 
@@ -110,7 +109,7 @@ class TutoresController extends Controller
         $nombre = "";
         $imagen = $request->file('foto'); //obtencion de la imagen
 
-        if ($request->has("carrrera")) {
+        if ($request->has("carrera")) {
             $tutores->carrera_id = $request->input('carrera');
         }
 
