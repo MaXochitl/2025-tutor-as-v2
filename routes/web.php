@@ -116,7 +116,7 @@ Route::resource('reporte', ControlMateriasController::class)->middleware(['auth'
 /**  ________________________________________----------------------------___________________________________________________------------------------TUTOR Y ADMIN */
 Route::resource('alumnos-tutor', TutoriasController::class)->middleware(['auth'])->names('alumnos-tutor');
 Route::post('searchAluTutor/{id}', [TutoriasController::class, 'searchAlumnoTutorado'])->name('searchAluTutor');
-
+Route::get('getPeriodoView', [TutoriasController::class, 'getPeriodoView'])->name('getPeriodoView');
 
 Route::put('/addAlumno/{tipo}', [
     TutoriasController::class,

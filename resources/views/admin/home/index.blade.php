@@ -134,4 +134,15 @@
 
         </div>
     </div>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @if (session('change') == 'yes')
+        <script>
+            Swal.fire(
+                'Actualizada!',
+                'Se actualizo el periodo a visualizar.',
+                'success'
+            )
+        </script>
+    @endif
+
 @endsection

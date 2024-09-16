@@ -60,7 +60,7 @@ class OrientacionController extends Controller
         $periodo_view = Periodo_view::find(1);
         $periodo_view->periodo_id = $request->periodo_select;
         $periodo_view->save();
-        return redirect()->route('orientacion.index');
+        return redirect()->route('orientacion.index')->with('change', 'yes');
     }
 
     /**

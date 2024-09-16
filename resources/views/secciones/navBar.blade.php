@@ -16,15 +16,18 @@
         @endcan
         <!-- Aquí centramos el texto "Hola" usando CSS personalizado -->
         <div class="position-absolute start-50 translate-middle-x" style="color: rgb(255, 255, 255)">
-            <h2 id="p_actual">
-                Enero 2024 - Junio 2024
-            </h2>
+
         </div>
 
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
         </div>
         <div>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+                <h4 id="p_actual" style="color: rgb(251, 255, 2)">
+
+                </h4>
                 <ul class="navbar-nav">
                     @include('secciones.menu_usuario')
                 </ul>
