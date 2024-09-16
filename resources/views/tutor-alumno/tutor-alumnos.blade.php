@@ -401,7 +401,7 @@
             {{ $alumnos_tutor->links('pagination::bootstrap-4') }}
 
             <div class="btn-regresar">
-                @can('mes.admin')
+                @hasanyrole(['admin','auditor'])
                     <a class="btn btn-secondary" href="{{ route('tutor.show', $alumnos_tutor[0]->tutor->carrera->id) }} ">
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40   " fill="currentColor"
                             class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
@@ -411,7 +411,7 @@
                         Regresar
 
                     </a>
-                @endcan
+                @endhasanyrole
 
             </div>
         </div>
