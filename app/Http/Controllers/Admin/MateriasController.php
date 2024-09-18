@@ -5,7 +5,10 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Carrera;
 use App\Models\Materia;
+use App\Models\Tutor;
+use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class MateriasController extends Controller
 {
@@ -17,11 +20,27 @@ class MateriasController extends Controller
     public function index()
     {
         //
+        $user = User::find(Auth::user()->id);
+        $id = $user->tutor_id;
+        $tutor = Tutor::find($id);
         $palabra = '';
-        $materias = Materia::orderby('carrera_id', 'asc')
-            ->orderby('semestre', 'asc')
-            ->paginate(5);
-        return view('admin.materias.materias', compact('materias','palabra'));
+
+        $carrera = $tutor->carrera;
+
+        if ($tutor->carrera_id != null) {
+            $carrera = $carrera->id;
+            $materias = Materia::where('carrera_id', $carrera)
+                ->orderby('carrera_id', 'asc')
+                ->orderby('semestre', 'asc')
+                ->paginate(10);
+        } else {
+            $materias = Materia::orderby('carrera_id', 'asc')
+                ->orderby('semestre', 'asc')
+                ->paginate(10);
+        }
+
+
+        return view('admin.materias.materias', compact('materias', 'palabra'));
     }
 
     /**
@@ -110,11 +129,27 @@ class MateriasController extends Controller
 
     public function searchMateria(Request $request)
     {
+
+        $user = User::find(Auth::user()->id);
+        $id = $user->tutor_id;
+        $tutor = Tutor::find($id);
+
+        $carrera = $tutor->carrera;
         $palabra = $request->busqueda;
-        $materias = Materia::where('nombre', 'LIKE', '%' . $palabra . '%')
-            ->orderby('carrera_id', 'asc')
-            ->orderby('semestre', 'asc')
-            ->paginate(5);
+
+        if ($tutor->carrera_id != null) {
+            $carrera = $carrera->id;
+            $materias = Materia::where('nombre', 'LIKE', '%' . $palabra . '%')
+                ->where('carrera_id', $carrera)
+                ->orderby('carrera_id', 'asc')
+                ->orderby('semestre', 'asc')
+                ->paginate(10);
+        } else {
+            $materias = Materia::where('nombre', 'LIKE', '%' . $palabra . '%')
+                ->orderby('carrera_id', 'asc')
+                ->orderby('semestre', 'asc')
+                ->paginate(5);
+        }
         return view('admin.materias.materias', compact('materias', 'palabra'));
     }
 }
