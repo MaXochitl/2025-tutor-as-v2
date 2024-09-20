@@ -8,8 +8,11 @@ use App\Models\Periodo;
 use App\Models\Periodo_tutorado;
 use App\Models\Respuesta;
 use App\Models\Semaforo;
+use App\Models\Tutor;
+use App\Models\User;
 use DateTime;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 use League\CommonMark\Extension\Table\Table;
 
@@ -80,11 +83,29 @@ class ControlMateriasController extends Controller
     public function show($id)
     {
 
+
+        $user = User::find(Auth::user()->id);
+        $id_tutor = $user->tutor_id;
+        $tutor = Tutor::find($id_tutor);
+
+        $carrera = $tutor->carrera;
+
+        if ($tutor->carrera_id != null) {
+            $carrera = $carrera->id;
+            $materias = Materia::where('carrera_id', $carrera)
+                ->orderby('carrera_id', 'asc')
+                ->orderby('semestre', 'asc')
+                ->get();
+        } else {
+            $materias = Materia::orderby('carrera_id', 'asc')
+                ->orderby('semestre', 'asc')
+                ->get();
+        }
+
         $periodo_tutorado = Periodo_tutorado::find($id);
 
-        // $materias = Materia::where('carrera_id', $periodo_tutorado->alumno->carrera_id)
-        //     ->orderby('semestre', 'asc')->get();
-        $materias=Materia::orderby('nombre','asc')->get();
+
+        //$materias = Materia::orderby('nombre', 'asc')->get();
 
         $semaforo = Semaforo::where('id', '<', 5)->get();
 
