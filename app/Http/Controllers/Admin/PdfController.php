@@ -46,7 +46,7 @@ class PdfController extends Controller
         $pdf = \App::make('dompdf.wrapper');
         $alumnos_tutorados = Periodo_tutorado::all();
         $datos = File_format::all();
-        
+
 
         $pdf = PDF::loadView('admin.constancia.constancia', compact('tutores', 'periodo', 'alumnos_tutorados', 'datos'));
         return $pdf->stream();
@@ -71,7 +71,8 @@ class PdfController extends Controller
      */
     public function show($id)
     {
-        //
+
+        return view('admin.resumen_pdf.RCarreraPDF');
     }
 
     /**
