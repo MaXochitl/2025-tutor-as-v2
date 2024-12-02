@@ -4,12 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Http\Controllers\Controller;
+use App\Models\Carrera;
 use App\Models\File_format;
 use App\Models\Periodo;
+use App\Models\Periodo_semaforo;
 use App\Models\Periodo_tutorado;
+use App\Models\Periodo_view;
 use App\Models\Tutor;
 use Facade\FlareClient\Stacktrace\File;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class PdfController extends Controller
 {
@@ -71,6 +75,46 @@ class PdfController extends Controller
      */
     public function show($id)
     {
+        $periodo = Periodo_view::find(1);
+        $periodo = $periodo->periodo_id;
+
+        $tutores = DB::select('CALL ResumenRegistros(?)', [$periodo]);
+        $periodo_tutorado = [];
+        foreach ($tutores as  $value) {
+            $periodo_tutorado[] = Periodo_tutorado::where('tutor_id', $value->tutor_id)
+                ->where('tipo', 1)
+                ->where('periodo_id', $periodo)
+                ->pluck('id')
+                ->toArray();
+        }
+
+        $sum_falls = [];
+        foreach ($periodo_tutorado as  $value) {
+            $sum_falls[] = Periodo_semaforo::whereIn('periodo_id', $value)
+                ->whereBetween('semaforo_id', [2, 3])
+                ->distinct()
+                ->count(['periodo_id']);
+        }
+
+        $tutores = array_map(function ($tutor) {
+            return (array)$tutor; // Convierte cada objeto stdClass en un array
+        }, $tutores);
+
+        for ($i = 0; $i < count($tutores); $i++) {
+            $tutores[$i]['falls'] = $sum_falls[$i];
+        }
+
+        //return $tutores;
+
+        $pdf = \App::make('dompdf.wrapper');
+        //$alumnos_tutorados = Periodo_tutorado::all();
+        //$datos = File_format::all();
+
+        $carrera = Carrera::find($id);
+        $pdf = PDF::loadView('admin.resumen_pdf.RCarreraPDF', compact('tutores','carrera'));
+        return $pdf->stream();
+
+
 
         return view('admin.resumen_pdf.RCarreraPDF');
     }
