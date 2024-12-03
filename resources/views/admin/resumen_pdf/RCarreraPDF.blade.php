@@ -63,13 +63,13 @@
                 </thead>
                 <tbody>
                     @for ($i = 0; $i < count($tutores); $i++)
-                        <tr>
+                        <tr style="text-align: center" >
                             <td>
                                 {{ $tutores[$i]['nombre_tutor'] . ' ' . $tutores[$i]['ap_paterno'] . ' ' . $tutores[$i]['ap_materno'] }}
                             </td>
                             <td>{{ $tutores[$i]['semestre'] . ' ' . $tutores[$i]['grupo'] }}</td>
                             <td>{{ $tutores[$i]['total_registros'] }}</td>
-                            <td>Hola</td>
+                            <td>{{ $tutores[$i]['total_registros'] }}</td>
                             <td>{{ $tutores[$i]['falls'] }}</td>
                             <td>Orientacion Educativa</td>
                         </tr>
