@@ -22,6 +22,8 @@ use App\Models\Aviso;
 use App\Models\Periodo_eval;
 use App\Providers\RouteServiceProvider;
 
+use App\Models\Actividades_tutoria;
+
 class ReportesController extends Controller
 {
     /**

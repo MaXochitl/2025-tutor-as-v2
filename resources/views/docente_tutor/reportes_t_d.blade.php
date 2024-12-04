@@ -106,6 +106,10 @@
 
                         <a class="nav-link tabs_s" id="nav-contact-tab" data-bs-toggle="tab" href="#nav-contact" role="tab"
                             aria-controls="nav-contact" aria-selected="false">Docente</a>
+                            <!-- Modificacion aqui -->
+                        <a class="nav-link tabs_s" id="nav-activities-tab" data-bs-toggle="tab" href="#nav-activities" role="tab"
+                            aria-controls="nav-activities" aria-selected="false">Actividades</a>    
+                        <!--  Hasta Aqui  -->
                     </div>
                 </nav>
 
@@ -120,6 +124,11 @@
                         @include('docente_tutor.docente')
 
                     </div>
+                    <!-- Modificacion aqui -->
+                    <div class="tab-pane fade" id="nav-activities" role="tabpanel" aria-labelledby="nav-activities-tab">
+                        @include('docente_tutor.actividades')
+                    </div>
+                    <!--  Hasta Aqui  -->
                 </div>
             </div>
         @else

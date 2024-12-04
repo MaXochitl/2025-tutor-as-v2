@@ -8,13 +8,17 @@ use App\Models\Actividades_tutoria;
 use App\Models\Asignacion_tutor;
 use App\Models\Periodo;
 use App\Models\Alumno;
+use App\Models\File_format;
 use App\Models\Periodo_tutorado;
 use App\Models\User;
+
+
 
 use Barryvdh\DomPDF\Facade as PDF; 
 
 class ActividadesTutoriaController extends Controller
 {
+    
     
     public function create()
     {
@@ -25,7 +29,6 @@ class ActividadesTutoriaController extends Controller
     
     public function pdfActividades()
 {
-    
     $user = User::find(Auth::user()->id);
     $tutor = Auth::user()->tutor;
     $actividades = Actividades_tutoria::all();
@@ -46,24 +49,25 @@ class ActividadesTutoriaController extends Controller
     $hombres = $alumnos->where('sexo', 'M')->count();  
     $mujeres = $alumnos->where('sexo', 'F')->count();  
     $total = $hombres + $mujeres;
+    $fileFormat = File_format::where('cargo', 'Coordinador del Programa Institucional de Tutorias')->first();
+    $atentamente1 = $fileFormat->atentamente_1 ?? 'No disponible';
     
-
 
     $pdf = PDF::loadView('docente_tutor.actividadesPdf.pdf', [
         'actividades' => $actividades,
         'tutor' => $tutor,
         'asignado' => $asignado,
-        'periodos   ' => $periodos,
+        'periodos' => $periodos,
         'periodo' => $periodo,
         'hombres' => $hombres,
         'mujeres' => $mujeres,
         'total' => $total,
-        
+        'atentamente1' => $atentamente1
     ]);
 
-    
     return $pdf->stream('actividades_tutoria.pdf');
 }
+
 
      
 
@@ -108,26 +112,33 @@ public function store(Request $request)
     
 public function edit($id)
 {
-    $actividad = Actividades_tutoria::findOrFail($id); 
-    return view('tutor-alumno.edit-actividades', compact('actividad'));
+    $actividad = Actividades_tutoria::findOrFail($id);
+    return view('actividades-tutoria.edit', compact('actividad'));
 }
 
-public function update(Request $request)
+
+public function update(Request $request, $id)
 {
-    $validatedData = $request->validate([
+    
+    $actividad = Actividades_tutoria::findOrFail($id);
+
+    
+    $request->validate([
         'tema' => 'required|string|max:255',
         'descripcion_actividad' => 'required|string',
         'fecha' => 'required|date',
-        'tiempo' => 'required|integer',
+        'tiempo' => 'required|string',
         'recursos' => 'nullable|string',
     ]);
 
-    $actividad = Actividades_tutoria::findOrFail($id); 
-    $actividad->update($validatedData); 
+    
+    $actividad->update($request->all());
 
-    return redirect()->route('reportes_tutor.show', $actividad)
-                     ->with('success', 'Actividad actualizada exitosamente.');
+    return redirect()->route('reportes_tutor.show', $actividad->id)
+    ->with('success', 'Actividad eliminada exitosamente.');
 }
+
+
 
     public function destroy($id)
     {
