@@ -30,6 +30,7 @@ use App\Http\Controllers\Examenes\TestEconomicoController;
 use App\Http\Controllers\PruebasController;
 use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\TutoriasController;
+use App\Http\Controllers\ActividadesTutoriaController;
 use App\Models\Altera_entrega;
 use App\Models\Alumno;
 use App\Models\File_format;
@@ -84,6 +85,17 @@ Route::resource('alumnos_examenes', AlumnosExamenController::class)->middleware(
 Route::resource('entrega', AlteraEntregaController::class)->names('entrega')->middleware(['auth', 'can:solo.admin']);
 
 
+// Ruta de las actividades del tutor°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
+Route::resource('actividades-tutoria', ActividadesTutoriaController::class)->middleware(['auth'])->names('actividades-tutoria');
+// Ruta para mostrar el reporte (GET)
+Route::get('/reportes-tutor/{id}', [ReportesController::class, 'show'])->name('reportes_tutor.show');
+//Ruta para el pdf
+Route::get('/pdf-actividades', [ActividadesTutoriaController::class, 'pdfActividades'])->name('pdf-actividades');
+
+Route::put('/actividades-tutoria/{id}', [ActividadController::class, 'update'])->name('actividades-tutoria.update');
+
+
+//°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
 
 
 /**________________________________________----------------------------___________________________________________________------------------------SOLO AUTH */
@@ -161,3 +173,4 @@ Route::get('probar', function () {
 */
 Route::resource('reportes_tutor', ReportesController::class)->names('reportes_tutor')->middleware(['auth']);
 //Auth::routes(['register' => false]);
+

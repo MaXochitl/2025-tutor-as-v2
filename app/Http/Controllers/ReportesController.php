@@ -22,6 +22,8 @@ use App\Models\Aviso;
 use App\Models\Periodo_eval;
 use App\Providers\RouteServiceProvider;
 
+use App\Models\Actividades_tutoria;
+
 class ReportesController extends Controller
 {
     /**
@@ -67,6 +69,10 @@ class ReportesController extends Controller
 
         $user = User::find(Auth::user()->id);
         $id = $user->tutor_id;
+        
+        //Agregar llamado de base de datos  
+        $actividades = Actividades_tutoria::all();
+        //        
 
         $periodo = Periodo::orderby('id', 'desc')->get();
         $alumnos_tutor = [];
@@ -132,7 +138,10 @@ class ReportesController extends Controller
             'tutor',
             'docente_alumno',
             'tutorado',
-            'altera_entrega'
+            'altera_entrega',
+            //asignarlo en return
+            'actividades'
+            //
         ));
     }
 
