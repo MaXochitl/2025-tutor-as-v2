@@ -109,12 +109,12 @@ class PdfController extends Controller
         $pdf = \App::make('dompdf.wrapper');
         //$alumnos_tutorados = Periodo_tutorado::all();
         //$datos = File_format::all();
-
+        $fileFormat = File_format::find(1);
         $carrera = Carrera::find($id);
-        $pdf = PDF::loadView('admin.resumen_pdf.RCarreraPDF', compact('tutores','carrera'));
+        $pdf = PDF::loadView('admin.resumen_pdf.RCarreraPDF', compact('tutores','carrera', 'fileFormat'));
         return $pdf->stream();
 
-
+        
 
         return view('admin.resumen_pdf.RCarreraPDF');
     }

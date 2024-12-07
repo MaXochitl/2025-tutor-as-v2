@@ -80,6 +80,42 @@
         </div>
     </div>
 
+       <!-- Contenedor para las firmas -->
+    <div style="margin-top: 10px">
+                    <table style="margin: auto; text-align: center">
+                        <tr style="height: 100px;">
+                            <td colspan="2">
+                                <b>
+                                    Atentamente
+                                    <div style="margin-top: 70px">
+                                    </div>
+                                </b>
+                            </td>
+                            <td>
+                                <b>
+                                    Vo. Bo.
+                                </b>
+                                <div style="margin-top: 70px">
+                                </div>
+                            </td>
+
+                        </tr>
+
+                        <tr>
+                            <td>{{ $fileFormat->atentamente_1 }}</td>
+                            <td>{{ $fileFormat->atentamente_2 }}</td>
+                            <td>{{ $fileFormat->atentamente_3 }}</td>
+                        </tr>
+
+                        <tr>
+                            <td>{{ $fileFormat->cargo }}</td>
+                            <td>{{ $fileFormat->cargo_2 }}</td>
+                            <td>{{ $fileFormat->cargo_3 }}</td>
+                        </tr>
+
+                    </table>
+                </div>
+
 </body>
 
 
