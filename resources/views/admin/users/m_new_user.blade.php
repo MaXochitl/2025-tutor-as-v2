@@ -1,15 +1,15 @@
-<div class="modal fade" id="m-new-user" tabindex="-1" aria-labelledby="carrera-modal" aria-hidden="true">
+<div class="modal fade" id="m-new-user" tabindex="-1" aria-labelledby="user-m-modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="carrera-modal">
+                </h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    <div>
 
             </div>
 
             <div class="modal-body">
-                <h1>Crear nuevo Usuario</h1>
+                <h1>Crear nuevo Auditor</h1>
                 @if (count($errors) > 0)
                     @include('secciones.errores')
                 @endif

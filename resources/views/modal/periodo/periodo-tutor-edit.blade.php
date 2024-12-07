@@ -1,4 +1,4 @@
-<div class="modal fade" id="edit-p-t-modal" tabindex="-1" aria-labelledby="periodo-t-modal" aria-hidden="true">
+<div class="modal fade" id="edit-p-t-modal{{$item->id}}" tabindex="-1" aria-labelledby="periodo-t-modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">

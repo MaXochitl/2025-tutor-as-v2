@@ -1,4 +1,3 @@
-
 <footer>
 
 
@@ -39,5 +38,15 @@
             </div>
         </div>
     </div>
+
+
 </footer>
 
+
+<script>
+    const ruta = '{{ route('getPeriodoView') }}';
+    console.log(ruta);
+</script>
+@can('solo.admin')
+    <script src="/js/periodo_view.js"></script>
+@endcan

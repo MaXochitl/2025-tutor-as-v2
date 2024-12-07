@@ -52,7 +52,7 @@
     <!--------------------------------------------------------------------INICIO-->
     @include('secciones.menu-bar')
 
-    <div class="content">
+    <div class="content ">
         <div id="cont" class="mov">
             @include('secciones.navBar')
             @yield('structure-content')

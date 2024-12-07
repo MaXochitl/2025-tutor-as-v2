@@ -37,13 +37,13 @@
             @php
                 date_default_timezone_set('America/Mexico_City');
 
-                $inicio = strtotime($periodo[0]->inicio);
-                $fin = strtotime($periodo[0]->fin);
-                $mes_1 = strtotime($periodo[0]->mes_1);
-                $mes_2 = strtotime($periodo[0]->mes_2);
-                $mes_3 = strtotime($periodo[0]->mes_3);
-                $mes_4 = strtotime($periodo[0]->mes_4);
-                $entrega_final = strtotime($periodo[0]->reporte_final);
+                $inicio = strtotime($periodo->inicio);
+                $fin = strtotime($periodo->fin);
+                $mes_1 = strtotime($periodo->mes_1);
+                $mes_2 = strtotime($periodo->mes_2);
+                $mes_3 = strtotime($periodo->mes_3);
+                $mes_4 = strtotime($periodo->mes_4);
+                $entrega_final = strtotime($periodo->reporte_final);
                 $fecha_actual = strtotime(date('Y-m-d', time()));
 
             @endphp
@@ -70,8 +70,8 @@
                     <p class="head-alumnos-tutor"><b>Telefono:</b> {{ $alumnos_tutor[0]->tutor->telefono }} </p>
 
                     @php
-                        $periodo_inicio = date('d/m/Y', strtotime($alumnos_tutor[0]->periodo->inicio));
-                        $periodo_fin = date('d/m/Y', strtotime($alumnos_tutor[0]->periodo->fin));
+                        $periodo_inicio = date('d/m/Y', strtotime($periodo->inicio));
+                        $periodo_fin = date('d/m/Y', strtotime($periodo->fin));
                         echo ' <b>Periodo: </b>' . $periodo_inicio . ' - ' . $periodo_fin;
                     @endphp
                 </div>
@@ -401,7 +401,7 @@
             {{ $alumnos_tutor->links('pagination::bootstrap-4') }}
 
             <div class="btn-regresar">
-                @can('mes.admin')
+                @hasanyrole(['admin','auditor'])
                     <a class="btn btn-secondary" href="{{ route('tutor.show', $alumnos_tutor[0]->tutor->carrera->id) }} ">
                         <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40   " fill="currentColor"
                             class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
@@ -411,7 +411,7 @@
                         Regresar
 
                     </a>
-                @endcan
+                @endhasanyrole
 
             </div>
         </div>

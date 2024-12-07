@@ -20,6 +20,7 @@ use App\Models\Asignacion_tutor;
 use App\Models\Aviso;
 use App\Models\Periodo_eval;
 use App\Models\Periodo_semaforo;
+use App\Models\Periodo_view;
 use App\Providers\RouteServiceProvider;
 
 class TutoriasController extends Controller
@@ -57,7 +58,8 @@ class TutoriasController extends Controller
     public function store(Request $request)
     {
         //return 'hola';
-        $periodo = Periodo::max('id');
+        $periodo_eval = Periodo_view::find(1);
+        $periodo = $periodo_eval->periodo_id; // Periodo::max('id');-----------------------------------esta linea esta pendiente
         $id_tutor = Auth::user()->tutor->id;
 
         $request->validate([
@@ -143,23 +145,26 @@ class TutoriasController extends Controller
      */
     public function show($id)
     {
+        //--------------------------------------------------------esta es la vista de los alumos de cada tutor del admin
         $palabra = '';
-        $periodo = Periodo::orderby('id', 'desc')->get();
+        $periodo_view = Periodo_view::find(1);
+        $periodo = Periodo::find($periodo_view->periodo_id);
+        //$periodo = $periodo_view->Periodo; // Periodo::orderby('id', 'desc')->get();
         $alumnos_tutor = [];
 
 
-        if (count($periodo) > 0) {
-            $alumnos_tutor = Periodo_tutorado::where('tutor_id', $id)
-                ->where('periodo_id', $periodo[0]->id)
-                ->where('tipo', 1)
-                ->orderby('semaforo_id', 'desc')
-                ->paginate(15);
-        }
 
-        // return $alumnos_tutor;
+        $alumnos_tutor = Periodo_tutorado::where('tutor_id', $id)
+            ->where('periodo_id', $periodo->id)
+            ->where('tipo', 1)
+            ->orderby('semaforo_id', 'desc')
+            ->paginate(15);
+
+
+        //return $alumnos_tutor;
         $semaforo = Semaforo::where('id', '<', 5)->get();
 
-        $asignado = Asignacion_tutor::where('periodo_id', $periodo->max('id'))
+        $asignado = Asignacion_tutor::where('periodo_id', $periodo->id)
             ->where('tutor_id', $id)
             ->get();
 
@@ -168,18 +173,19 @@ class TutoriasController extends Controller
             $id_carrera = $tutor->carrera->id;
             return view('tutor-alumno.tutor-alumnos', compact('alumnos_tutor', 'id_carrera', 'periodo', 'palabra'));
         } else {
-            $hombres = $this->cuentaSexo($id, 'M', $periodo[0]->id);
-            $mujeres = $this->cuentaSexo($id, 'F', $periodo[0]->id);
-            $temporal = $this->cuentaBajas($id, 2, $periodo[0]->id);
-            $baja = $this->cuentaBajas($id, 3, $periodo[0]->id);
-            $verde = $this->cuentaColores($id, 1, $periodo[0]->id);
-            $naranja = $this->cuentaColores($id, 2, $periodo[0]->id);
-            $rojo = $this->cuentaColores($id, 3, $periodo[0]->id);
+            $hombres = $this->cuentaSexo($id, 'M', $periodo->id);
+            $mujeres = $this->cuentaSexo($id, 'F', $periodo->id);
+            $temporal = $this->cuentaBajas($id, 2, $periodo->id);
+            $baja = $this->cuentaBajas($id, 3, $periodo->id);
+            $verde = $this->cuentaColores($id, 1, $periodo->id);
+            $naranja = $this->cuentaColores($id, 2, $periodo->id);
+            $rojo = $this->cuentaColores($id, 3, $periodo->id);
             $avisos = Aviso::all();
             $asigno = 1;
             if (count($asignado) == 0) {
                 $asigno = 0;
             }
+
             return view('tutor-alumno.tutor-alumnos', compact('alumnos_tutor', 'semaforo', 'hombres', 'mujeres', 'baja', 'temporal', 'avisos', 'verde', 'naranja', 'rojo', 'periodo', 'asignado', 'asigno', 'palabra'));
         }
     }
@@ -288,9 +294,7 @@ class TutoriasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-    }
+    public function update(Request $request, $id) {}
 
 
     public function seguimiento(Request $request, $id, $mesSelect)
@@ -444,5 +448,13 @@ class TutoriasController extends Controller
             // No se encontraron registros para eliminar
             echo "No se encontraron registros con el periodo_id proporcionado.";
         }
+    }
+    public function getPeriodoView()
+    {
+        $periodo_view = Periodo_view::find(1);
+        $periodo = Periodo::find($periodo_view->periodo_id);
+        $response[0] = $periodo->inicio;
+        $response[1] = $periodo->fin;
+        return $response;
     }
 }

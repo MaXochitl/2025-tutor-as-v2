@@ -64,7 +64,7 @@ class TutoresController extends Controller
         //$tutores = Tutor::all()->where('carrera_id', $id);
         $tutores = Tutor::where('carrera_id', $id)->paginate(15);
 
-        return view('admin.tutorias.home', compact('tutores', 'carrera','palabra'));
+        return view('admin.tutorias.home', compact('tutores', 'carrera', 'palabra'));
     }
 
     /**
@@ -93,13 +93,11 @@ class TutoresController extends Controller
      */
     public function update(Request $request, $id)
     {
-
         $user = User::find(Auth::user()->id);
         $id = $user->tutor_id;
 
         $tutores = Tutor::find($id);
         //$tutores->id = $request->input('matricula');
-        $tutores->carrera_id = $request->input('carrera');
         $tutores->nombre = $request->input('nombre');
         $tutores->ap_paterno = $request->input('ap_paterno');
         $tutores->ap_materno = $request->input('ap_materno');
@@ -111,7 +109,13 @@ class TutoresController extends Controller
         $nombre = "";
         $imagen = $request->file('foto'); //obtencion de la imagen
 
+        if ($request->has("carrera")) {
+            $tutores->carrera_id = $request->input('carrera');
+        }
 
+        if ($request->pass !== null) {
+            $user->password = Hash::make($request->pass);
+        }
 
         if ($imagen) {
             $extension = $imagen->getClientOriginalExtension(); //obtiene la extencion
@@ -126,6 +130,7 @@ class TutoresController extends Controller
 
 
         $tutores->save();
+        $user->save();
         return back()->with('editado', 'ok');
     }
 

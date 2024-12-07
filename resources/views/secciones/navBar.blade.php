@@ -13,15 +13,21 @@
         @can('solo.admin')
             <a class="navbar-brand" href="{{ route('evaluacion.index') }} ">Nuevo Ingreso</a>
             <a class="navbar-brand" href="{{ route('usersAdmin.index') }} ">Usuarios</a>
-
         @endcan
+        <!-- Aquí centramos el texto "Hola" usando CSS personalizado -->
+        <div class="position-absolute start-50 translate-middle-x" style="color: rgb(255, 255, 255)">
 
-
+        </div>
 
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
         </div>
         <div>
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
+
+                <h4 id="p_actual" style="color: rgb(251, 255, 2)">
+
+                </h4>
                 <ul class="navbar-nav">
                     @include('secciones.menu_usuario')
                 </ul>

@@ -34,7 +34,15 @@ class DatabaseSeeder extends Seeder
         Permission::create(['name' => 'solo.tutor'])->syncRoles([$rol_tutor]);
         Permission::create(['name' => 'admin.tutor'])->syncRoles([$rol_admin, $rol_tutor]);
 
+        /*
+NO BORRAR ESTA LINEA NO RECUERDO COMO LA USE, SE USO CUANDO SE AGREGO UN UNEVO ROL Y PERMISO
+DESPUES DE HABER TERMINADO
+        $role_auditor = Role::create(['name' => 'auditor']);
+        $permiso_admin_auditor = Permission::create(['name' => 'auditor.admin']);
+        Permission::create(['name' => 'auditor'])->syncRoles([$role_auditor]);
+        $role_auditor->givePermissionTo($permiso_admin_auditor);
 
+ */
 
         $tutor = Tutor::create([
             'id' => 'Admin01',
@@ -58,7 +66,5 @@ class DatabaseSeeder extends Seeder
         Registro::create([
             'status' => 1
         ]);
-
-        
     }
 }
