@@ -21,7 +21,7 @@ class Asignacion_tutor extends Model
 
     public function tutor()
     {
-        return $this->hasMany(Tutor::class);
+        return $this->belongsTo(Tutor::class);
     }
 
     public function periodo()

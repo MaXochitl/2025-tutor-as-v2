@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\Admin\AsignacionesController;
 use App\Models\Alumno;
+use App\Models\Asignacion_tutor;
 use App\Models\Aviso;
 use App\Models\Carrera;
 use App\Models\Evaluacion_respuesta;
@@ -15,6 +17,7 @@ use App\Models\Periodo_view;
 use App\Models\Posicion;
 use App\Models\Pregunta;
 use App\Models\Respuesta;
+use App\Models\Tutor;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -35,9 +38,35 @@ class PruebasController extends Controller
     {
 
 
-        $periodo_view = Periodo_view::find(1);
-        $x = $periodo_view->Periodo;
-        return $x;
+
+        $periodo = 3;
+
+        $tutores = DB::select('CALL ResumenRegistros(?)', [$periodo]);
+        $periodo_tutorado = [];
+        foreach ($tutores as  $value) {
+            $periodo_tutorado[] = Periodo_tutorado::where('tutor_id', $value->tutor_id)
+                ->where('tipo', 1)
+                ->where('periodo_id', $periodo)
+                ->pluck('id')
+                ->toArray();
+        }
+
+        $sum_falls = [];
+        foreach ($periodo_tutorado as  $value) {
+            $sum_falls[] = Periodo_semaforo::whereIn('periodo_id', $value)
+                ->whereBetween('semaforo_id', [2, 3])
+                ->distinct()
+                ->count(['periodo_id']);
+        }
+
+        $tutores = array_map(function ($tutor) {
+            return (array)$tutor; // Convierte cada objeto stdClass en un array
+        }, $tutores);
+
+        for ($i = 0; $i < count($tutores); $i++) {
+            $tutores[$i]['falls'] = $sum_falls[$i];
+        }
+        return $tutores;
     }
 
     public function addIndications($periodo_id) {}

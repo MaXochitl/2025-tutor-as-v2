@@ -89,7 +89,7 @@ class AsignacionesController extends Controller
             ->where('periodo_id', $periodo)
             ->count();
 
-
+        //return $asignaciones;
         if ($periodos == null) {
 
             return view('admin.tutorias.asignaciones_tutor', compact('asignaciones', 'periodos', 'periodo'));
