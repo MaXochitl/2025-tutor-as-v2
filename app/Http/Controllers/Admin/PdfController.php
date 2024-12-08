@@ -78,7 +78,7 @@ class PdfController extends Controller
         $periodo = Periodo_view::find(1);
         $periodo = $periodo->periodo_id;
 
-        $tutores = DB::select('CALL ResumenRegistros(?)', [$periodo]);
+        $tutores = DB::select('CALL ResumenRegistros(?,?)', [$periodo,$id]);
         $periodo_tutorado = [];
         foreach ($tutores as  $value) {
             $periodo_tutorado[] = Periodo_tutorado::where('tutor_id', $value->tutor_id)
@@ -114,7 +114,7 @@ class PdfController extends Controller
         $pdf = PDF::loadView('admin.resumen_pdf.RCarreraPDF', compact('tutores','carrera', 'fileFormat'));
         return $pdf->stream();
 
-        
+
 
         return view('admin.resumen_pdf.RCarreraPDF');
     }
