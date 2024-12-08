@@ -12,6 +12,31 @@
 
 <body>
 
+    @php
+        date_default_timezone_set('America/Mexico_City');
+        setlocale(LC_ALL, 'es_ES');
+        $diassemana = ['Domingo', 'Lunes', 'Martes', 'Miercoles', 'Jueves', 'Viernes', 'Sábado'];
+        $meses = [
+            'Enero',
+            'Febrero',
+            'Marzo',
+            'Abril',
+            'Mayo',
+            'Junio',
+            'Julio',
+            'Agosto',
+            'Septiembre',
+            'Octubre',
+            'Noviembre',
+            'Diciembre',
+        ];
+        //  $hoy = $diassemana[date('w')] . ' ' . date('d') . ' de ' . $meses[date('n') - 1] . ' del ' . date('Y');
+        $hoy = date('d') . ' /' . date('n') . '/' . date('Y');
+        //$inicio = $meses[date('n', strtotime($periodo->inicio)) - 1] . '  ' . date('Y', strtotime($periodo->inicio));
+        //$fin = $meses[date('n', strtotime($periodo->fin)) - 1] . '  ' . date('Y', strtotime($periodo->fin));
+
+    @endphp
+
     <div style="text-align: center; padding-left: 0; padding-top: 0px; height: 1000px; font-size: 15px">
 
         <div style="margin-top: 10px">
@@ -28,7 +53,7 @@
                     <tr class="asign-color">
                         <td colspan="5">Nombre del Coordinador de Tutoria del Departamento Académico:
                             Li. Emma Valeria Ramirez Guzmán</td>
-                        <td class="borde">Fecha: 01/01/2024</td>
+                        <td class="borde">Fecha: <br> {{$hoy}}</td>
                     </tr>
                     <tr class="asign-color">
                         <td colspan="5">Programa educativo: {{ $carrera->nombre_carrera }}</td>
@@ -63,7 +88,7 @@
                 </thead>
                 <tbody>
                     @for ($i = 0; $i < count($tutores); $i++)
-                        <tr style="text-align: center" >
+                        <tr style="text-align: center">
                             <td>
                                 {{ $tutores[$i]['nombre_tutor'] . ' ' . $tutores[$i]['ap_paterno'] . ' ' . $tutores[$i]['ap_materno'] }}
                             </td>
@@ -78,43 +103,45 @@
                 </tbody>
             </table>
         </div>
+        <!-- Contenedor para las firmas -->
+        <div style="margin-top: 10px">
+            <table class="no-border" style="margin: auto; text-align: center;">
+                <tr class="no-border" style="height: 100px;">
+                    <td class="no-border" colspan="2">
+                        <b>
+                            Atentamente
+                            <div style="margin-top: 70px">
+                            </div>
+                        </b>
+                    </td>
+                    <td class="no-border">
+                        <b>
+                            Vo. Bo.
+                        </b>
+                        <div style="margin-top: 70px">
+                        </div>
+                    </td>
+
+                </tr>
+
+                <tr class="no-border">
+                    <td class="no-border">{{ $fileFormat->atentamente_1 }}</td>
+                    <td class="no-border">{{ $fileFormat->atentamente_2 }}</td>
+                    <td class="no-border">{{ $fileFormat->atentamente_3 }}</td>
+                </tr>
+
+                <tr>
+                    <td class="no-border">{{ $fileFormat->cargo }}</td>
+                    <td class="no-border">{{ $fileFormat->cargo_2 }}</td>
+                    <td class="no-border">{{ $fileFormat->cargo_3 }}</td>
+                </tr>
+
+            </table>
+        </div>
+
     </div>
 
-       <!-- Contenedor para las firmas -->
-    <div style="margin-top: 10px">
-                    <table style="margin: auto; text-align: center">
-                        <tr style="height: 100px;">
-                            <td colspan="2">
-                                <b>
-                                    Atentamente
-                                    <div style="margin-top: 70px">
-                                    </div>
-                                </b>
-                            </td>
-                            <td>
-                                <b>
-                                    Vo. Bo.
-                                </b>
-                                <div style="margin-top: 70px">
-                                </div>
-                            </td>
 
-                        </tr>
-
-                        <tr>
-                            <td>{{ $fileFormat->atentamente_1 }}</td>
-                            <td>{{ $fileFormat->atentamente_2 }}</td>
-                            <td>{{ $fileFormat->atentamente_3 }}</td>
-                        </tr>
-
-                        <tr>
-                            <td>{{ $fileFormat->cargo }}</td>
-                            <td>{{ $fileFormat->cargo_2 }}</td>
-                            <td>{{ $fileFormat->cargo_3 }}</td>
-                        </tr>
-
-                    </table>
-                </div>
 
 </body>
 
@@ -137,6 +164,11 @@
         padding: 5px;
         text-align: left;
 
+    }
+
+    .no-border {
+        border: none;
+        text-align: center;
     }
 
     .fix-fila {
