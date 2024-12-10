@@ -101,7 +101,7 @@
                                     </th>
                                     <td>{{ $item->nombre_carrera }}</td>
                                     <td class="text-center">
-                                        <a href="{{ route('pdf.show', $item->id) }}">
+                                        <a href="{{ route('ReportsExports.show', $item->id) }}">
                                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25"
                                                 fill="currentColor" class="bi bi-file-earmark-pdf-fill" viewBox="0 0 16 16">
                                                 <path

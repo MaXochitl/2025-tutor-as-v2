@@ -31,6 +31,7 @@ use App\Http\Controllers\PruebasController;
 use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\TutoriasController;
 use App\Http\Controllers\ActividadesTutoriaController;
+use App\Http\Controllers\ExportReportsControllerXLX;
 use App\Models\Altera_entrega;
 use App\Models\Alumno;
 use App\Models\File_format;
@@ -92,7 +93,7 @@ Route::get('/reportes-tutor/{id}', [ReportesController::class, 'show'])->name('r
 //Ruta para el pdf
 Route::get('/pdf-actividades', [ActividadesTutoriaController::class, 'pdfActividades'])->name('pdf-actividades');
 
-Route::put('/actividades-tutoria/{id}', [ActividadController::class, 'update'])->name('actividades-tutoria.update');
+//Route::put('/actividades-tutoria/{id}', [ActividadController::class, 'update'])->name('actividades-tutoria.update');
 
 
 //°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
@@ -102,7 +103,7 @@ Route::put('/actividades-tutoria/{id}', [ActividadController::class, 'update'])-
 Route::resource('orientacion', OrientacionController::class)->middleware(['auth'])->names('orientacion');
 Route::post('importExcel', [AlumnosExamenController::class, 'importExcel'])->middleware(['auth'])->name('importExcel');
 Route::post('importAlumnos', [AlumnosController::class, 'importAlumnos'])->middleware(['auth'])->name('importAlumnos');
-
+Route::resource('ReportsExports',ExportReportsControllerXLX::class)->names('ReportsExports');
 
 /*________________________________________----------------------------___________________________________________________------------------------SOLO TUTOR*/
 Route::put('/seguimiento-alumno/{id}/{mes}', [
