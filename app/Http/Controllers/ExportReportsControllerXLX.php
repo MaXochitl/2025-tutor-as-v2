@@ -99,8 +99,8 @@ class ExportReportsControllerXLX extends Controller
         for ($i = 0; $i < count($tutores); $i++) {
             $tutores[$i]['falls'] = $sum_falls[$i];
         }
-       // return $tutores;
-       /*
+        // return $tutores;
+        /*
         $data = [
             ['Ing. Carmen Karely Pro Torres', '2° A', 13, 10, 10, 'Orientación Educativa'],
             ['Ing. Marcelino Cruz del Ángel', '4° A', 9, 2, 2, 'Orientación Educativa'],
@@ -108,14 +108,14 @@ class ExportReportsControllerXLX extends Controller
             ['Dr. José Jaime González Elizondo', '8° A', 11, 1, 1, 'Orientación Educativa'],
         ];
         */
-
+        date_default_timezone_set('America/Mexico_City');
         // Cabeceras dinámicas
         $headings = [
             //[''],
             ['INSTITUTO TECNOLÓGICO SUPERIOR DE TANTOYUCA'],
             ['REPORTE SEMESTRAL DEL COORDINADOR DE TUTORÍA DEL DEPARTAMENTO ACADÉMICO'],
             ['Programa Educativo:', '', $carrera->nombre_carrera, '', '', '', ''], // Dinámico
-            ['Fecha: ', date('d/m/Y'), 'Hora: ' . date('H:i')],
+            ['Fecha: ', date('d/m/Y'), 'Hora: ' . date('h:i A')],
             ['Matricula', 'Nombre', 'Grupo', 'Tutoría Grupal', 'Tutoría Individual', 'Estudiantes canalizados en el semestre', 'Área canalizada'],
         ];
 
