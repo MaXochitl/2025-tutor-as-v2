@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Exports\ReportExport;
+use App\Models\Carrera;
 use App\Models\Periodo_semaforo;
 use App\Models\Periodo_tutorado;
 use App\Models\Periodo_view;
@@ -70,6 +71,8 @@ class ExportReportsControllerXLX extends Controller
     {
         $periodo = Periodo_view::find(1);
         $periodo = $periodo->periodo_id;
+        $carrera = Carrera::find($id);
+
 
         $tutores = DB::select('CALL ResumenRegistros(?,?)', [$periodo, $id]);
         $periodo_tutorado = [];
@@ -96,24 +99,28 @@ class ExportReportsControllerXLX extends Controller
         for ($i = 0; $i < count($tutores); $i++) {
             $tutores[$i]['falls'] = $sum_falls[$i];
         }
+       // return $tutores;
+       /*
         $data = [
             ['Ing. Carmen Karely Pro Torres', '2° A', 13, 10, 10, 'Orientación Educativa'],
             ['Ing. Marcelino Cruz del Ángel', '4° A', 9, 2, 2, 'Orientación Educativa'],
             ['M.G.E.R. Sofía Elizabeth García Martínez', '6° A', 13, 4, 4, 'Orientación Educativa'],
             ['Dr. José Jaime González Elizondo', '8° A', 11, 1, 1, 'Orientación Educativa'],
         ];
+        */
 
         // Cabeceras dinámicas
         $headings = [
+            //[''],
             ['INSTITUTO TECNOLÓGICO SUPERIOR DE TANTOYUCA'],
             ['REPORTE SEMESTRAL DEL COORDINADOR DE TUTORÍA DEL DEPARTAMENTO ACADÉMICO'],
-            ['Programa Educativo: Ing. Ambiental', 'Fecha: ' . date('d/m/Y'), 'Hora: ' . date('H:i')], // Dinámico
-            ['Matricula','Nombre', 'Apellido Materno ','Apellido Materno ',  'Grupo', 'Tutoría Grupal', 'Tutoría Individual', 'Estudiantes canalizados en el semestre', 'Área canalizada'],
+            ['Programa Educativo:', '', $carrera->nombre_carrera, '', '', '', ''], // Dinámico
+            ['Fecha: ', date('d/m/Y'), 'Hora: ' . date('H:i')],
+            ['Matricula', 'Nombre', 'Grupo', 'Tutoría Grupal', 'Tutoría Individual', 'Estudiantes canalizados en el semestre', 'Área canalizada'],
         ];
 
         // Descargar el archivo Excel
         return Excel::download(new ReportExport($tutores, $headings), 'reporte_semestral.xlsx');
-
     }
 
     /**
