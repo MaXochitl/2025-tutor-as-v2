@@ -16,27 +16,27 @@
                     @csrf
                     <div class="form-group">
                         <label for="tema">Tema</label>
-                        <input name="tema" type="text" class="form-control" id="tema" required>
+                        <input name="tema" type="text" class="form-control" id="tema" required placeholder="Describir la actividad que se realizará para abordar la temática.">
                     </div>
 
                     <div class="form-group mt-3">
                         <label for="descripcion_actividad">Descripción de la Actividad</label>
-                        <textarea name="descripcion_actividad" class="form-control" id="descripcion_actividad" rows="3" required></textarea>
+                        <textarea name="descripcion_actividad" class="form-control" id="descripcion_actividad" rows="3" required placeholder="Describir  la/las actividades que se realizarán para abordar la temática."></textarea>
                     </div>
 
                     <div class="form-group mt-3">
                         <label for="fecha">Fecha</label>
-                        <input name="fecha" type="date" class="form-control" id="fecha" required>
+                        <input name="fecha" type="date" class="form-control" id="fecha" required >
                     </div>
 
                     <div class="form-group mt-3">
-                        <label for="tiempo">Tiempo (en formato HH:MM)</label>
+                        <label for="tiempo">Tiempo (Horas, Minutos)</label>
                         <input type="text" name="tiempo" class="form-control" id="tiempo" required placeholder="Ejemplo: 1:30">
                     </div>
 
                     <div class="form-group mt-3">
                         <label for="recursos">Recursos</label>
-                        <textarea name="recursos" class="form-control" id="recursos" rows="2"></textarea>
+                        <textarea name="recursos" class="form-control" id="recursos" rows="2" required placeholder="Describir los recursos, materiales, enlaces o herramientas que se utilizarán en el abordaje de la problemática o temática."></textarea>
                     </div>
 
                     <div class="mt-4 text-center">

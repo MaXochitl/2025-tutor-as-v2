@@ -8,7 +8,6 @@ use App\Models\Actividades_tutoria;
 use App\Models\Asignacion_tutor;
 use App\Models\Periodo;
 use App\Models\Alumno;
-use App\Models\File_format;
 use App\Models\Periodo_tutorado;
 use App\Models\User;
 
@@ -27,8 +26,9 @@ class ActividadesTutoriaController extends Controller
     }
 
     
-    public function pdfActividades()
+    public function pdfActividades(Request $request)
 {
+
     $user = User::find(Auth::user()->id);
     $tutor = Auth::user()->tutor;
     $actividades = Actividades_tutoria::all();
@@ -49,9 +49,7 @@ class ActividadesTutoriaController extends Controller
     $hombres = $alumnos->where('sexo', 'M')->count();  
     $mujeres = $alumnos->where('sexo', 'F')->count();  
     $total = $hombres + $mujeres;
-    $fileFormat = File_format::where('cargo', 'Coordinador del Programa Institucional de Tutorias')->first();
-    $atentamente1 = $fileFormat->atentamente_1 ?? 'No disponible';
-    
+    $name = $request->input('name', 'Nombre no proporcionado');
 
     $pdf = PDF::loadView('docente_tutor.actividadesPdf.pdf', [
         'actividades' => $actividades,
@@ -62,7 +60,8 @@ class ActividadesTutoriaController extends Controller
         'hombres' => $hombres,
         'mujeres' => $mujeres,
         'total' => $total,
-        'atentamente1' => $atentamente1
+        'name' => $name,
+
     ]);
 
     return $pdf->stream('actividades_tutoria.pdf');

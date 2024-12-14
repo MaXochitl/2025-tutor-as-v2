@@ -170,15 +170,17 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
     <div class="signature-container">
         <div class="signature signature-left">
             <hr>
-            <p> Tutora </p>
             <p><strong>{{ $tutor->nombre }} {{ $tutor->ap_paterno }} {{ $tutor->ap_materno }}</strong>
+            <p> Nombre de la Persona Tutora </p>
+            
             </p>
         </div>
 
         <div class="signature signature-right">
             <hr>
-            <p>Coordinador de tutorías</p>
-            <p><strong>{{ $atentamente1 }}<strong></p>
+            <p><strong>{{ $name }}<strong></p>
+            <p>Nombre y del Coordinador de tutorías por programa eduacativo</p>
+            
         </div>
     </div>
 
