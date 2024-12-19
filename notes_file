@@ -27,7 +27,7 @@ DELIMITER ;
 
 
 CALL ResumenRegistros(2,1);
------------------------------------------------------------------------------CONTACTENANDO
+-----------------------------------------------------------------------------CONCATENANDO
 
 DROP PROCEDURE IF EXISTS ResumenRegistros;
 
