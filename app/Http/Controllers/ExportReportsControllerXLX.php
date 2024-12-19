@@ -116,7 +116,7 @@ class ExportReportsControllerXLX extends Controller
             ['REPORTE SEMESTRAL DEL COORDINADOR DE TUTORÍA DEL DEPARTAMENTO ACADÉMICO'],
             ['Programa Educativo:', '', $carrera->nombre_carrera, '', '', '', ''], // Dinámico
             ['Fecha: ', date('d/m/Y'), 'Hora: ' . date('h:i A')],
-            ['Matricula', 'Nombre', 'Grupo', 'Tutoría Grupal', 'Tutoría Individual', 'Estudiantes canalizados en el semestre', 'Área canalizada'],
+            ['Matricula', 'Lista de tutores', 'Grupo', 'Tutoría Grupal', 'Tutoría Individual', 'Estudiantes canalizados en el semestre', 'Área canalizada'],
         ];
 
         // Descargar el archivo Excel
