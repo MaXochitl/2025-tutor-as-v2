@@ -44,9 +44,20 @@ class ReportExport implements FromArray, WithHeadings, WithStyles
     public function styles(Worksheet $sheet)
     {
 
-        // Configuración del pie de página
-        //      $sheet->getHeaderFooter()
-        //            ->setOddFooter('&C&K000000 Pie de página personalizado'); // Pie de página centrado con texto negro
+        // Agregar una imagen al encabezado
+        //$sheet->getHeaderFooter()->setOddHeader('&C&HEncabezado con imagen');
+
+        $drawing = new Drawing();
+        $drawing->setName('Logo');
+        $drawing->setDescription('Logo');
+        $drawing->setPath(public_path('/tutores/encabezado.png')); // Ruta a tu imagen
+        $drawing->setHeight(50); // Altura de la imagen
+        $drawing->setCoordinates('A2'); // Celda donde se coloca
+        $drawing->setWorksheet($sheet);
+        //Ajuste del pie de pagina
+        $sheet->getHeaderFooter()
+            ->setOddFooter('&L&K000000 R00/0824 &R&K000000 F-OE-06');
+
 
         // Combinar celdas
         $sheet->mergeCells('A1:I1'); // Combina las celdas A1 hasta F1
@@ -65,6 +76,7 @@ class ReportExport implements FromArray, WithHeadings, WithStyles
         $sheet->getStyle('A2:F2')->getFont()->setBold(true)->setSize(12); // Segunda fila: negrita y tamaño 12
         $sheet->getStyle('A5:G5')->getFont()->setBold(true)->setSize(14); // Primera fila: negrita y tamaño 14
         $sheet->getStyle('A3:F3')->getFont()->setItalic(true); // Tercera fila: cursiva
+        $sheet->getStyle('A9:I9')->getFont()->setBold(true);
 
 
         // Agregar nombres en la misma fila (esquinas opuestas)
@@ -105,7 +117,13 @@ class ReportExport implements FromArray, WithHeadings, WithStyles
         $drawing = new Drawing();
         $drawing->setName('Logo');
         $drawing->setDescription('Logo del Instituto');
-        $drawing->setPath(public_path() . '\tutores\encabezado.png'); // Ruta a la imagen
+
+        // Usar barra normal '/' o DIRECTORY_SEPARATOR para que funcione correctamente
+        $drawing->setPath(public_path() . '/tutores/encabezado.png'); // Ruta a la imagen con barra normal
+
+        // Alternativamente, usando DIRECTORY_SEPARATOR
+        // $drawing->setPath(public_path() . DIRECTORY_SEPARATOR . 'tutores' . DIRECTORY_SEPARATOR . 'encabezado.png');
+
         $drawing->setHeight(90); // Altura de la imagen
         $drawing->setCoordinates('A1'); // Celda donde se colocará
         return $drawing;

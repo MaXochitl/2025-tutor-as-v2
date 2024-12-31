@@ -111,7 +111,10 @@ class ExportReportsControllerXLX extends Controller
         date_default_timezone_set('America/Mexico_City');
         // Cabeceras dinámicas
         $headings = [
-            //[''],
+            [' '],
+            [' '],
+            [' '],
+            [' '],
             ['INSTITUTO TECNOLÓGICO SUPERIOR DE TANTOYUCA'],
             ['REPORTE SEMESTRAL DEL COORDINADOR DE TUTORÍA DEL DEPARTAMENTO ACADÉMICO'],
             ['Programa Educativo:', '', $carrera->nombre_carrera, '', '', '', ''], // Dinámico
