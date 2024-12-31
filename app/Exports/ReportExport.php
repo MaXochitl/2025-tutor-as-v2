@@ -50,7 +50,7 @@ class ReportExport implements FromArray, WithHeadings, WithStyles
         $drawing = new Drawing();
         $drawing->setName('Logo');
         $drawing->setDescription('Logo');
-        $drawing->setPath(public_path('/tutores/encabezado.png')); // Ruta a tu imagen
+        $drawing->setPath(public_path('/tutores/tecnologico.jpg')); // Ruta a tu imagen
         $drawing->setHeight(50); // Altura de la imagen
         $drawing->setCoordinates('A2'); // Celda donde se coloca
         $drawing->setWorksheet($sheet);
