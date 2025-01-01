@@ -52,7 +52,8 @@ class ReportExport implements FromArray, WithHeadings, WithStyles
         $drawing->setDescription('Logo');
         $drawing->setPath(public_path('/tutores/tecnologico.jpg')); // Ruta a tu imagen
         $drawing->setHeight(50); // Altura de la imagen
-        $drawing->setCoordinates('A2'); // Celda donde se coloca
+        $drawing->setWidth(700); // Altura de la imagen
+        $drawing->setCoordinates('A1'); // Celda donde se coloca
         $drawing->setWorksheet($sheet);
         //Ajuste del pie de pagina
         $sheet->getHeaderFooter()
@@ -76,36 +77,47 @@ class ReportExport implements FromArray, WithHeadings, WithStyles
         $sheet->getStyle('A2:F2')->getFont()->setBold(true)->setSize(12); // Segunda fila: negrita y tamaño 12
         $sheet->getStyle('A5:G5')->getFont()->setBold(true)->setSize(14); // Primera fila: negrita y tamaño 14
         $sheet->getStyle('A3:F3')->getFont()->setItalic(true); // Tercera fila: cursiva
-        $sheet->getStyle('A9:I9')->getFont()->setBold(true);
+        $sheet->getStyle('A9:H9')->getFont()->setBold(true);
+        $sheet->getStyle('A9:H9')->applyFromArray([
+            'font' => [
+                'bold' => true,
+                'color' => ['rgb' => 'f2f2f2'], // Color del texto (blanco)
+            ],
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => ['rgb' => '1b396a'], // Amarillo
+            ],
+        ]);
+        $sheet->getColumnDimension('B')->setWidth(30);
 
 
         // Agregar nombres en la misma fila (esquinas opuestas)
-        $lastRow = count($this->data) + 8; // Calcular la última fila de datos (ajustar según cabeceras)
+        $lastRow = count($this->data) + 10; // Calcular la última fila de datos (ajustar según cabeceras)
 
         $sheet->setCellValue('A' . ($lastRow + 1), 'Lic. Emma Valeria Ramírez Guzmán'); // Esquina izquierda
-        $sheet->setCellValue('I' . ($lastRow + 1), 'MC. Sonia Cruz Rivero'); // Esquina derecha
+        $sheet->setCellValue('H' . ($lastRow + 1), 'MC. Sonia Cruz Rivero'); // Esquina derecha
 
         $sheet->setCellValue('A' . ($lastRow + 2), 'Encargada de la oficina de Orientacion'); // Esquina izquierda
-        $sheet->setCellValue('I' . ($lastRow + 2), 'Jefa del Dpto. Desarrollo Académico'); // Esquina derecha
+        $sheet->setCellValue('H' . ($lastRow + 2), 'Jefa del Dpto. Desarrollo Académico'); // Esquina derecha
 
 
         // Aplicar estilos a los nombres
         $sheet->getStyle('A' . ($lastRow + 2))
             ->getFont()->setBold(true)->setSize(12);
-        $sheet->getStyle('I' . ($lastRow + 2))
+        $sheet->getStyle('H' . ($lastRow + 2))
             ->getFont()->setBold(true)->setSize(12);
 
         // Aplicar estilos a los cargos
         $sheet->getStyle('A' . ($lastRow + 1))
             ->getFont()->setItalic(false)->setSize(10);
-        $sheet->getStyle('I' . ($lastRow + 1))
+        $sheet->getStyle('H' . ($lastRow + 1))
             ->getFont()->setItalic(false)->setSize(10);
 
         // Alinear texto
         $sheet->getStyle('A' . ($lastRow + 1))->getAlignment()->setHorizontal('left');
-        $sheet->getStyle('I' . ($lastRow + 1))->getAlignment()->setHorizontal('right');
+        $sheet->getStyle('H' . ($lastRow + 1))->getAlignment()->setHorizontal('right');
         $sheet->getStyle('A' . ($lastRow + 2))->getAlignment()->setHorizontal('left');
-        $sheet->getStyle('I' . ($lastRow + 2))->getAlignment()->setHorizontal('right');
+        $sheet->getStyle('H' . ($lastRow + 2))->getAlignment()->setHorizontal('right');
 
         return [];
     }
