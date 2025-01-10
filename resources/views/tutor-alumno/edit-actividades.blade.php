@@ -31,7 +31,16 @@
 
                     <div class="form-group mt-3">
                         <label for="tiempo">Tiempo (en formato HH:MM)</label>
-                        <input type="text" name="tiempo" class="form-control" id="tiempo" value="{{ $actividad->tiempo }}" required placeholder="Ejemplo: 1:30">
+                        <input  type="text" 
+                                name="tiempo" 
+                                class="form-control" 
+                                id="tiempo" 
+                                value="{{ \Carbon\Carbon::parse($actividad->tiempo)->format('H:i') }}" 
+                                required 
+                                pattern="^([0-9]+):([0-5][0-9])$" 
+                                placeholder="Ejemplo: 1:30" 
+                                title="Formato incorrecto. Usa HH:MM, con minutos entre 00 y 59."
+                        >
                     </div>
 
                     <div class="form-group mt-3">
