@@ -37,7 +37,9 @@ class PruebasController extends Controller
     public function index()
     {
 
+        $path=public_path() . '\tutores\tecnologico.jpg';
 
+        return $path;
 
         $periodo = 3;
 

@@ -27,3 +27,37 @@ DELIMITER ;
 
 
 CALL ResumenRegistros(2,1);
+-----------------------------------------------------------------------------CONCATENANDO
+
+DROP PROCEDURE IF EXISTS ResumenRegistros;
+
+DELIMITER $$
+
+CREATE PROCEDURE ResumenRegistros(
+    IN periodo INT,
+    IN carrera INT
+)
+BEGIN
+    SELECT
+        t.tutor_id,
+        CONCAT(tu.nombre, ' ', tu.ap_paterno, ' ', tu.ap_materno) AS nombre_tutor,
+        CONCAT(ast.semestre, '-', ast.grupo) AS semestre_grupo,
+        COUNT(DISTINCT t.id) AS total_registros,
+        0 AS columna1, -- Primera columna fija con 0
+        0 AS falls  -- Segunda columna fija con 0
+    FROM periodo_tutorado t
+    JOIN tutores tu ON t.tutor_id = tu.id
+    JOIN asignacion_tutor ast ON t.tutor_id = ast.tutor_id
+    JOIN periodo_semaforo psf ON t.id = psf.periodo_id
+    WHERE t.periodo_id = periodo
+      AND ast.periodo_id = periodo
+      AND t.tipo = 1
+      AND tu.carrera_id = carrera
+    GROUP BY t.tutor_id, tu.nombre, tu.ap_paterno, tu.ap_materno, ast.semestre, ast.grupo;
+END$$
+
+DELIMITER ;
+
+
+
+CALL ResumenRegistros(3,1);
