@@ -64,7 +64,7 @@ class ActividadesTutoriaController extends Controller
 
     ]);
 
-    return $pdf->stream('actividades_tutoria.pdf');
+    return $pdf->stream('F-OE-04FORMATO DE PLAN DE TRABAJO DE TUTORIAS.pdf');
 }
 
 

@@ -30,9 +30,19 @@
                     </div>
 
                     <div class="form-group mt-3">
-                        <label for="tiempo">Tiempo (Horas, Minutos)</label>
-                        <input type="text" name="tiempo" class="form-control" id="tiempo" required placeholder="Ejemplo: 1:30">
-                    </div>
+                <label for="tiempo">Tiempo (Horas, Minutos)</label>
+    <input 
+        type="text" 
+        name="tiempo" 
+        class="form-control" 
+        id="tiempo" 
+        required 
+        pattern="^([0-9]+):([0-5][0-9])$" 
+        placeholder="Ejemplo: 1:30" 
+        title="Formato incorrecto. Usa HH:MM, con minutos entre 00 y 59."
+    >
+</div>
+
 
                     <div class="form-group mt-3">
                         <label for="recursos">Recursos</label>

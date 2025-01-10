@@ -19,7 +19,7 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formato de Actividades</title>
+    <title>F-OE-04 FORMATO DE PLAN DE TRABAJO DE TUTORIAS</title>
     <style>
         
         body {
@@ -69,7 +69,7 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
         .signature-container {
             position: relative;
             width: 100%;
-            height: 150px; 
+            height: 100px; 
             margin-top: 50px;
         }
 
@@ -101,6 +101,13 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
             background-color: black; 
             margin: 0;
             width: 150%; 
+        }
+        footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 180%;
+            padding: 10px 0;
         }
     </style>
 </head>
@@ -184,6 +191,12 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
         </div>
     </div>
 
-</body>
+    <footer>
+    <p style="display: inline-block; margin: 0 20px 0 0;">R00/0824</p>
+    <p style="display: inline-block; margin: 0 0 0 600px;">F-OE-04</p>
+</footer>
 
+
+</body>
 </html>
+
