@@ -1,12 +1,12 @@
 @php
-$carreras = App\Models\Carrera::all();
+    $carreras = App\Models\Carrera::all();
 @endphp
 <div class="modal fade" id="new-materia-modal" tabindex="-1" aria-labelledby="new-materia-modal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="new-materia-modal">
-                    Nueva Materia
+                    <b> Nueva Materia</b>
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
@@ -21,10 +21,17 @@ $carreras = App\Models\Carrera::all();
 
                     <div class="row">
 
-                        <div class="col-md-9">
+                        <div class="col-md-11">
                             <div class="form-group">
                                 <label for="materia" class="form-label">Nombre de la Materia</label>
                                 <input name="materia" type="text" class="form-control" id="materia">
+                            </div>
+                        </div>
+
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <label for="clave" class="form-label">Clave Materia</label>
+                                <input name="clave" type="text" class="form-control" id="clave" value="">
                             </div>
                         </div>
 
@@ -67,7 +74,7 @@ $carreras = App\Models\Carrera::all();
 
                         <div class="form-group">
                             <div style="text-align: center">
-                                
+
                                 <button type="submit" class="btn btn-primary" style="margin-top: 20px">Guardar</button>
                             </div>
                         </div>

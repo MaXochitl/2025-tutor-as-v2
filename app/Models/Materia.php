@@ -10,7 +10,7 @@ class Materia extends Model
     use HasFactory;
     protected $table = 'materias';
     protected $primarykey = 'id';
-    protected $fillable = ['nombre', 'semestre', 'carrera_id'];
+    protected $fillable = ['nombre', 'semestre', 'carrera_id','clave'];
     public $timestamps = false;
 
     public function periodos()

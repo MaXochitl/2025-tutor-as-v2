@@ -22,8 +22,6 @@
                         </div>
                     </div>
 
-
-
                     <div class="col-md-2">
                         <div class="form-group row">
                             <label for="semestre" class="form-label">Semestre</label>
@@ -49,6 +47,12 @@
                         </div>
                     </div>
 
+                    <div class="col-md-9">
+                        <div class="form-group row">
+                            <label for="materia" class="form-label">Clave</label>
+                            <input name="materia" type="text" class="form-control" id="materia">
+                        </div>
+                    </div>
 
                     <div class="col-md-11">
                         <label for="carrera" class="form-label">Carrera</label>

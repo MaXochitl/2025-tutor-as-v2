@@ -29,7 +29,7 @@
                         @csrf
                         <div class="btn-group">
                             <input name="busqueda" type="text" id="searchInput" class="form-control"
-                                placeholder="Buscar por nombre" value="{{ $palabra}}">
+                                placeholder="Buscar por nombre" value="{{ $palabra }}">
                             <button class="btn btn-primary"><svg xmlns="http://www.w3.org/2000/svg" width="16"
                                     height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
                                     <path
@@ -51,6 +51,7 @@
                     <thead>
                         <tr>
                             <th scope="col">Editar</th>
+                            <th scope="col">Clave</th>
                             <th scope="col">Materia</th>
                             <th scope="col">Semestre</th>
                             <th scope="col">Carrera</th>
@@ -76,6 +77,7 @@
                                     </a>
                                     @include('modal.materia.editar-materia')
                                 </th>
+                                <td>{{ $mater->clave }}</td>
                                 <td>{{ $mater->nombre }} </td>
                                 <td>{{ $mater->semestre }} </td>
                                 <td>{{ $mater->carrera->nombre_carrera }} </td>
@@ -127,6 +129,21 @@
             )
         </script>
     @endif
+
+    @if (session('error') == 'clave')
+        <script>
+            document.addEventListener("DOMContentLoaded", function() {
+                Swal.fire({
+                    title: 'Error',
+                    text: 'La clave ya existe, intenta con otra.',
+                    icon: 'error',
+                    confirmButtonText: 'Aceptar',
+                    timer: 4000
+                });
+            });
+        </script>
+    @endif
+
 
     <script>
         $('.form-delete-m').submit(function(e) {

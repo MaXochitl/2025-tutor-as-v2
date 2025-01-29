@@ -7,6 +7,7 @@ use App\Models\Carrera;
 use App\Models\Materia;
 use App\Models\Tutor;
 use App\Models\User;
+use Illuminate\Database\QueryException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -67,11 +68,19 @@ class MateriasController extends Controller
         $request->validate([
             'materia' => ['required']
         ]);
-        Materia::create([
-            'nombre' => $request->materia,
-            'semestre' => $request->semestre,
-            'carrera_id' => $request->carrera
-        ]);
+        try {
+            Materia::create([
+                'nombre' => $request->materia,
+                'semestre' => $request->semestre,
+                'carrera_id' => $request->carrera,
+                'clave' => $request->clave
+            ]);
+        } catch (QueryException $e) {
+            if ($e->errorInfo[1] == 1062) { // Código de error para clave duplicada
+                return back()->with('error', 'clave');
+            }
+            throw $e;
+        }
         return redirect()->route('materia.index');
     }
 
@@ -110,6 +119,7 @@ class MateriasController extends Controller
         $materia->nombre = $request->materia;
         $materia->semestre = $request->semestre;
         $materia->carrera_id = $request->carrera;
+        $materia->clave = $request->clave;
         $materia->save();
         return redirect()->route('materia.index');
     }

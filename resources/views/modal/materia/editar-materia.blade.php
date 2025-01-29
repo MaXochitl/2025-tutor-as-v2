@@ -18,11 +18,19 @@ $semestres = [1, 2, 3, 4, 5, 6, 7, 8, 9];
                     @csrf
                     <div class="row">
 
-                        <div class="col-md-9">
+                        <div class="col-md-11">
                             <div class="form-group">
                                 <label for="materia" class="form-label">Nombre de la Materia</label>
                                 <input name="materia" type="text" class="form-control" id="materia"
                                     value="{{ $mater->nombre }}">
+                            </div>
+                        </div>
+
+                        <div class="col-md-9">
+                            <div class="form-group">
+                                <label for="clave" class="form-label">Clave Materia</label>
+                                <input name="clave" type="text" class="form-control" id="clave"
+                                    value="{{ $mater->clave }}">
                             </div>
                         </div>
 
