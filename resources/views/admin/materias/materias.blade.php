@@ -130,19 +130,7 @@
         </script>
     @endif
 
-    @if (session('error') == 'clave')
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                Swal.fire({
-                    title: 'Error',
-                    text: 'La clave ya existe, intenta con otra.',
-                    icon: 'error',
-                    confirmButtonText: 'Aceptar',
-                    timer: 4000
-                });
-            });
-        </script>
-    @endif
+
 
 
     <script>
@@ -166,6 +154,34 @@
             })
         });
     </script>
+
+
+
+
+    @if (session('error') || $errors->any())
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            let errorMessage = '';
+
+            @if (session('error') == 'clave')
+                errorMessage += 'La clave ya existe, intenta con otra.<br>';
+            @endif
+
+            @if ($errors->any())
+                errorMessage += `{!! implode('<br>', $errors->all()) !!}`;
+            @endif
+
+            Swal.fire({
+                title: 'Error',
+                html: errorMessage,
+                icon: 'error',
+                confirmButtonText: 'Aceptar',
+                timer: 4000
+            });
+        });
+    </script>
+@endif
+
 @endsection
 
 @endsection

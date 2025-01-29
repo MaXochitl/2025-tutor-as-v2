@@ -66,8 +66,10 @@ class MateriasController extends Controller
     {
         //
         $request->validate([
-            'materia' => ['required']
+            'materia' => ['required'],
+            'clave' => ['required']
         ]);
+
         try {
             Materia::create([
                 'nombre' => $request->materia,
@@ -158,7 +160,7 @@ class MateriasController extends Controller
             $materias = Materia::where('nombre', 'LIKE', '%' . $palabra . '%')
                 ->orderby('carrera_id', 'asc')
                 ->orderby('semestre', 'asc')
-                ->paginate(5);
+                ->paginate(10);
         }
         return view('admin.materias.materias', compact('materias', 'palabra'));
     }

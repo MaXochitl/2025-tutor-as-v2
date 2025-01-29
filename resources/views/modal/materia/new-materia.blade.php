@@ -24,14 +24,15 @@
                         <div class="col-md-11">
                             <div class="form-group">
                                 <label for="materia" class="form-label">Nombre de la Materia</label>
-                                <input name="materia" type="text" class="form-control" id="materia">
+                                <input name="materia" type="text" class="form-control" id="materia" required>
                             </div>
                         </div>
 
                         <div class="col-md-9">
                             <div class="form-group">
                                 <label for="clave" class="form-label">Clave Materia</label>
-                                <input name="clave" type="text" class="form-control" id="clave" value="">
+                                <input name="clave" type="text" class="form-control" id="clave" value=""
+                                    required>
                             </div>
                         </div>
 
