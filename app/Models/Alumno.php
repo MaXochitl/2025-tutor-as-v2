@@ -73,4 +73,12 @@ class Alumno extends Model
         // return $this->hasMany(Evaluacion_respuesta::class);
         return $this->hasOne(Evaluacion_respuesta::class);
     }
+
+
+     // En el modelo Alumno.php
+     public function atencion()
+     {
+         return $this->hasOne(Atencion::class, 'alumno_id', 'id');
+     }
+ 
 }

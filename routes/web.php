@@ -41,6 +41,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Maatwebsite\Excel\Row;
 
+use App\Http\Controllers\AtencionController;
+
 App::setLocale('es');
 /*
 Route::get('dashboard',function(){
@@ -124,6 +126,15 @@ Route::delete('/removMateria/{id}/{reporte}', [
 
 
 Route::resource('reporte', ControlMateriasController::class)->middleware(['auth'])->names('reporte');
+
+
+/** °°°°°°°°°°tutorias**/
+
+Route::post('atenciones/store', [AtencionController::class, 'store'])->name('atenciones.store');
+
+Route::get('/atenciones/{id}', [AtencionController::class, 'show']);
+
+Route::get('/reporte-pdf/{id}', [AtencionController::class, 'createPDF'])->name('reporte.pdf');
 
 
 
