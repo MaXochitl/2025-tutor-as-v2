@@ -31,6 +31,7 @@ use App\Http\Controllers\PruebasController;
 use App\Http\Controllers\ReportesController;
 use App\Http\Controllers\TutoriasController;
 use App\Http\Controllers\ActividadesTutoriaController;
+use App\Http\Controllers\ReporteSemCarrerasController;
 use App\Models\Altera_entrega;
 use App\Models\Alumno;
 use App\Models\File_format;
@@ -104,7 +105,7 @@ Route::post('/pdf-actividades', [ActividadesTutoriaController::class, 'pdfActivi
 Route::resource('orientacion', OrientacionController::class)->middleware(['auth'])->names('orientacion');
 Route::post('importExcel', [AlumnosExamenController::class, 'importExcel'])->middleware(['auth'])->name('importExcel');
 Route::post('importAlumnos', [AlumnosController::class, 'importAlumnos'])->middleware(['auth'])->name('importAlumnos');
-
+Route::get('importExcelInformeSC', [ReporteSemCarrerasController::class, 'importInformeSC'])->name('exportInfSC');
 
 /*________________________________________----------------------------___________________________________________________------------------------SOLO TUTOR*/
 Route::put('/seguimiento-alumno/{id}/{mes}', [
