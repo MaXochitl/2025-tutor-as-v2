@@ -59,7 +59,7 @@ DESPUES DE HABER TERMINADO
         $user = User::create([
             'name' => 'Admin',
             'email' => 'orientacion14educativa@gmail.com',
-            'password' => Hash::make('orientacion321'),
+            'password' => Hash::make('newadminpass'),
             'tutor_id' => 'Admin01' //$tutor_b[0]->id
         ])->assignRole('admin');
 
