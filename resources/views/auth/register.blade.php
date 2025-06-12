@@ -69,7 +69,7 @@
 
                     <div>
                         <x-label for="carrera" value="Selecciona Carrera" />
-                        <select name="carrera" class="form-control" aria-label="Default select example">
+                        <select name="carrera" class="form-select" aria-label="Default select example">
                             @foreach ($carreras as $item)
                                 <option value="{{ $item->id }}">{{ $item->nombre_carrera }}</option>
                             @endforeach
