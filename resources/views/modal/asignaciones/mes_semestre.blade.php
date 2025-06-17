@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5>ASIGNAR SEMESTRE Y GRUPO</h5> <br>
-                {{ $item->id }}
+
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
 
