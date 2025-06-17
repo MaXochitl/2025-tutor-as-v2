@@ -142,7 +142,7 @@
                             <form class="input-group" method="POST"
                                 action="{{ route('searchAluTutor', $alumnos_tutor[0]->tutor->id) }} ">
                                 @csrf
-                                <input name="search_tutor" type="text" class="form-control" placeholder="Bucar"
+                                <input name="search_tutor" type="text" class="form-control" placeholder="Bucar.."
                                     aria-label="Buscar" id="search-input" value="{{ $palabra }} ">
                                 <div class="input-group-append">
                                     <!-- Botón de buscar -->
