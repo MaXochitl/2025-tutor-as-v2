@@ -1,4 +1,4 @@
-@include("modal.alumno.add-alumno")
+
 <div class="row row-tutor">
     <div class="col d-flex flex-column flex-shrink-0" style="padding: 20px;">
         <div class="col-8">
@@ -372,3 +372,4 @@
 
     </div>
 </div>
+@include("modal.alumno.add-alumno")
