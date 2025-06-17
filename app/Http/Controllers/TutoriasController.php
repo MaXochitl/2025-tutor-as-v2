@@ -207,7 +207,9 @@ class TutoriasController extends Controller
             ->where('tipo', 1)
             ->whereHas('alumno', function ($query) use ($palabra) {
                 $query->where('nombre', 'like', '%' . $palabra . '%')
-                ->orWhere('id', 'like', '%' . $palabra . '%');
+                ->orWhere('id', 'like', '%' . $palabra . '%')
+                ->orWhere('ap_paterno', 'like', '%' . $palabra . '%')
+                ->orWhere('ap_materno', 'like', '%' . $palabra . '%');
             })
             ->orderby('semaforo_id', 'desc')
             ->paginate(15);
