@@ -30,7 +30,7 @@ $semestres = [1, 2, 3, 4, 5, 6, 7, 8, 9];
                             <div class="form-group">
                                 <label for="clave" class="form-label">Clave Materia</label>
                                 <input name="clave" type="text" class="form-control" id="clave"
-                                    value="{{ $mater->clave }}">
+                                    value="{{ $mater->clave }}" required>
                             </div>
                         </div>
 
