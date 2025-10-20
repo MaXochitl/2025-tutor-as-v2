@@ -6,7 +6,6 @@
                     Materias Aprobadas
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-
             </div>
             <div class="modal-body" style="text-align: left">
                 <form method="POST" action="{{ route('addMateria.addMateria',[$periodo_tutorado->id,1]) }}">
@@ -24,9 +23,21 @@
                                 <tr>
                                     <th scope="row">
                                         <label class="list-group-item">
-                                            <input name="materiax[]" class="form-check-input me-1"
-                                                type="checkbox" value="{{ $item->id }} ">
-                                            {{ $item->nombre }}
+                                            <input 
+                                                name="materiax[]" 
+                                                class="form-check-input me-1"
+                                                type="checkbox" 
+                                                value="{{ $item->id }} " 
+                                                @if(in_array($item->id, $materias_seleccionadas)) 
+                                                    checked disabled 
+                                                @endif
+                                                >
+                                                {{ $item->nombre }}
+                                                <span>
+                                                @if(in_array($item->id, $materias_seleccionadas))
+
+                                                @endif
+                                                </span>
                                         </label>
                                     </th>
 

@@ -120,11 +120,16 @@ class ControlMateriasController extends Controller
             ->where('alumno_id', $periodo_tutorado->alumno_id)
             ->where('status', 0);
 
+        $materias_seleccionadas = array_merge(
+            $materia_aprobadas->pluck('materia_id')->toArray(),
+            $materia_reprobadas->pluck('materia_id')->toArray()
+        );
+
         $now = new DateTime();
         $fecha = $now->format('Y-m-d H:i:s'); //obtiene fecha actual
         $periodo_tutorado->entrega_final = $fecha;
 
-        return view('tutor-alumno.end-report', compact('periodo_tutorado', 'materias', 'materia_aprobadas', 'materia_reprobadas', 'semaforo'));
+        return view('tutor-alumno.end-report', compact('periodo_tutorado', 'materias', 'materia_aprobadas', 'materia_reprobadas','materias_seleccionadas', 'semaforo'));
     }
 
     /**
