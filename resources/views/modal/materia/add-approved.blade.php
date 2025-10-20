@@ -33,11 +33,6 @@
                                                 @endif
                                                 >
                                                 {{ $item->nombre }}
-                                                <span>
-                                                @if(in_array($item->id, $materias_seleccionadas))
-
-                                                @endif
-                                                </span>
                                         </label>
                                     </th>
 

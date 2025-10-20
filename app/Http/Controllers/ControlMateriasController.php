@@ -120,6 +120,7 @@ class ControlMateriasController extends Controller
             ->where('alumno_id', $periodo_tutorado->alumno_id)
             ->where('status', 0);
 
+        //Metodo para verificar materias seleccionadas.
         $materias_seleccionadas = array_merge(
             $materia_aprobadas->pluck('materia_id')->toArray(),
             $materia_reprobadas->pluck('materia_id')->toArray()
