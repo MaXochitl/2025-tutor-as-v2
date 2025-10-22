@@ -46,10 +46,11 @@
                     <p class="head-alumnos-tutor"><b>Carrera: </b> {{ $tutor->carrera->nombre_carrera }}
                     </p>
 
-                    @if ($asigno != 0)
-                        <p class="head-alumnos-tutor"><b>Semetre:</b>
-                            {{ $asignado[0]->semestre }} <b>Grupo:</b> {{ $asignado[0]->grupo }} </p>
-                        <p class="head-alumnos-tutor"> </p>
+                    @if ($asigno != 0 && !($asignado[0]->semestre == 0 || $asignado[0]->grupo == 'sin asignar'))
+                        <p class="head-alumnos-tutor">
+                            <b>Semestre:</b> {{ $asignado[0]->semestre }}
+                            <b>Grupo:</b> {{ $asignado[0]->grupo }}
+                        </p>
                     @else
                         <div class="alert alert-danger">
                             No se ha asignado grupo

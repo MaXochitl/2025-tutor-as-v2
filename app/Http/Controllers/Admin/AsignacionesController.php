@@ -150,8 +150,8 @@ class AsignacionesController extends Controller
                     Asignacion_tutor::create([
                         'tutor_id' => $value->id,
                         'periodo_id' => $periodo,
-                        'semestre' => 1,
-                        'grupo' => 'A'
+                        'semestre' => 0,
+                        'grupo' => 'sin asignar'
                     ]);
                 }
             }
