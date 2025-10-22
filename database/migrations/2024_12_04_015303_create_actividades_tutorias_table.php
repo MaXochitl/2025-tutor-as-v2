@@ -23,7 +23,7 @@ class CreateActividadesTutoriasTable extends Migration
 
             $table->timestamps();
 
-            // foránea
+            // CLAVE FORANEA
             $table->foreign('tutor_id')->references('id')->on('tutores')->onDelete('cascade'); 
         });
     }
