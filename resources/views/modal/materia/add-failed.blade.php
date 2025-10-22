@@ -23,9 +23,20 @@
                                 <tr>
                                     <th scope="row">
                                         <label class="list-group-item">
-                                            <input name="materiax[]" class="form-check-input me-1"
-                                                type="checkbox" value="{{ $item->id }} ">
-                                            {{ $item->nombre }}
+                                            <input 
+                                                name="materiax[]" 
+                                                class="form-check-input me-1"
+                                                type="checkbox" 
+                                                value="{{ $item->id }} "
+                                                @if(in_array($item->id, $materias_seleccionadas)) 
+                                                    checked disabled 
+                                                @endif
+                                                >
+                                                {{ $item->nombre }}
+                                                <span>
+                                                @if(in_array($item->id, $materias_seleccionadas))
+                                                @endif
+                                                </span>
                                         </label>
                                     </th>
 
