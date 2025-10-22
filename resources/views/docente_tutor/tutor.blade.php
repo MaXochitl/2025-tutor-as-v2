@@ -23,8 +23,7 @@
                         <th scope="col">TUTOR<br>3</th>
                         <th scope="col">DOCENTE<br>4</th>
                         <th scope="col">TUTOR<br>4</th>
-                        <th scope="col">RESULTADOS</th>
-                        <th scope="col">TUTOR</th>
+                        <th scope="col">DOCENTE QUE CANALIZO</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -63,7 +62,7 @@
                                             @endif
                                         </div>
                                     </td>
-
+                                    {{-- Tutor 1 --}}
                                     <td>
                                         <div>
                                             {{ $alumnos->oe_1 }}
@@ -94,21 +93,21 @@
                                             </b>
                                         @endif
                                     </td>
+
+                                    {{-- Tutor 2 --}}
                                     <td>
                                         <div>
                                             {{ $alumnos->oe_2 }}
                                         </div>
-                                        @if ($fecha_actual == $mes_2 || ($fecha_actual >= $mes_1 && $fecha_actual <= $mes_2))
+                                        @if (($fecha_actual >= $mes_1 && $fecha_actual <= $mes_2) || $altera_entrega->mes_2)
                                             <div class="d-grid gap-2">
-                                                <a href="" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#oe2Modal{{ $alumnos->id }}"
-                                                    data-bs-whatever="@mdo">
+                                                <a href="#" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#oe2Modal{{ $alumnos->id }}" data-bs-whatever="@mdo">
                                                     Seguimiento
                                                 </a>
                                             </div>
                                             @include('modal.orientacion.mes2')
                                         @endif
-
                                     </td>
 
 
@@ -125,15 +124,15 @@
                                         @endif
                                     </td>
 
+                                    {{-- Tutor 3 --}}
                                     <td>
                                         <div>
                                             {{ $alumnos->oe_3 }}
                                         </div>
-                                        @if ($fecha_actual >= $mes_2 && $fecha_actual <= $mes_3)
+                                        @if (($fecha_actual >= $mes_2 && $fecha_actual <= $mes_3) || $altera_entrega->mes_3)
                                             <div class="d-grid gap-2">
-                                                <a href="" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#oe3Modal{{ $alumnos->id }}"
-                                                    data-bs-whatever="@mdo">
+                                                <a href="#" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#oe3Modal{{ $alumnos->id }}" data-bs-whatever="@mdo">
                                                     Seguimiento
                                                 </a>
                                             </div>
@@ -156,44 +155,22 @@
                                         @endif
                                     </td>
 
-
+                                    {{-- Tutor 4 --}}
                                     <td>
                                         <div>
                                             {{ $alumnos->oe_4 }}
                                         </div>
-                                        @if ($fecha_actual >= $mes_3 && $fecha_actual <= $mes_4)
+                                        @if (($fecha_actual >= $mes_3 && $fecha_actual <= $mes_4) || $altera_entrega->mes_4)
                                             <div class="d-grid gap-2">
-                                                <a href="" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#oe4Modal{{ $alumnos->id }}"
-                                                    data-bs-whatever="@mdo">
+                                                <a href="#" type="button" class="btn btn-primary" data-bs-toggle="modal"
+                                                    data-bs-target="#oe4Modal{{ $alumnos->id }}" data-bs-whatever="@mdo">
                                                     Seguimiento
                                                 </a>
                                             </div>
                                             @include('modal.orientacion.mes4')
                                         @endif
-
-
                                     </td>
 
-                                    <td>
-                                        <div>
-                                            {{ $alumnos->reporte_final }}
-                                        </div>
-
-                                        @if ($fecha_actual >= $mes_4 && $fecha_actual <= $entrega_final)
-                                            <div class="d-grid gap-2">
-                                                <a href="" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#endMatter{{ $alumnos->id }}"
-                                                    data-bs-whatever="@mdo">
-                                                    Materias
-                                                </a>
-
-                                            </div>
-                                            @include(
-                                                'modal.materia.resultado-materia'
-                                            )
-                                        @endif
-                                    </td>
                                     <td>
                                         {{ $alumnos->tutor->nombre . ' ' . $alumnos->tutor->ap_paterno . ' ' . $alumnos->tutor->ap_materno }}
                                     </td>

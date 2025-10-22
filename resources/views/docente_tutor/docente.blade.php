@@ -42,7 +42,6 @@
                         <th scope="col">TUTOR<br>3</th>
                         <th scope="col">DOCENTE<br>4</th>
                         <th scope="col">TUTOR<br>4</th>
-                        <th scope="col">RESULTADOS</th>
                         <th scope="col">OPCIONES</th>
                     </tr>
                 </thead>
@@ -246,33 +245,6 @@
 
                                 </td>
 
-                                <td>
-                                    <div>
-                                        {{ $alumnos->reporte_final }}
-                                    </div>
-                                    @can('mes.tutor')
-                                        @if (($fecha_actual >= $mes_4 && $fecha_actual <= $entrega_final|| $altera_entrega->mes_4))
-                                            <div class="d-grid gap-2">
-                                                <a href="{{ route('reporte.show', $alumnos->id) }} " type="button"
-                                                    class="btn btn-primary">
-                                                    Seguimiento
-                                                </a>
-                                            </div>
-                                        @endif
-                                    @endcan
-
-                                    @can('mes.admin')
-                                        <div class="d-grid gap-2">
-                                            <a href="" type="button" class="btn btn-primary"
-                                                data-bs-toggle="modal" data-bs-target="#endMatter{{ $alumnos->id }}"
-                                                data-bs-whatever="@mdo">
-                                                Materias
-                                            </a>
-
-                                        </div>
-                                        @include('modal.materia.resultado-materia')
-                                    @endcan
-                                </td>
                                 <td>
                                     <div>
                                         <form action="{{ route('alumnos-tutor.destroy', $alumnos->id) }} "

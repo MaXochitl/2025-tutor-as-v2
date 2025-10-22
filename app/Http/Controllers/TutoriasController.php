@@ -374,7 +374,18 @@ class TutoriasController extends Controller
 
         $tutorias->save();
 
+    // detectar la URL anterior (desde donde se envio el formulario)
+    $previous = url()->previous();
 
+    // si la peticion viene desde la vista de reportes_tutor MODULO DEL TUTOR (mis tutorados canalizados)
+    if (str_contains($previous, 'reportes_tutor')) {
+        // Redirigir a la misma vista (reportes_tutor.show)
+        $user = Auth::user();
+        return redirect()->route('reportes_tutor.show', $user->tutor_id)
+            ->with('success', 'Seguimiento actualizado correctamente');
+            echo('tutor');
+    }
+        // si no redirigir a alumnos-tutor.show MODULO DE OE
         return redirect()->route('alumnos-tutor.show', $tutorias->tutor_id);
     }
 
