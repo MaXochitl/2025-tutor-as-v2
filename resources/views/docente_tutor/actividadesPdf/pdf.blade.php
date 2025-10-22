@@ -18,6 +18,7 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
 
 <head>
     <meta charset="UTF-8">
+    <!--ESTRUCTURA DEL FORMATO PARA GENERACION DEL PDF ACTIVIDADES -->
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>F-OE-04 FORMATO DE PLAN DE TRABAJO DE TUTORIAS</title>
     <style>
@@ -178,7 +179,7 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
         <div class="signature signature-left">
             <hr>
             <p><strong>{{ $tutor->nombre }} {{ $tutor->ap_paterno }} {{ $tutor->ap_materno }}</strong>
-            <p> Nombre de la Persona Tutora </p>
+            <p> Docente Tutor </p>
             
             </p>
         </div>
@@ -186,9 +187,9 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
         <div class="signature signature-right">
             <hr>
             <p><strong>{{ $name }}<strong></p>
-            <p>Nombre y del Coordinador de tutorías por programa eduacativo</p>
-            
+            <p>Coordinador de tutorías del programa educativo</p>
         </div>
+
     </div>
 
     <footer>

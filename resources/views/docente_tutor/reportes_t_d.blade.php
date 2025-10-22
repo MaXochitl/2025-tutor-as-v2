@@ -106,10 +106,11 @@
 
                         <a class="nav-link tabs_s" id="nav-contact-tab" data-bs-toggle="tab" href="#nav-contact" role="tab"
                             aria-controls="nav-contact" aria-selected="false">Docente</a>
-                            <!-- Modificacion aqui -->
+
+                            <!-- Nuevo modulo actividades pdf  -->
                         <a class="nav-link tabs_s" id="nav-activities-tab" data-bs-toggle="tab" href="#nav-activities" role="tab"
                             aria-controls="nav-activities" aria-selected="false">Actividades</a>    
-                        <!--  Hasta Aqui  -->
+
                     </div>
                 </nav>
 

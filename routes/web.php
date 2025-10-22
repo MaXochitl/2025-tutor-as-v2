@@ -97,8 +97,8 @@ Route::resource('actividades-tutoria', ActividadesTutoriaController::class)->mid
 // Ruta para mostrar el reporte (GET)
 //Route::get('/reportes-tutor/{id}', [ReportesController::class, 'show'])->name('reportes_tutor.show');
 //Ruta para el pdf
-//Route::get('/pdf-actividades', [ActividadesTutoriaController::class, 'pdfActividades'])->name('pdf-actividades');
-Route::post('/pdf-actividades', [ActividadesTutoriaController::class, 'pdfActividades'])->name('pdf-actividades');
+Route::get('/pdf-actividades', [ActividadesTutoriaController::class, 'pdfActividades'])->middleware(['auth'])->name('pdf-actividades');
+Route::post('/pdf-actividades', [ActividadesTutoriaController::class, 'pdfActividades'])->middleware(['auth'])->name('pdf-actividades');
 
 //Route::put('/actividades-tutoria/{id}', [ActividadController::class, 'update'])->name('actividades-tutoria.update');
 

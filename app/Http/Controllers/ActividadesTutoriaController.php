@@ -16,9 +16,7 @@ use App\Models\User;
 use Barryvdh\DomPDF\Facade as PDF; 
 
 class ActividadesTutoriaController extends Controller
-{
-    
-    
+{     
     public function create()
     {
         $id_tutor = Auth::user()->tutor->id; 
@@ -67,9 +65,6 @@ class ActividadesTutoriaController extends Controller
     return $pdf->stream('F-OE-04FORMATO DE PLAN DE TRABAJO DE TUTORIAS.pdf');
 }
 
-
-     
-
     
 public function store(Request $request)
 {
@@ -106,9 +101,7 @@ public function store(Request $request)
                      ->with('success', 'Actividad creada exitosamente.');
 }
 
-
-
-    
+  
 public function edit($id)
 {
     $actividad = Actividades_tutoria::findOrFail($id);
@@ -147,4 +140,5 @@ public function update(Request $request, $id)
         return redirect()->route('reportes_tutor.show', $actividad->id)
                          ->with('success', 'Actividad eliminada exitosamente.');
     }
+    
 }

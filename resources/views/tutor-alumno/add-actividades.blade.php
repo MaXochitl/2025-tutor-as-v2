@@ -37,13 +37,11 @@
                     class="form-control" 
                     id="tiempo" 
                     required 
-                    pattern="^([0-9]+):([0-5][0-9])$" 
-                    placeholder="Ejemplo: 1:30" 
-                    title="Formato incorrecto. Usa HH:MM, con minutos entre 00 y 59."
+                    pattern="^([01][0-9]|2[0-3]):([0-5][0-9])$" 
+                    placeholder="Ejemplo: 13:30" 
+                    title="Formato incorrecto. Usa HH:MM, con horas de 00 a 23 y minutos de 00 a 59."
                 >
                 </div>
-
-
                     <div class="form-group mt-3">
                         <label for="recursos">Recursos</label>
                         <textarea name="recursos" class="form-control" id="recursos" rows="2" required placeholder="Describir los recursos, materiales, enlaces o herramientas que se utilizarán en el abordaje de la problemática o temática."></textarea>

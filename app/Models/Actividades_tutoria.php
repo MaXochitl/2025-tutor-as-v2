@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Actividades_tutoria extends Model
 {
-    use HasFactory;
+    use HasFactory; 
 
     protected $table = 'actividades_tutorias';
     
@@ -20,7 +20,6 @@ class Actividades_tutoria extends Model
         'tutor_id', 
     ];
 
-    
     protected $casts = [
         'fecha' => 'datetime', 
     ];
