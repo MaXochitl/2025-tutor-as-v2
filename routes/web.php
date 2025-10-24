@@ -87,6 +87,8 @@ Route::resource('evaluacion', EvaluacionController::class)->middleware(['auth', 
 Route::resource('periodo-eval', PeriodoEvalController::class)->middleware(['auth', 'can:solo.admin'])->names('periodo-eval');
 Route::resource('datospdf', ArchivoController::class)->middleware(['auth', 'can:solo.admin'])->names('datospdf');
 Route::resource('asignaciones', AsignacionesController::class)->middleware(['auth', 'can:solo.admin'])->names('asignaciones');
+//Ruta para el nuevo modal agregar_grupo.blade remplazo de mes_semestre.blade, agregarGrupo evalua si usara create o update
+Route::post('asignaciones/agregar-grupo', [AsignacionesController::class, 'agregarGrupo'])->middleware(['auth', 'can:solo.admin'])->name('asignaciones.agregarGrupo');
 Route::resource('memorandum', MemorandumController::class)->names('memorandum');
 Route::resource('alumnos_examenes', AlumnosExamenController::class)->middleware(['auth', 'can:solo.admin'])->names('alumnos_examenes');
 Route::resource('entrega', AlteraEntregaController::class)->names('entrega')->middleware(['auth', 'can:solo.admin']);
