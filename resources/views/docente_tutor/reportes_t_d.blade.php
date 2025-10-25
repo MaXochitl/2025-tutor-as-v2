@@ -47,9 +47,14 @@
                     </p>
 
                     @if ($asigno != 0 && !($asignado[0]->semestre == 0 || $asignado[0]->grupo == 'sin asignar'))
+                    <!-- modificado para mostrar multiples grupos asignados por OE, mostrados en orden alfanumerico  -->
                         <p class="head-alumnos-tutor">
-                            <b>Semestre:</b> {{ $asignado[0]->semestre }}
-                            <b>Grupo:</b> {{ $asignado[0]->grupo }}
+                            <b>Semestres y grupos:</b>
+                                @foreach ($asignado->sortBy(function($asig) {
+                                    return $asig->semestre . str_pad($asig->grupo, 2, '0', STR_PAD_LEFT);
+                                }) as $asig)
+                                    {{ $asig->semestre }}{{ $asig->grupo }}@if(!$loop->last),@endif
+                                @endforeach
                         </p>
                     @else
                         <div class="alert alert-danger">
