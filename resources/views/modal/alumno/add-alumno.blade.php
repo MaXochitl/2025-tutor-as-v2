@@ -40,6 +40,15 @@
                             <option value="16">16</option>
                         </select>
                     </div>
+                    <!-- alumno.grupo se pedira para mostrar en las multiples tablas a que sem-grupo pertenecera en este periodo-->
+                    <div class="mb-3">
+                        <label for="grupo" class="col-form-label">Grupo</label>
+                        <select name="grupo" class="form-select" aria-label="Default select example">
+                            @foreach(range('A', 'O') as $letra)
+                                <option value="{{ $letra }}">{{ $letra }}</option>
+                            @endforeach
+                        </select>
+                    </div>
                     <button type="submit" class="btn btn-primary">Agregar Alumno</button>
                 </form>
 

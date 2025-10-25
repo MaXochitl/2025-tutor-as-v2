@@ -1,0 +1,12 @@
+
+.casilla.editable {
+    background-color: #e8f1fc; /* azul muy suave */
+    border: 1px solid #3b82f6; /* azul tipo tailwind (azul medio) */
+    transition: 0.2s;
+    cursor: pointer;
+}
+
+.casilla.editable:hover {
+    background-color: #d5e5fb;
+    box-shadow: 0 0 4px rgba(59, 130, 246, 0.4);
+}

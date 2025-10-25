@@ -46,16 +46,27 @@
                     <p class="head-alumnos-tutor"><b>Carrera: </b> {{ $tutor->carrera->nombre_carrera }}
                     </p>
 
-                    @if ($asigno != 0)
-                        <p class="head-alumnos-tutor"><b>Semetre:</b>
-                            {{ $asignado[0]->semestre }} <b>Grupo:</b> {{ $asignado[0]->grupo }} </p>
-                        <p class="head-alumnos-tutor"> </p>
+                    @if ($asigno != 0 && !($asignado[0]->semestre == 0 || $asignado[0]->grupo == 'sin asignar'))
+                    <!-- modificado para mostrar multiples grupos asignados por OE, mostrados en orden alfanumerico  -->
+                        <p class="head-alumnos-tutor">
+                            <b>Semestres y grupos:</b>
+                                @foreach ($asignado->sortBy(function($asig) {
+                                    return $asig->semestre . str_pad($asig->grupo, 2, '0', STR_PAD_LEFT);
+                                }) as $asig)
+                                    {{ $asig->semestre }}{{ $asig->grupo }}@if(!$loop->last),@endif
+                                @endforeach
+                        </p>
                     @else
                         <div class="alert alert-danger">
                             No se ha asignado grupo
                         </div>
                     @endif
-
+                    <!-- sgAsignados se usara en orientacion para comparar que semestresgrupos no deberia tener por si se quivoco -->
+                    @php
+                        $sgAsignados = $asignado->map(function($a){
+                            return $a->semestre . '-' . $a->grupo;
+                        })->toArray();
+                    @endphp
                     <p class="head-alumnos-tutor"><b>Telefono:</b> {{ $tutor->telefono }} </p>
                     <p> <b>Periodo: </b>{{ $inicio_p . ' - ' . $fin_p }}</p>
 

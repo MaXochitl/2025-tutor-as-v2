@@ -150,8 +150,8 @@ class AsignacionesController extends Controller
                     Asignacion_tutor::create([
                         'tutor_id' => $value->id,
                         'periodo_id' => $periodo,
-                        'semestre' => 1,
-                        'grupo' => 'A'
+                        'semestre' => 0,
+                        'grupo' => 'sin asignar'
                     ]);
                 }
             }
@@ -166,6 +166,88 @@ class AsignacionesController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $asignacion = Asignacion_tutor::find($id); // buscar la asignacion por ID
+        
+        if (!$asignacion) {// Validar si existe
+            return redirect()->back()->with('error', 'No se encontró la asignación seleccionada.');
+        }
+
+        try {
+            $asignacion->delete();// Eliminar el registro
+
+            return redirect()->back()->with('success', 'El grupo fue eliminado correctamente.');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'No se pudo eliminar el grupo. Intenta nuevamente.');
+        }
     }
+
+    public function agregarGrupo(Request $request)
+    {
+
+        $tutor_id = $request->tutor_id;
+        $periodo_id = $request->periodo_id;
+        $semestre = $request->semestre;
+        $grupo = $request->grupo;
+
+        // (1) VERIFICAR SI EL GRUPO Y SEMESTRE YA ESTÁN ASIGNADOS
+        // Comprobar si ya existe una asignación para el mismo periodo, semestre y grupo
+        // Si existe, no se permite crear otra y se muestra un error indicando que tutor ya tiene ese grupo
+        $existe = Asignacion_tutor::where('periodo_id', $periodo_id)
+            ->where('semestre', $semestre)
+            ->where('grupo', $grupo)
+            ->with('tutor') 
+            ->first();
+
+        if ($existe) { // obtener el nombre del tutor asignado (si existe la relación)
+            $nombreTutor = $existe->tutor
+                ? $existe->tutor->nombre . ' ' . $existe->tutor->ap_paterno . ' ' . $existe->tutor->ap_materno
+                : 'Desconocido';
+
+            return redirect()->back()->with('error', "El semestre $semestre grupo $grupo ya está asignado al tutor $nombreTutor.");
+        }
+
+        // (2) ACTUALIZAR UN REGISTRO 'SIN ASIGNAR'
+        // Buscar si existe un registro para este tutor y periodo con semestre = 0 y grupo = 'sin asignar'
+        // Si existe, se actualiza ese registro en lugar de crear uno nuevo
+        $sinAsignar = Asignacion_tutor::where('tutor_id', $tutor_id)
+            ->where('periodo_id', $periodo_id)
+            ->where('semestre', 0)
+            ->where('grupo', 'sin asignar')
+            ->first();
+
+        if ($sinAsignar) { // si existe, actualizrlo en lugar de crear uno nuevo
+            $sinAsignar->update([
+                'semestre' => $semestre,
+                'grupo' => $grupo,
+            ]);
+
+            $tutor = $sinAsignar->tutor;
+            $nombreTutor = $tutor
+                ? $tutor->nombre . ' ' . $tutor->ap_paterno
+                : 'Desconocido';
+
+            return redirect()
+                ->route('asignaciones.index')
+                ->with('success', "$semestre$grupo asignado a $nombreTutor");//para pruebas: ->with('success', "$semestre$grupo asignado a $nombreTutor (registro actualizado).");
+        }
+
+        // (3) CREAR NUEVA ASIGNACION
+        // Si no existe un registro duplicado ni un registro "sin asignar" para actualizar, se crea una nueva asignacion
+        $asignacion = Asignacion_tutor::create([
+            'tutor_id' => $tutor_id,
+            'periodo_id' => $periodo_id,
+            'semestre' => $semestre,
+            'grupo' => $grupo
+        ]);
+
+        $tutor = $asignacion->tutor;
+        $nombreTutor = $tutor
+            ? $tutor->nombre . ' ' . $tutor->ap_paterno
+            : 'Desconocido';
+
+        return redirect()
+            ->route('asignaciones.index')
+            ->with('success', "$semestre$grupo asignado a $nombreTutor.");
+    }
+    
 }

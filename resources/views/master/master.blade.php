@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="{{ URL::asset('css/structure/navBar.css') }} ">
     <link rel="stylesheet" href="{{ URL::asset('css/structure/style_forms.css') }} ">
     <link rel="stylesheet" href="{{ URL::asset('css/alumnos_tutor/tutor_alumnos.css') }} ">
+    <link rel="stylesheet" href="{{ URL::asset('css/table/box.css') }}"> <!--css casillas visuales de color-->
 
 
     <!--DRAWN AND DROP-->
@@ -77,6 +78,7 @@
     <script type="text/javascript" src="{{ URL::asset('js/validacion.js') }}"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.19/dist/sweetalert2.all.min.js"></script>
 
+    <script src="{{ asset('js/tooltips.js') }}"></script><!--scrip para usar tooltips -->
 
 </body>
 
