@@ -61,7 +61,12 @@
                             No se ha asignado grupo
                         </div>
                     @endif
-
+                    <!-- sgAsignados se usara en orientacion para comparar que semestresgrupos no deberia tener por si se quivoco -->
+                    @php
+                        $sgAsignados = $asignado->map(function($a){
+                            return $a->semestre . '-' . $a->grupo;
+                        })->toArray();
+                    @endphp
                     <p class="head-alumnos-tutor"><b>Telefono:</b> {{ $tutor->telefono }} </p>
                     <p> <b>Periodo: </b>{{ $inicio_p . ' - ' . $fin_p }}</p>
 

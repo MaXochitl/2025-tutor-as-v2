@@ -59,14 +59,24 @@
                 $partes = explode('-', $grupoKey);
                 $semestre = $partes[0];
                 $grupo = $partes[1];
+                $sgActual = $semestre . '-' . $grupo;   
             @endphp
 
-        <h5 class="mt-3 mb-2">Semestre: {{ $semestre }} - Grupo: {{ $grupo }}</h5>
+            <!--A. comparar arreglo sgActual de semestregrupos asignados al tutor con los que se a asignado el el tutor-->
+            @if(!in_array($sgActual, $sgAsignados))
+                <h5 class="mt-3 mb-2 text-danger">Semestre: {{ $semestre }} - Grupo: {{ $grupo }} (No asignado)</h5>
+            @else
+                <h5 class="mt-3 mb-2">Semestre: {{ $semestre }} - Grupo: {{ $grupo }}</h5>
+            @endif
+
+        <!--A. Resaltar los semestres y grupos del tutor que no están dentro de sus semestresgrupos asignados por OE -->
+        <tr @if(!in_array($sgActual, $sgAsignados)) class="table-danger" @endif>
+
         <div class="table-responsive">
             <table class="table text-start table-striped" style="font-size: 12px"> <!--texto alineado a la izq-->
                 <thead>
                     <tr>
-                        <th scope="col">SG</th><!--test-->
+                        <!--th scope="col">SG</th> //test-->
                         <th class="title-table" scope="col">N° CONTROL</th>
                         <th class="title-table" scope="col">NOMBRE COMPLETO</th>
                         <th class="title-table" scope="col">TELEFONO</th>
@@ -87,7 +97,7 @@
                     @foreach ($alumnosGrupo as $alumnos)
                         <tr>
 
-                            <td>{{ $alumnos->semestre }}{{ $alumnos->alumno->grupo}}</td><!--test-->
+                            <!--<td>{{ $alumnos->semestre }}{{ $alumnos->alumno->grupo}}</td> test-->
                             <td style="background: {{ $alumnos->semaforo->fondo }} ">
                                 <p>{{ $alumnos->alumno->id }} </p>
                                 {{ $alumnos->semaforo->nombre }}
