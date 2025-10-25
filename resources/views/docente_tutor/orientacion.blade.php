@@ -66,8 +66,7 @@
             <table class="table text-start table-striped" style="font-size: 12px"> <!--texto alineado a la izq-->
                 <thead>
                     <tr>
-                        <th scope="col">SEMESTRE</th><!--test-->
-                        <th scope="col">GRUPO</th><!--test-->
+                        <th scope="col">SG</th><!--test-->
                         <th class="title-table" scope="col">N° CONTROL</th>
                         <th class="title-table" scope="col">NOMBRE COMPLETO</th>
                         <th class="title-table" scope="col">TELEFONO</th>
@@ -88,8 +87,7 @@
                     @foreach ($alumnosGrupo as $alumnos)
                         <tr>
 
-                            <td>{{ $alumnos->semestre }}</td><!--test-->
-                            <td>{{ $alumnos->alumno->grupo}}</td><!--test-->
+                            <td>{{ $alumnos->semestre }}{{ $alumnos->alumno->grupo}}</td><!--test-->
                             <td style="background: {{ $alumnos->semaforo->fondo }} ">
                                 <p>{{ $alumnos->alumno->id }} </p>
                                 {{ $alumnos->semaforo->nombre }}
@@ -99,25 +97,24 @@
                             <td>
                                 {{ $alumnos->alumno->telefono }}
                             </td>
-                            <td class="p-0">
-                                <div
-                                    style="pading: 0; height: 5px; background:{{ $alumnos->lights[0]->semaforos[0]->fondo }}; ">
-                                </div>
-                                <div>
-                                    {{ $alumnos->mes_1 }}
-                                    <br>
-                                </div>
-                                <div class="d-grid gap-2">
-                                    @if (($fecha_actual >= $inicio && $fecha_actual <= $mes_1) || $altera_entrega->mes_1)
-                                        <a href="" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                            data-bs-target="#month1Modal{{ $alumnos->id }} "
-                                            data-bs-id="{{ $alumnos->id }}">
-                                            Seguimiento
-                                        </a>
-                                        @include('modal.meses.mes1')
-                                    @endif
-                                </div>
+
+                        <!--MES 1 btn seguim invicible-->
+                        @if (($fecha_actual >= $inicio && $fecha_actual <= $mes_1) || $altera_entrega->mes_1)
+                            <td class="casilla editable"
+                                data-bs-toggle="modal"
+                                data-bs-target="#month1Modal{{ $alumnos->id }}"
+                                data-bs-toggle="tooltip"
+                                title="Seguimiento">
+                                <div style="height: 5px; background:{{ $alumnos->lights[0]->semaforos[0]->fondo }};"></div>
+                                <div>{{ $alumnos->mes_1 }}</div>
                             </td>
+                            @include('modal.meses.mes1')
+                        @else
+                            <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento bloqueado">
+                                <div style="height: 5px; background:{{ $alumnos->lights[0]->semaforos[0]->fondo }};"></div>
+                                <div>{{ $alumnos->mes_1 }}</div>
+                            </td>
+                        @endif
 
                             <td>
                                 <div>
@@ -125,67 +122,68 @@
                                 </div>
                             </td>
 
-                            <td class="p-0">
-                                <div style="height: 5px; background:{{ $alumnos->lights[1]->semaforos[0]->fondo }}; ">
-                                    <div>
-                                        {{ $alumnos->mes_2 }}
-                                        <br>
-                                    </div>
-                                    @if ($fecha_actual == $mes_2 || ($fecha_actual >= $mes_1 && $fecha_actual <= $mes_2) || $altera_entrega->mes_2)
-                                        <div class="d-grid gap-2">
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#month2Modal{{ $alumnos->id }}" data-bs-id="">
-                                                Seguimiento
-                                            </button>
-                                        </div>
-                                        @include('modal.meses.mes2')
-                                    @endif
+                        <!--MES 2 btn seguim invicible-->
+                        @if (($fecha_actual >= $mes_1 && $fecha_actual <= $mes_2) || $altera_entrega->mes_2)
+                            <td class="casilla editable"
+                                data-bs-toggle="modal"
+                                data-bs-target="#month2Modal{{ $alumnos->id }}"
+                                data-bs-toggle="tooltip"
+                                title="Seguimiento">
+                                <div style="height: 5px; background:{{ $alumnos->lights[1]->semaforos[0]->fondo }};"></div>
+                                <div>{{ $alumnos->mes_2 }}</div>
                             </td>
+                            @include('modal.meses.mes2')
+                        @else
+                            <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento bloqueado">
+                                <div style="height: 5px; background:{{ $alumnos->lights[1]->semaforos[0]->fondo }};"></div>
+                                <div>{{ $alumnos->mes_2 }}</div>
+                            </td>
+                        @endif
                             <td>
                                 <div>
                                     {{ $alumnos->oe_2 }}
                                 </div>
                             </td>
 
-                            <td class="p-0">
-                                <div style="height: 5px; background:{{ $alumnos->lights[2]->semaforos[0]->fondo }}; ">
-                                    <div>
-                                        {{ $alumnos->mes_3 }}
-                                    </div>
-                                    @if (($fecha_actual >= $mes_2 && $fecha_actual <= $mes_3) || $altera_entrega->mes_3)
-                                        <div class="d-grid gap-2">
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#month3Modal{{ $alumnos->id }} "
-                                                data-bs-id="{{ $alumnos->id }}">
-                                                Seguimiento
-                                            </button>
-                                        </div>
-                                        @include('modal.meses.mes3')
-                                    @endif
-
+                        <!--MES 3 btn seguim invicible-->
+                        @if (($fecha_actual >= $mes_2 && $fecha_actual <= $mes_3) || $altera_entrega->mes_3)
+                            <td class="casilla editable"
+                                data-bs-toggle="modal"
+                                data-bs-target="#month3Modal{{ $alumnos->id }}"
+                                data-bs-toggle="tooltip"
+                                title="Seguimiento">
+                                <div style="height: 5px; background:{{ $alumnos->lights[2]->semaforos[0]->fondo }};"></div>
+                                <div>{{ $alumnos->mes_3 }}</div>
                             </td>
+                            @include('modal.meses.mes3')
+                        @else
+                            <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento bloqueado">
+                                <div style="height: 5px; background:{{ $alumnos->lights[2]->semaforos[0]->fondo }};"></div>
+                                <div>{{ $alumnos->mes_3 }}</div>
+                            </td>
+                        @endif
 
                             <td>
                                 <div>{{ $alumnos->oe_3 }}</div>
                             </td>
 
-                            <td class="p-0">
-                                <div style="height: 5px; background:{{ $alumnos->lights[3]->semaforos[0]->fondo }}; ">
-                                    <div>
-                                        {{ $alumnos->mes_4 }}
-                                    </div>
-                                    @if (($fecha_actual >= $mes_3 && $fecha_actual <= $mes_4) || $altera_entrega->mes_4)
-                                        <div class="d-grid gap-2">
-                                            <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                data-bs-target="#month4Modal{{ $alumnos->id }} "
-                                                data-bs-id="{{ $alumnos->id }}">
-                                                Seguimiento
-                                            </button>
-                                        </div>
-                                        @include('modal.meses.mes4')
-                                    @endif
-
+                        <!--MES 4 btn seguim invicible-->
+                        @if (($fecha_actual >= $mes_3 && $fecha_actual <= $mes_4) || $altera_entrega->mes_4)
+                            <td class="casilla editable"
+                                data-bs-toggle="modal"
+                                data-bs-target="#month4Modal{{ $alumnos->id }}"
+                                data-bs-toggle="tooltip"
+                                title="Seguimiento">
+                                <div style="height: 5px; background:{{ $alumnos->lights[3]->semaforos[0]->fondo }};"></div>
+                                <div>{{ $alumnos->mes_4 }}</div>
                             </td>
+                            @include('modal.meses.mes4')
+                        @else
+                            <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento bloqueado">
+                                <div style="height: 5px; background:{{ $alumnos->lights[3]->semaforos[0]->fondo }};"></div>
+                                <div>{{ $alumnos->mes_4 }}</div>
+                            </td>
+                        @endif
 
                             <td>
                                 <div>
@@ -201,7 +199,7 @@
                                     <div class="d-grid gap-2">
                                         <a href="{{ route('reporte.show', $alumnos->id) }} " type="button"
                                             class="btn btn-primary">
-                                            Seguimiento
+                                            RF
                                         </a>
                                     </div>
                                 @endif

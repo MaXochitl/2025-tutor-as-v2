@@ -1,9 +1,9 @@
 <div class="modal fade" id="month3Modal{{$alumnos->id}}" tabindex="-1" aria-labelledby="monthModal" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content text-center"><!--texto centrado-->
             <div class="modal-header">
                 <h5 class="modal-title" id="month3Modal{{$alumnos->id}}">
-                    Alumno {{ $alumnos->alumno->nombre . ' ' . $alumnos->alumno->ap_paterno . ' ' . $alumnos->alumno->ap_paterno }}
+                    Alumno {{ $alumnos->alumno->nombre . ' ' . $alumnos->alumno->ap_paterno . ' ' . $alumnos->alumno->ap_materno }}<!--apellido paterno duplicado-->
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
