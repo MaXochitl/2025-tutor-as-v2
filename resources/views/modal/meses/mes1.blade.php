@@ -5,7 +5,7 @@
             <div class="modal-header">
                 <h5 class="modal-title" id="month1Modal{{ $alumnos->id }}">
                     Alumno
-                    {{ $alumnos->alumno->nombre . ' ' . $alumnos->alumno->ap_paterno . ' ' . $alumnos->alumno->ap_paterno }}
+                    {{ $alumnos->alumno->nombre . ' ' . $alumnos->alumno->ap_paterno . ' ' . $alumnos->alumno->ap_materno }}<!--apellido paterno duplicado-->
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
