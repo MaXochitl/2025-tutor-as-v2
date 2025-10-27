@@ -6,10 +6,16 @@
     <title>F-OE-08 REPORTE SEMESTRAL DEL TUTOR</title>
     
 </head>
+@php
+    // Ordenar alfanuméricamente: primero por semestre (número), luego por grupo (letra)
+    $asignadoOrdenado = collect($asignado)->sortBy(function($a) {
+        return sprintf('%02d%s', $a->semestre, strtoupper($a->grupo));
+    });
+@endphp
 <body>
     <table>
         <th>
-            <img src="./tutores/tecnologico.png" class="img-no-border" height="60">
+            <img src="./tutores/tecnologico.jpg" class="img-no-border" height="60">
         </th>
         <tr>
             <td class="title" colspan="2">
@@ -26,7 +32,10 @@
     <table>
         <tr>
             <td><strong>Programa Educativo: </strong> {{ $tutor->carrera->nombre_carrera }}</td>
-            <td><strong>Semestre y Grupo: </strong> {{ $asignado[0]->semestre }} {{ $asignado[0]->grupo }}</td>
+            <td><strong>Semestre y Grupo: </strong> 
+            @foreach($asignadoOrdenado as $asig)
+            {{ $asig->semestre }}° {{ strtoupper($asig->grupo) }}@if(!$loop->last), @endif
+            @endforeach
             <td><strong>Fecha de Entrega: </strong> {{ $fechaPDF }}</td>
         </tr>
     </table>
