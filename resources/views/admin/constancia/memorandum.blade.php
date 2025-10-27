@@ -56,54 +56,15 @@
                     </div>
 
                     <div style="text-align: justify; margin-top: 30px">
-                        
-<!-- codigo para soportar uno o multiples semestresgrupos-->
-@php
-    $asignacionesPeriodo = $item->asignaciones
-        ->where('periodo_id', $periodo->id)
-        ->sortBy(function ($a) {
-            return sprintf('%02d%s', $a->semestre, strtoupper($a->grupo));
-        })
-        ->values();
-
-    $count = $asignacionesPeriodo->count();
-
-    if ($count > 1) {
-        // Si hay más de un grupo, agregar “y” antes del último
-        $listaSemGrup = $asignacionesPeriodo
-            ->slice(0, $count - 1)
-            ->map(fn($a) => $a->semestre . '°' . strtoupper($a->grupo))
-            ->implode(', ')
-            . ' y ' .
-            $asignacionesPeriodo->last()->semestre . '°' .
-            strtoupper($asignacionesPeriodo->last()->grupo);
-    } else {
-        // Solo un grupo
-        $single = $asignacionesPeriodo->first();
-        if ($single && $single->semestre != 0 && $single->grupo != 'sin asignar') {
-            $listaSemGrup = $single->semestre . '°' . strtoupper($single->grupo);
-        } else {
-            $listaSemGrup = 'NO ASIGNADO'; // = 'No asignado'; para mostrar algo
-        }
-    }
-
-    $esPlural = $count > 1;
-@endphp
-
                         &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;Por medio del presente se le otorga la
-                        asignación como tutor
-<!-- mostrar de forma correcta el o los semestresgrupos-->
-@if ($esPlural)
-    de los semestres y grupos
-@else
-    del semestre y grupo
-@endif
-@if ($listaSemGrup == 'NO ASIGNADO')
-    <b>{{ $listaSemGrup }}</b><!-- resaltar en negritas el error al personal de OE-->
-@else
-    {{ $listaSemGrup }}<!-- mostrar normal sin resaltar-->
-@endif
-
+                        asignación como tutor del
+                        @foreach ($item->asignaciones->where('periodo_id', $periodo->id) as $items)
+                            {{ $items->semestre . '°' }}
+                        @endforeach
+                        semestre grupo
+                        @foreach ($item->asignaciones->where('periodo_id', $periodo->id) as $items)
+                            {{ $items->grupo }}
+                        @endforeach
                         de la carrera
                         de
                         @php

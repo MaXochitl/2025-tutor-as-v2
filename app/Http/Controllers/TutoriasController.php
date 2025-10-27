@@ -100,8 +100,7 @@ class TutoriasController extends Controller
         $id_tutor = Auth::user()->tutor->id;
 
         $request->validate([
-            'numero_control' => ['required'],
-            'grupo' => ['required'],  // se agrego validacion para el campo grupo
+            'numero_control' => ['required']
         ]);
 
 
@@ -130,12 +129,6 @@ class TutoriasController extends Controller
                 'semaforo_id' => 4
 
             ]);
-
-            // depues de agregar un alumno tutorado, aprovechar para actualizar el grupo en tabla 'alumno':
-            $alumno_actualizado = Alumno::find($request->numero_control);
-            $alumno_actualizado->grupo = $request->grupo;
-            $alumno_actualizado->save();
-
             $this->addIndications($alumno_add->id);
             return redirect()->route('reportes_tutor.show', $id_tutor);
         }

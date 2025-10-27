@@ -6,16 +6,10 @@
     <title>F-OE-08 REPORTE SEMESTRAL DEL TUTOR</title>
     
 </head>
-@php
-    // Ordenar alfanuméricamente: primero por semestre (número), luego por grupo (letra)
-    $asignadoOrdenado = collect($asignado)->sortBy(function($a) {
-        return sprintf('%02d%s', $a->semestre, strtoupper($a->grupo));
-    });
-@endphp
 <body>
     <table>
         <th>
-            <img src="./tutores/tecnologico.jpg" class="img-no-border" height="60">
+            <img src="./tutores/tecnologico.png" class="img-no-border" height="60">
         </th>
         <tr>
             <td class="title" colspan="2">
@@ -32,24 +26,12 @@
     <table>
         <tr>
             <td><strong>Programa Educativo: </strong> {{ $tutor->carrera->nombre_carrera }}</td>
-            <td><strong>Semestre y Grupo: </strong> 
-            @foreach($asignadoOrdenado as $asig)
-            {{ $asig->semestre }}° {{ strtoupper($asig->grupo) }}@if(!$loop->last), @endif
-            @endforeach
+            <td><strong>Semestre y Grupo: </strong> {{ $asignado[0]->semestre }} {{ $asignado[0]->grupo }}</td>
             <td><strong>Fecha de Entrega: </strong> {{ $fechaPDF }}</td>
         </tr>
     </table>
-
-    <!-- Ordenar alumnos alfanumericamente por semestre (numero) y grupo (letra)-->
-    @php
-    $alumnosOrdenados = collect($alumnos_tutor)->sortBy(function($a) {
-        $sem = $a->semestre ?? 0;
-        $grp = strtoupper($a->alumno->grupo ?? '');
-        return sprintf('%02d%s', $sem, $grp);
-    })->values();
-    @endphp
-
-    @foreach($alumnosOrdenados as $index => $alumno)<!-- iterar sobre alumnosOrdenados-->
+    
+    @foreach($alumnos_tutor as $index => $alumno)
     @if($index % 15 == 0 && $index != 0)
         <div class="page-break"></div>
     @endif
@@ -58,12 +40,11 @@
             <thead>
                 <tr class="sub-header">
                     <td rowspan="2" style="width: 5%;">No.</td>
-                    <td rowspan="2" style="width: 20%;">Lista de estudiantes</td>
-                    <td rowspan="2" style="width: 5%;">Grupo y Semestre</td><!-- mostrar col de sem y grup-->
-                    <td rowspan="2" style="width: 10%;">Firma del alumno</td>
-                    <td colspan="2">Estudiantes atendidos en el semestre</td>
-                    <td rowspan="2" style="width: 15%;">Estudiantes canalizados en el semestre</td>
-                    <td rowspan="2" style="width: 15%;">Área canalizada</td>
+                    <td rowspan="2" style="width: 20%;">Lista de estudiantes (6)</td>
+                    <td rowspan="2" style="width: 15%;">Firma del alumno</td>
+                    <td colspan="2">Estudiantes atendidos en el semestre (8)</td>
+                    <td rowspan="2" style="width: 15%;">Estudiantes canalizados en el semestre (9)</td>
+                    <td rowspan="2" style="width: 15%;">Área canalizada (10)</td>
                 </tr>
                 <tr class="sub-header">
                     <td>Tutoría Grupal</td>
@@ -75,7 +56,6 @@
             <tr>
                 <td>{{ $index + 1 }}</td>
                 <td>{{ $alumno->alumno ? $alumno->alumno->ap_paterno . ' ' . $alumno->alumno->ap_materno . ' ' . $alumno->alumno->nombre : 'Sin alumno' }}</td>
-                <td>{{ $alumno->semestre . '° ' . strtoupper($alumno->alumno->grupo)}}</td> <!-- mostrar dato de sem y grup-->
                 <td></td>
                 <td>@if($alumno->alumno->atencion && in_array($alumno->alumno->atencion->atencion, ['Grupal', 'Grupal/Individual'])) X @endif</td>
                 <td>@if($alumno->alumno->atencion && in_array($alumno->alumno->atencion->atencion, ['Individual', 'Grupal/Individual'])) X @endif</td>

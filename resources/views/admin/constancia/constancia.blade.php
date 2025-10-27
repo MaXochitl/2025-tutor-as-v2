@@ -39,40 +39,6 @@
 
                     <br>
                     <div style="text-align: center; margin-top: 10px">
-                        
-<!-- codigo para soportar uno o multiples semestresgrupos-->
-@php
-    $asignacionesPeriodo = $item->asignaciones
-        ->where('periodo_id', $periodo->id)
-        ->sortBy(function ($a) {
-            return sprintf('%02d%s', $a->semestre, strtoupper($a->grupo));
-        })
-        ->values();
-
-    $count = $asignacionesPeriodo->count();
-
-    if ($count > 1) {
-        // Si hay más de un grupo, agregar “y” antes del último
-        $listaSemGrup = $asignacionesPeriodo
-            ->slice(0, $count - 1)
-            ->map(fn($a) => $a->semestre . '°' . strtoupper($a->grupo))
-            ->implode(', ')
-            . ' y ' .
-            $asignacionesPeriodo->last()->semestre . '°' .
-            strtoupper($asignacionesPeriodo->last()->grupo);
-    } else {
-        // Solo un grupo
-        $single = $asignacionesPeriodo->first();
-        if ($single && $single->semestre != 0 && $single->grupo != 'sin asignar') {
-            $listaSemGrup = $single->semestre . '°' . strtoupper($single->grupo);
-        } else {
-            $listaSemGrup = 'NO ASIGNADO'; // = 'No asignado'; para mostrar algo
-        }
-    }
-
-    $esPlural = $count > 1;
-@endphp
-
                         <p style="font-size: 20px"> <b>H A C E &nbsp;&nbsp; C O N S T A R</b> </p>
                     </div>
 
@@ -100,18 +66,14 @@
                     {{ $inicio }} – {{ $fin }} con
                     un total de 16 Hrs en el Instituto Tecnológico Superior de Tantoyuca, atendiendo a
                     {{ $alumnos_tutorados->where('tutor_id', $item->id)->where('periodo_id', $periodo->id)->where('tipo', 1)->count() }}
-                    alumnos,
-<!-- mostrar de forma correcta el o los semestresgrupos-->
-@if ($esPlural)
-    de los semestres y grupos
-@else
-    del semestre y grupo
-@endif
-@if ($listaSemGrup == 'NO ASIGNADO')
-    <b>{{ $listaSemGrup }}</b><!-- resaltar en negritas el error al personal de OE-->
-@else
-    {{ $listaSemGrup }}<!-- mostrar normal sin resaltar-->
-@endif
+                    alumnos, de
+                    @foreach ($item->asignaciones->where('periodo_id', $periodo->id) as $items)
+                        {{ $items->semestre . '°' }}
+                    @endforeach
+                    semestre grupo
+                    @foreach ($item->asignaciones->where('periodo_id', $periodo->id) as $items)
+                        {{ $items->grupo }}
+                    @endforeach
                     , cumpliendo el 100% de las actividades del
                     programa, con un
                     índice de

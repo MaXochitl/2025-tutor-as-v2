@@ -14,32 +14,18 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
 @endphp
 
 <div class="container">
-    <!-- Mostrar alerts -->
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" aria-label="Close"></button>
-        </div>
-    @endif
-
-    @if (session('error'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ session('error') }}
-            <button type="button" class="btn-close" aria-label="Close"></button>
-        </div>
-    @endif
 
     <div class="row ">
 
         <div class="col d-flex flex-column flex-shrink-0" style="padding: 20px;">
             <div style="text-align: center">
                 <h1>
-                    Asignación de Tutores
+                    Asignacion de Tutores
                 </h1>
             </div>
 
             @if ($asig == 0)
-            <!-- Crear asignaciones iniciales -->
+            <div class="row row-tutor">
                 <div class="row  shadow-lg p-3">
                     <div class="col-3 col-md-4">
                         <label for="periodo">Periodo Actual</label>
@@ -59,17 +45,20 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
                     </div>
 
                     <div class="col-5 col-md-1 " style="margin-top: 21px">
-                        <a href="{{ route('asignaciones.create') }}" class="btn btn-success">
-                        <i class="bi bi-plus-circle" style="font-size: 1.5rem"></i>
+                        <a href="{{ route('asignaciones.create') }} " type="submit" class="btn btn-success">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-plus-circle" viewBox="0 0 16 16">
+                                <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z" />
+                                <path d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4z" />
+                            </svg>
                         </a>
 
                     </div>
                 </div>
-            <!--Fin Crear asignaciones iniciales -->   
+            </div>
 
             @else
 
-            <!-- Si ya existen asignaciones -->
+
             <div class="row row-tutor">
                 <form action="{{ route('asignaciones.store') }}" method="post">
                     @csrf
@@ -95,8 +84,9 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
 
                         <div class="col-5 col-md-1 " style="margin-top: 21px">
                             <button type="submit" class="btn btn-primary">
-                            <i class="bi bi-search" style="font-size: 1.5rem"></i>
-                            </button>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+                                </svg></button>
                         </div>
 
                         <div class="col-5 col-md-1 " style="margin-top: 21px">
@@ -110,7 +100,7 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
                     </div>
                 </form>
                 <div class="overflow-scroll" style="height: 500px">
-                    <table id="table" class="table table-striped text-center align-middle">  <!-- align-middle>-->
+                    <table id="table" class="table table-striped text-center">
                         <thead>
                             <tr>
                                 <th scope="col">FOTO</th>
@@ -118,18 +108,16 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
                                 <th scope="col">NOMBRE COMPLETO</th>
                                 <th scope="col">CORREO</th>
                                 <th scope="col">TELEFONO</th>
-                                <th scope="col">ASIGNACIONES</th><!-- mostrara los semestres y grupos-->
-                                <th scope="col">ACCIONES</th><!-- asignara los semestres y grupos-->
+                                <th scope="col">SEMESTRE</th>
+                                <th scope="col">GRUPO</th>
+                                <th scope="col">ASIGNAR</th>
 
                             </tr>
                         </thead>
                         <tbody>
 
                             @foreach ($asignaciones as $item)
-                            @if ($item->carrera_id)
-                            @php
-                            $asigPeriodo = $item->asignaciones->where('periodo_id', $periodo);
-                            @endphp
+                            @if ($item->carrera_id != null)
                             <tr>
                                 <td>
                                     <img src="{{ $item->foto }} " alt="" height="50px" width="50px" class="img-icon" style="border-radius: 40px; padding: 0px ">
@@ -140,59 +128,31 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
                                 <td>{{ $item->user->email }}</td>
                                 <td>{{ $item->telefono }} </td>
 
-                                <!--penultima columna, td que remplaza los antiguos td semestres y td grupos-->
                                 <td>
-                                    @if ($asigPeriodo->isNotEmpty())
-                                        {{-- Verificar si solo hay una asignación con semestre=0 y grupo="sin asignar" --}}
-                                        @php
-                                            $soloSinAsignar = $asigPeriodo->count() === 1 &&
-                                                            $asigPeriodo->first()->semestre == 0 &&
-                                                            strtolower(trim($asigPeriodo->first()->grupo)) == 'sin asignar';
-                                        @endphp
-
-                                        @if ($soloSinAsignar)
-                                            <span class="text-muted fst-italic">
-                                                Sin asignación actual.
-                                            </span>
-                                        @else
-                                            @foreach ($asigPeriodo as $a)
-                                                {{-- Saltar el registro "sin asignar" si hay más asignaciones --}}
-                                                @if ($a->semestre != 0 && strtolower(trim($a->grupo)) != 'sin asignar')
-                                                    <div class="d-flex justify-content-between align-items-center mb-1 border rounded p-1">
-                                                        <span>
-                                                            <span class="badge bg-primary">{{ $a->semestre }}</span>
-                                                            <span class="badge bg-secondary">{{ $a->grupo }}</span>
-                                                        </span>
-                                                        <form action="{{ route('asignaciones.destroy', $a->id) }}" method="POST" class="formulario-eliminar-grupo" data-id="{{ $a->id }}">
-                                                            @csrf
-                                                            @method('DELETE')
-                                                            <button type="submit" class="btn btn-sm btn-danger">
-                                                                <i class="bi bi-x-lg"></i>
-                                                            </button>
-                                                        </form>
-                                                    </div>
-                                                @endif
-                                            @endforeach
-                                        @endif
-                                    @else
-                                        <span class="text-muted">Sin asignaciones</span>
-                                    @endif
+                                    @foreach ($item->asignaciones->where('periodo_id', $periodo) as $tems)
+                                    {{ $tems->semestre }}
+                                    @php
+                                    $id_modal = $tems->id;
+                                    @endphp
+                                    @endforeach
+                                </td>
+                                <td>
+                                    @foreach ($item->asignaciones->where('periodo_id', $periodo) as $tems)
+                                    {{ $tems->grupo }}
+                                    @endforeach
                                 </td>
 
 
-                                <td> <!--ultima columna, botones de asignacion-->
-                                    <button type="button" class="btn btn-success btn-sm"
-                                        data-bs-toggle="modal"
-                                        data-bs-target="#modal-agregar{{ $item->id }}">
-                                    + Grupo
-                                    </button>
-                                    {{-- Modal de agregar grupo --}}
-                                    @include('modal.asignaciones.agregar_grupo', [
-                                    'item' => $item,
-                                    'semestres' => $semestres,
-                                    'grupos' => $grupos,
-                                    'periodo' => $periodo
-                                    ])
+                                <td>
+                                    <a href="" type="button" class="btn btn-warning" style="color: white" data-bs-toggle="modal" data-bs-target="#modal-asignacion{{ $item->id }}" data-bs-whatever="@mdo">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-pencil-square" viewBox="0 0 16 16">
+                                            <path d="M15.502 1.94a.5.5 0 0 1 0 .706L14.459 3.69l-2-2L13.502.646a.5.5 0 0 1 .707 0l1.293 1.293zm-1.75 2.456-2-2L4.939 9.21a.5.5 0 0 0-.121.196l-.805 2.414a.25.25 0 0 0 .316.316l2.414-.805a.5.5 0 0 0 .196-.12l6.813-6.814z" />
+                                            <path fill-rule="evenodd" d="M1 13.5A1.5 1.5 0 0 0 2.5 15h11a1.5 1.5 0 0 0 1.5-1.5v-6a.5.5 0 0 0-1 0v6a.5.5 0 0 1-.5.5h-11a.5.5 0 0 1-.5-.5v-11a.5.5 0 0 1 .5-.5H9a.5.5 0 0 0 0-1H2.5A1.5 1.5 0 0 0 1 2.5v11z" />
+
+                                        </svg>
+                                    </a>
+
+                                    @include('modal.asignaciones.mes_semestre')
 
                                 </td>
                             </tr>
@@ -216,7 +176,6 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
 <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
-<script src="{{ asset('js/custom/alerts.js') }}"></script> <!--animacion para alerts-->
 <script>
     $(document).ready(function() {
         $('#table').DataTable({
@@ -238,25 +197,10 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
             }
         });
 
-        //confirmacion antes de eliminar un grupo
-        $('.formulario-eliminar-grupo').submit(function(e) {
-            e.preventDefault();
+        // Muestra un cuadro de diálogo SweetAlert
 
-            Swal.fire({
-                title: '¿Estás seguro?',
-                text: "Esta asignación será eliminada permanentemente.",
-                icon: 'warning',
-                showCancelButton: true,
-                confirmButtonColor: '#3085d6',
-                cancelButtonColor: '#d33',
-                confirmButtonText: 'Sí, eliminar',
-                cancelButtonText: 'Cancelar'
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    this.submit();
-                }
-            });
-        });
+
     });
+
 </script>
 @endsection
