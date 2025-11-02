@@ -73,7 +73,11 @@
                                         data-bs-toggle="tooltip"
                                         title="Seguimiento">
 
-                                        <i class="bi bi-circle-fill" style="color: {{ $alumnos->lights[0]->semaforos[0]->fondo }};"></i>
+<i class="bi bi-circle-fill"
+   style="color: {{ (!empty($alumnos->lights[0]->semaforos[0]->fondo) && $alumnos->lights[0]->semaforos[0]->fondo !== '#')
+       ? $alumnos->lights[0]->semaforos[0]->fondo
+       : 'transparent' }};">
+</i>
                                         {{ $alumnos->mes_1 }}
 
                                         @can('show.date')
@@ -91,7 +95,11 @@
                                     <td class="p-0 text-muted"
                                         data-bs-toggle="tooltip"
                                         title="Seguimiento bloqueado">
-                                        <i class="bi bi-circle-fill" style="color: {{ $alumnos->lights[0]->semaforos[0]->fondo }};"></i>
+<i class="bi bi-circle-fill"
+   style="color: {{ (!empty($alumnos->lights[0]->semaforos[0]->fondo) && $alumnos->lights[0]->semaforos[0]->fondo !== '#')
+       ? $alumnos->lights[0]->semaforos[0]->fondo
+       : 'transparent' }};">
+</i>
                                         {{ $alumnos->mes_1 }}
 
                                         @can('show.date')
@@ -129,8 +137,11 @@
                                         data-bs-toggle="tooltip"
                                         title="Seguimiento">
 
-                                        <i class="bi bi-circle-fill"
-                                            style="color: {{ $alumnos->lights[1]->semaforos[0]->fondo }};"></i>
+<i class="bi bi-circle-fill"
+   style="color: {{ (!empty($alumnos->lights[1]->semaforos[0]->fondo) && $alumnos->lights[1]->semaforos[0]->fondo !== '#')
+       ? $alumnos->lights[1]->semaforos[0]->fondo
+       : 'transparent' }};">
+</i>
                                         {{ $alumnos->mes_2 }}
 
                                         @can('show.date')
@@ -145,8 +156,11 @@
                                     @include('modal.meses.mes2')
                                 @else
                                     <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento bloqueado">
-                                        <i class="bi bi-circle-fill"
-                                            style="color: {{ $alumnos->lights[1]->semaforos[0]->fondo }};"></i>
+<i class="bi bi-circle-fill"
+   style="color: {{ (!empty($alumnos->lights[1]->semaforos[0]->fondo) && $alumnos->lights[1]->semaforos[0]->fondo !== '#')
+       ? $alumnos->lights[1]->semaforos[0]->fondo
+       : 'transparent' }};">
+</i>
                                         {{ $alumnos->mes_2 }}
 
                                         @can('show.date')
@@ -183,8 +197,11 @@
                                         data-bs-toggle="tooltip"
                                         title="Seguimiento">
 
-                                        <i class="bi bi-circle-fill"
-                                            style="color: {{ $alumnos->lights[2]->semaforos[0]->fondo }};"></i>
+<i class="bi bi-circle-fill"
+   style="color: {{ (!empty($alumnos->lights[2]->semaforos[0]->fondo) && $alumnos->lights[2]->semaforos[0]->fondo !== '#')
+       ? $alumnos->lights[2]->semaforos[0]->fondo
+       : 'transparent' }};">
+</i>
                                         {{ $alumnos->mes_3 }}
 
                                         @can('show.date')
@@ -199,8 +216,11 @@
                                     @include('modal.meses.mes3')
                                 @else
                                     <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento bloqueado">
-                                        <i class="bi bi-circle-fill"
-                                            style="color: {{ $alumnos->lights[2]->semaforos[0]->fondo }};"></i>
+<i class="bi bi-circle-fill"
+   style="color: {{ (!empty($alumnos->lights[2]->semaforos[0]->fondo) && $alumnos->lights[2]->semaforos[0]->fondo !== '#')
+       ? $alumnos->lights[2]->semaforos[0]->fondo
+       : 'transparent' }};">
+</i>
                                         {{ $alumnos->mes_3 }}
                                         @can('show.date')
                                             @if ($alumnos->entrega_3)
@@ -237,8 +257,11 @@
                                         data-bs-toggle="tooltip"
                                         title="Seguimiento">
 
-                                        <i class="bi bi-circle-fill"
-                                            style="color: {{ $alumnos->lights[3]->semaforos[0]->fondo }};"></i>
+<i class="bi bi-circle-fill"
+   style="color: {{ (!empty($alumnos->lights[3]->semaforos[0]->fondo) && $alumnos->lights[3]->semaforos[0]->fondo !== '#')
+       ? $alumnos->lights[3]->semaforos[0]->fondo
+       : 'transparent' }};">
+</i>
                                         {{ $alumnos->mes_4 }}
 
                                         @can('show.date')
@@ -253,8 +276,11 @@
                                     @include('modal.meses.mes4')
                                 @else
                                     <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento bloqueado">
-                                        <i class="bi bi-circle-fill"
-                                            style="color: {{ $alumnos->lights[3]->semaforos[0]->fondo }};"></i>
+<i class="bi bi-circle-fill"
+   style="color: {{ (!empty($alumnos->lights[3]->semaforos[0]->fondo) && $alumnos->lights[3]->semaforos[0]->fondo !== '#')
+       ? $alumnos->lights[3]->semaforos[0]->fondo
+       : 'transparent' }};">
+</i>
                                         {{ $alumnos->mes_4 }}
 
                                         @can('show.date')
