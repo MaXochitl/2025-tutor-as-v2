@@ -1,7 +1,7 @@
 <div class="row row-tutor">
     <div class="col d-flex flex-column flex-shrink-0" style="padding: 20px;">
 
-        <div class="col-6">
+        <div class="col-12 d-flex align-items-center gap-3"><!--HorizontalMax-flexbox para boton y gap para espacio -->
             <a href="{{ route('alumnos-tutor.create') }} " type="button" class="btn btn-primary" data-bs-toggle="modal"
                 data-bs-target="#add-alumno-2" data-bs-whatever="@mdo">
                 <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
@@ -65,32 +65,45 @@
                                 <td>
                                     {{ $alumnos->alumno->telefono }}
                                 </td>
-                                <td>
-                                    <div>
+                                <!-- Docente 1 -->
+                                @if (($fecha_actual >= $inicio && $fecha_actual <= $mes_1) || $altera_entrega->mes_1)
+                                    <td class="casilla editable"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#month1Modal{{ $alumnos->id }}"
+                                        data-bs-toggle="tooltip"
+                                        title="Seguimiento">
+
+                                        <i class="bi bi-circle-fill" style="color: {{ $alumnos->lights[0]->semaforos[0]->fondo }};"></i>
                                         {{ $alumnos->mes_1 }}
-                                    </div>
-                                    <div class="d-grid gap-2">
-                                        @if (($fecha_actual >= $inicio && $fecha_actual <= $mes_1)|| $altera_entrega->mes_1)
-                                            <a href="" type="button" class="btn btn-primary"
-                                                data-bs-toggle="modal" data-bs-target="#month1Modal{{ $alumnos->id }} "
-                                                data-bs-id="{{ $alumnos->id }}">
-                                                Seguimiento
-                                            </a>
-                                            @include('modal.meses.mes1')
-                                        @endif
 
                                         @can('show.date')
-                                            @if ($alumnos->entrega_1 != null)
-                                                <b>
-                                                    @php
-                                                        echo date('d/m/Y', strtotime($alumnos->entrega_1));
-                                                    @endphp
-                                                </b>
+                                            @if ($alumnos->entrega_1)
+                                                <br>
+                                                <small class="text-muted">
+                                                    <b>{{ date('d/m/Y', strtotime($alumnos->entrega_1)) }}</b>
+                                                </small>
                                             @endif
                                         @endcan
+                                    </td>
 
-                                    </div>
-                                </td>
+                                    @include('modal.meses.mes1')
+                                @else
+                                    <td class="p-0 text-muted"
+                                        data-bs-toggle="tooltip"
+                                        title="Seguimiento bloqueado">
+                                        <i class="bi bi-circle-fill" style="color: {{ $alumnos->lights[0]->semaforos[0]->fondo }};"></i>
+                                        {{ $alumnos->mes_1 }}
+
+                                        @can('show.date')
+                                            @if ($alumnos->entrega_1)
+                                                <br>
+                                                <small class="text-muted">
+                                                    <b>{{ date('d/m/Y', strtotime($alumnos->entrega_1)) }}</b>
+                                                </small>
+                                            @endif
+                                        @endcan
+                                    </td>
+                                @endif
 
                                 <td>
                                     <div>
@@ -106,34 +119,46 @@
                                         </div>
                                         @include('modal.orientacion.mes1')
                                     @endcan
-
                                 </td>
 
-                                <td>
-                                    <div>
+                                <!-- Docente 2 -->
+                                @if (($fecha_actual >= $mes_1 && $fecha_actual <= $mes_2) || $altera_entrega->mes_2)
+                                    <td class="casilla editable"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#month2Modal{{ $alumnos->id }}"
+                                        data-bs-toggle="tooltip"
+                                        title="Seguimiento">
+
+                                        <i class="bi bi-circle-fill"
+                                            style="color: {{ $alumnos->lights[1]->semaforos[0]->fondo }};"></i>
                                         {{ $alumnos->mes_2 }}
-                                    </div>
-                                    @can('mes.tutor')
-                                        @if ( ($fecha_actual >= $mes_1 && $fecha_actual <= $mes_2) || $altera_entrega->mes_2)
-                                            <div class="d-grid gap-2">
-                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#month2Modal{{ $alumnos->id }}" data-bs-id="">
-                                                    Seguimiento
-                                                </button>
-                                            </div>
-                                            @include('modal.meses.mes2')
-                                        @endif
-                                    @endcan
-                                    @can('show.date')
-                                        @if ($alumnos->entrega_2 != null)
-                                            <b>
-                                                @php
-                                                    echo date('d/m/Y', strtotime($alumnos->entrega_2));
-                                                @endphp
-                                            </b>
-                                        @endif
-                                    @endcan
-                                </td>
+
+                                        @can('show.date')
+                                            @if ($alumnos->entrega_2)
+                                                <small class="text-muted">
+                                                    <b>{{ date('d/m/Y', strtotime($alumnos->entrega_2)) }}</b>
+                                                </small>
+                                            @endif
+                                        @endcan
+                                    </td>
+
+                                    @include('modal.meses.mes2')
+                                @else
+                                    <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento bloqueado">
+                                        <i class="bi bi-circle-fill"
+                                            style="color: {{ $alumnos->lights[1]->semaforos[0]->fondo }};"></i>
+                                        {{ $alumnos->mes_2 }}
+
+                                        @can('show.date')
+                                            @if ($alumnos->entrega_2)
+                                                <small class="text-muted">
+                                                    <b>{{ date('d/m/Y', strtotime($alumnos->entrega_2)) }}</b>
+                                                </small>
+                                            @endif
+                                        @endcan
+                                    </td>
+                                @endif
+
                                 <td>
                                     <div>
                                         {{ $alumnos->oe_2 }}
@@ -150,37 +175,42 @@
 
                                 </td>
 
+                                <!-- Docente 3 -->
+                                @if (($fecha_actual >= $mes_2 && $fecha_actual <= $mes_3) || $altera_entrega->mes_3)
+                                    <td class="casilla editable"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#month3Modal{{ $alumnos->id }}"
+                                        data-bs-toggle="tooltip"
+                                        title="Seguimiento">
 
-                                <td>
-                                    <div>
+                                        <i class="bi bi-circle-fill"
+                                            style="color: {{ $alumnos->lights[2]->semaforos[0]->fondo }};"></i>
                                         {{ $alumnos->mes_3 }}
-                                    </div>
-                                    @can('mes.tutor')
-                                        @if (($fecha_actual >= $mes_2 && $fecha_actual <= $mes_3)|| $altera_entrega->mes_3)
-                                            <div class="d-grid gap-2">
-                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#month3Modal{{ $alumnos->id }} "
-                                                    data-bs-id="{{ $alumnos->id }}">
-                                                    Seguimiento
-                                                </button>
-                                            </div>
-                                        @endif
-                                        @include('modal.meses.mes3')
-                                    @endcan
 
-                                    @can('show.date')
-                                        @if ($alumnos->entrega_3 != null)
-                                            <b>
-                                                @php
-                                                    echo date('d/m/Y', strtotime($alumnos->entrega_3));
-                                                @endphp
-                                            </b>
-                                        @endif
-                                    @endcan
+                                        @can('show.date')
+                                            @if ($alumnos->entrega_3)
+                                                <small class="text-muted">
+                                                    <b>{{ date('d/m/Y', strtotime($alumnos->entrega_3)) }}</b>
+                                                </small>
+                                            @endif
+                                        @endcan
+                                    </td>
 
-
-                                </td>
-
+                                    @include('modal.meses.mes3')
+                                @else
+                                    <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento bloqueado">
+                                        <i class="bi bi-circle-fill"
+                                            style="color: {{ $alumnos->lights[2]->semaforos[0]->fondo }};"></i>
+                                        {{ $alumnos->mes_3 }}
+                                        @can('show.date')
+                                            @if ($alumnos->entrega_3)
+                                                <small class="text-muted">
+                                                    <b>{{ date('d/m/Y', strtotime($alumnos->entrega_3)) }}</b>
+                                                </small>
+                                            @endif
+                                        @endcan
+                                    </td>
+                                @endif
 
                                 <td>
                                     <div>
@@ -199,34 +229,43 @@
 
                                 </td>
 
+                                <!-- Docente 4 -->
+                                @if (($fecha_actual >= $mes_3 && $fecha_actual <= $mes_4) || $altera_entrega->mes_4)
+                                    <td class="casilla editable"
+                                        data-bs-toggle="modal"
+                                        data-bs-target="#month4Modal{{ $alumnos->id }}"
+                                        data-bs-toggle="tooltip"
+                                        title="Seguimiento">
 
-                                <td>
-                                    <div>
+                                        <i class="bi bi-circle-fill"
+                                            style="color: {{ $alumnos->lights[3]->semaforos[0]->fondo }};"></i>
                                         {{ $alumnos->mes_4 }}
-                                    </div>
-                                    @can('mes.tutor')
-                                        @if (($fecha_actual >= $mes_3 && $fecha_actual <= $mes_4)|| $altera_entrega->mes_4)
-                                            <div class="d-grid gap-2">
-                                                <button type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#month4Modal{{ $alumnos->id }} "
-                                                    data-bs-id="{{ $alumnos->id }}">
-                                                    Seguimiento
-                                                </button>
-                                            </div>
-                                        @endif
-                                        @include('modal.meses.mes4')
-                                    @endcan
-                                    @can('show.date')
-                                        @if ($alumnos->entrega_4 != null)
-                                            <b>
-                                                @php
-                                                    echo date('d/m/Y', strtotime($alumnos->entrega_4));
-                                                @endphp
-                                            </b>
-                                        @endif
-                                    @endcan
-                                </td>
 
+                                        @can('show.date')
+                                            @if ($alumnos->entrega_4)
+                                                <small class="text-muted">
+                                                    <b>{{ date('d/m/Y', strtotime($alumnos->entrega_4)) }}</b>
+                                                </small>
+                                            @endif
+                                        @endcan
+                                    </td>
+
+                                    @include('modal.meses.mes4')
+                                @else
+                                    <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento bloqueado">
+                                        <i class="bi bi-circle-fill"
+                                            style="color: {{ $alumnos->lights[3]->semaforos[0]->fondo }};"></i>
+                                        {{ $alumnos->mes_4 }}
+
+                                        @can('show.date')
+                                            @if ($alumnos->entrega_4)
+                                                <small class="text-muted">
+                                                    <b>{{ date('d/m/Y', strtotime($alumnos->entrega_4)) }}</b>
+                                                </small>
+                                            @endif
+                                        @endcan
+                                    </td>
+                                @endif
 
                                 <td>
                                     <div>

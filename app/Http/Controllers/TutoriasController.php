@@ -99,10 +99,17 @@ class TutoriasController extends Controller
         $periodo = Periodo::max('id');
         $id_tutor = Auth::user()->tutor->id;
 
-        $request->validate([
-            'numero_control' => ['required'],
-            'grupo' => ['required'],  // se agrego validacion para el campo grupo
-        ]);
+        // Validar según el tipo
+        if ($tipo == 1) {
+            $request->validate([
+                'numero_control' => ['required'],
+                'grupo' => ['required'], // obligatorio solo para tipo 1
+            ]);
+        } else {//canalizacion
+            $request->validate([
+                'numero_control' => ['required'],
+            ]);
+        }
 
 
         $existe = Alumno::find($request->numero_control);
@@ -111,7 +118,7 @@ class TutoriasController extends Controller
             return redirect()->route('reportes_tutor.show', $id_tutor)->with('existe_alumno', 'no');
         }
 
-
+        
         $alumno = Periodo_tutorado::where('alumno_id', $request->numero_control)
             ->where('periodo_id', $periodo)
             ->where('tutor_id', $id_tutor)
@@ -132,10 +139,11 @@ class TutoriasController extends Controller
             ]);
 
             // depues de agregar un alumno tutorado, aprovechar para actualizar el grupo en tabla 'alumno':
+        if ($tipo == 1) { // Solo actualizar grupo si es tipo 1
             $alumno_actualizado = Alumno::find($request->numero_control);
             $alumno_actualizado->grupo = $request->grupo;
             $alumno_actualizado->save();
-
+        }
             $this->addIndications($alumno_add->id);
             return redirect()->route('reportes_tutor.show', $id_tutor);
         }
