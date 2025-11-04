@@ -95,6 +95,7 @@
             </tr>
         </thead>
     <tbody>
+        <!-- Estos datos son cargados desde el controlador ReportesController.php-->
         @foreach ($actividades as $index => $actividad)
             <tr>
                 <td>{{ $index + 1 }}</td> 
