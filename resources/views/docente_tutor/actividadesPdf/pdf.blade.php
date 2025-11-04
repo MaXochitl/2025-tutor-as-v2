@@ -113,6 +113,13 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
     </style>
 </head>
 
+    @php
+        // Ordenar alfanuméricamente: primero por semestre (número), luego por grupo (letra)
+        $asignadoOrdenado = collect($asignado)->sortBy(function($a) {
+            return sprintf('%02d%s', $a->semestre, strtoupper($a->grupo));
+        });
+    @endphp
+
 <body>
     <div style="text-align:center">
         
@@ -143,10 +150,19 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
                 <td colspan="6">Programa educativo: <strong>{{$tutor->carrera->nombre_carrera}}</strong></td>
             </tr>
             <tr class="double-fila">
-                <td colspan="6">Semestre y grupo:<strong> {{$asignado[0]->semestre}}° {{ $asignado[0]->grupo }}</strong></td>
-                <td colspan="6">N° de personas tutoradas: <strong>{{$total}}</strong> 
+                <td colspan="6">
+                    Semestre y grupo:
+                    <strong>
+                        @foreach($asignadoOrdenado as $asig)
+                            {{ $asig->semestre }}°{{ strtoupper($asig->grupo) }}@if(!$loop->last), @endif
+                        @endforeach
+                    </strong>
+                </td>
+                <td colspan="6">
+                    N° de personas tutoradas: <strong>{{ $total }}</strong>
                     <br>
-                     Hombres: <strong>{{$hombres}}</strong>, Mujeres: <strong>{{$mujeres}} </strong></td>
+                    Hombres: <strong>{{ $hombres }}</strong>, Mujeres: <strong>{{ $mujeres }}</strong>
+                </td>
             </tr>
             <tr class="double-fila">
                 <td colspan="2"><strong>N.º Ses.</strong></td>
