@@ -98,7 +98,7 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
 
         .signature hr {
             border: none;
-            height: 3px; 
+            height: .5px; 
             background-color: black; 
             margin: 0;
             width: 150%; 
@@ -130,26 +130,26 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
                 <td colspan="12"><strong>COORDINACION INSTITUCIONAL DE TUTORIAS</strong></td>
             </tr>
             <tr class="second-fila">
-                <td colspan="12"><strong>PLAN DE ACCION TUTORIAL</strong></td>
+                <td colspan="12"><strong>PLAN DE ACCIÓN TUTORIAL</strong></td>
             </tr>
             
             <tr class="double-fila">
-                <td colspan="6">Nombre de la Persona Tutora: <strong>{{ $tutor->nombre }} {{ $tutor->ap_paterno }} {{ $tutor->ap_materno }}</strong>
+                <td colspan="6">Nombre del docente tutor: <strong>{{ $tutor->nombre }} {{ $tutor->ap_paterno }} {{ $tutor->ap_materno }}</strong>
                 </td>
-                <td colspan="6">Periodo :<strong> {{$inicio}} - {{$fin}}</strong> </td>
+                <td colspan="6">Periodo:<strong> {{$inicio}} - {{$fin}}</strong> </td>
             </tr>
             <tr class="double-fila">
-                <td colspan="6">Tipo de Tutoria : <strong>Individual/Grupal</strong></td>
-                <td colspan="6">Programa Educativo : <strong>{{$tutor->carrera->nombre_carrera}}</strong></td>
+                <td colspan="6">Tipo de Tutoría: <strong>Individual/Grupal</strong></td>
+                <td colspan="6">Programa Educativo: <strong>{{$tutor->carrera->nombre_carrera}}</strong></td>
             </tr>
             <tr class="double-fila">
-                <td colspan="6">Semestre y Grupo :<strong> {{$asignado[0]->semestre}}° {{ $asignado[0]->grupo }}</strong></td>
-                <td colspan="6">N° de Personas tutoradas : <strong>{{$total}}</strong> 
+                <td colspan="6">Semestre y Grupo:<strong> {{$asignado[0]->semestre}}° {{ $asignado[0]->grupo }}</strong></td>
+                <td colspan="6">N° de Personas tutoradas: <strong>{{$total}}</strong> 
                     <br>
                      Hombres: <strong>{{$hombres}}</strong>, Mujeres: <strong>{{$mujeres}} </strong></td>
             </tr>
             <tr class="double-fila">
-                <td colspan="2"><strong>NÚMERO DE SESIONES </strong></td>
+                <td colspan="2"><strong>N.º SESIONES </strong></td>
                 <td colspan="2"><strong>TEMA </strong></td>
                 <td colspan="2"><strong>DESCRIPCIÓN DE LA ACTIVIDAD </strong></td>
                 <td colspan="2"><strong>FECHA </strong></td>
