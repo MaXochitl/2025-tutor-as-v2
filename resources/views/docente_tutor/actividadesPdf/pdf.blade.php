@@ -98,7 +98,7 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
 
         .signature hr {
             border: none;
-            height: 3px; 
+            height: .5px; 
             background-color: black; 
             margin: 0;
             width: 150%; 
@@ -113,6 +113,13 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
     </style>
 </head>
 
+    @php
+        // Ordenar alfanuméricamente: primero por semestre (número), luego por grupo (letra)
+        $asignadoOrdenado = collect($asignado)->sortBy(function($a) {
+            return sprintf('%02d%s', $a->semestre, strtoupper($a->grupo));
+        });
+    @endphp
+
 <body>
     <div style="text-align:center">
         
@@ -124,37 +131,46 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
         </thead>
         <tbody>
         <tr>
-                <th class="first-fila" colspan="12"><strong>ORIENTACION EDUCATIVA</strong></th>
+                <th class="first-fila" colspan="12"><strong>ORIENTACIÓN EDUCATIVA</strong></th>
             </tr>
             <tr class="second-fila">
-                <td colspan="12"><strong>COORDINACION INSTITUCIONAL DE TUTORIAS</strong></td>
+                <td colspan="12"><strong>COORDINACIÓN INSTITUCIONAL DE TUTORÍAS</strong></td>
             </tr>
             <tr class="second-fila">
-                <td colspan="12"><strong>PLAN DE ACCION TUTORIAL</strong></td>
+                <td colspan="12"><strong>PLAN DE ACCIÓN TUTORIAL</strong></td>
             </tr>
             
             <tr class="double-fila">
-                <td colspan="6">Nombre de la Persona Tutora: <strong>{{ $tutor->nombre }} {{ $tutor->ap_paterno }} {{ $tutor->ap_materno }}</strong>
+                <td colspan="6">Nombre del docente tutor: <strong>{{ $tutor->nombre }} {{ $tutor->ap_paterno }} {{ $tutor->ap_materno }}</strong>
                 </td>
-                <td colspan="6">Periodo :<strong> {{$inicio}} - {{$fin}}</strong> </td>
+                <td colspan="6">Periodo:<strong> {{$inicio}} - {{$fin}}</strong> </td>
             </tr>
             <tr class="double-fila">
-                <td colspan="6">Tipo de Tutoria : <strong>Individual/Grupal</strong></td>
-                <td colspan="6">Programa Educativo : <strong>{{$tutor->carrera->nombre_carrera}}</strong></td>
+                <td colspan="6">Tipo de tutoría: <strong>Individual/Grupal</strong></td>
+                <td colspan="6">Programa educativo: <strong>{{$tutor->carrera->nombre_carrera}}</strong></td>
             </tr>
             <tr class="double-fila">
-                <td colspan="6">Semestre y Grupo :<strong> {{$asignado[0]->semestre}}° {{ $asignado[0]->grupo }}</strong></td>
-                <td colspan="6">N° de Personas tutoradas : <strong>{{$total}}</strong> 
+                <td colspan="6">
+                    Semestre y grupo:
+                    <strong>
+                        @foreach($asignadoOrdenado as $asig)
+                            {{ $asig->semestre }}°{{ strtoupper($asig->grupo) }}@if(!$loop->last), @endif
+                        @endforeach
+                    </strong>
+                </td>
+                <td colspan="6">
+                    N° de personas tutoradas: <strong>{{ $total }}</strong>
                     <br>
-                     Hombres: <strong>{{$hombres}}</strong>, Mujeres: <strong>{{$mujeres}} </strong></td>
+                    Hombres: <strong>{{ $hombres }}</strong>, Mujeres: <strong>{{ $mujeres }}</strong>
+                </td>
             </tr>
             <tr class="double-fila">
-                <td colspan="2"><strong>NÚMERO DE SESIONES </strong></td>
-                <td colspan="2"><strong>TEMA </strong></td>
-                <td colspan="2"><strong>DESCRIPCIÓN DE LA ACTIVIDAD </strong></td>
-                <td colspan="2"><strong>FECHA </strong></td>
-                <td colspan="2"><strong>TIEMPO </strong></td>
-                <td colspan="2"><strong>RECURSOS </strong></td>
+                <td colspan="2"><strong>N.º Ses.</strong></td>
+                <td colspan="2"><strong>Tema</strong></td>
+                <td colspan="2"><strong>Descripción de la actividad</strong></td>
+                <td colspan="2"><strong>Fecha</strong></td>
+                <td colspan="2"><strong>Tiempo</strong></td>
+                <td colspan="2"><strong>Recursos</strong></td>
             </tr>
 
             <!-- Actividades -->

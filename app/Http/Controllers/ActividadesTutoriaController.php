@@ -11,8 +11,6 @@ use App\Models\Alumno;
 use App\Models\Periodo_tutorado;
 use App\Models\User;
 
-
-
 use Barryvdh\DomPDF\Facade as PDF; 
 
 class ActividadesTutoriaController extends Controller
@@ -29,7 +27,8 @@ class ActividadesTutoriaController extends Controller
 
     $user = User::find(Auth::user()->id);
     $tutor = Auth::user()->tutor;
-    $actividades = Actividades_tutoria::all();
+    $tutorId = $tutor->id;
+    $actividades = Actividades_tutoria::where('tutor_id', $tutorId)->get();
     $periodo = Periodo::max('id');
     $periodos = Periodo::orderby('id', 'desc')->get();
     $id = $user->tutor_id;    

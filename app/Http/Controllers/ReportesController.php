@@ -71,8 +71,8 @@ class ReportesController extends Controller
         $id = $user->tutor_id;
         
         //Agregar llamado de base de datos  
-        $actividades = Actividades_tutoria::all();
-        //        
+        $tutor_id = Auth::user()->tutor_id;
+        $actividades = Actividades_tutoria::where('tutor_id', $tutor_id)->get();        
 
         $periodo = Periodo::orderby('id', 'desc')->get();
         $alumnos_tutor = [];
