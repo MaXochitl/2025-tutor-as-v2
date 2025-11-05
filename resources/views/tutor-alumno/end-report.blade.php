@@ -184,6 +184,22 @@
                 }
             });
         });
-    </script>
 
+    document.addEventListener("DOMContentLoaded", function() {
+        const textarea = document.getElementById("seguimiento");
+
+        if (localStorage.getItem("seguimientoTemp")) {
+            textarea.value = localStorage.getItem("seguimientoTemp");
+        }
+
+        textarea.addEventListener("input", function() {
+            localStorage.setItem("seguimientoTemp", textarea.value);
+        });
+
+        document.querySelector("form[action*='seguimiento-alumno']").addEventListener("submit", function() {
+            localStorage.removeItem("seguimientoTemp");
+        });
+    });
+    </script>
+    
 @endsection
