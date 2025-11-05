@@ -8,22 +8,23 @@
         @endif
 
         <div class="overflow-scroll">
-            <table class="table text-center table-striped" style="font-size: 12px">
+            <br>
+            <table class="table text-start table-striped" style="font-size: 12px">
                 <thead>
                     <tr>
                         <th class="title-table" scope="col">N°</th>
                         <th class="title-table" scope="col">N° CONTROL</th>
                         <th class="title-table" scope="col">NOMBRE COMPLETO</th>
                         <th class="title-table" scope="col">TELEFONO</th>
-                        <th scope="col">DOCENTE<br>1</th>
-                        <th scope="col">TUTOR<br>1</th>
-                        <th scope="col">DOCENTE<br>2</th>
-                        <th scope="col">TUTOR<br>2</th>
-                        <th scope="col">DOCENTE<br>3</th>
-                        <th scope="col">TUTOR<br>3</th>
-                        <th scope="col">DOCENTE<br>4</th>
-                        <th scope="col">TUTOR<br>4</th>
-                        <th scope="col">DOCENTE QUE CANALIZO</th>
+                        <th class="text-center" scope="col">DOCENTE<br>1</th>
+                        <th class="text-center" scope="col">TUTOR<br>1</th>
+                        <th class="text-center" scope="col">DOCENTE<br>2</th>
+                        <th class="text-center" scope="col">TUTOR<br>2</th>
+                        <th class="text-center" scope="col">DOCENTE<br>3</th>
+                        <th class="text-center" scope="col">TUTOR<br>3</th>
+                        <th class="text-center" scope="col">DOCENTE<br>4</th>
+                        <th class="text-center" scope="col">TUTOR<br>4</th>
+                        <th scope="col">CANALIZÓ</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -48,129 +49,118 @@
                                     <td>
                                         {{ $alumnos->alumno->telefono }}
                                     </td>
+
+                                    <!--DOCENTE 1-->
                                     <td>
-                                        <div>
-                                            {{ $alumnos->mes_1 }}
-                                        </div>
-                                        <div class="d-grid gap-2">
-                                            @if ($alumnos->entrega_1 != null)
-                                                <b>
-                                                    @php
-                                                        echo date('d/m/Y', strtotime($alumnos->entrega_1));
-                                                    @endphp
-                                                </b>
-                                            @endif
-                                        </div>
+                                        <i class="bi bi-circle-fill"
+                                        style="color: {{ (!empty($alumnos->lights[0]->semaforos[0]->fondo) && $alumnos->lights[0]->semaforos[0]->fondo !== '#')
+                                            ? $alumnos->lights[0]->semaforos[0]->fondo
+                                            : 'transparent' }};">
+                                        </i>
+                                        {{ $alumnos->mes_1 }}
                                     </td>
+
                                     {{-- Tutor 1 --}}
-                                    <td>
-                                        <div>
+                                    @if (($fecha_actual >= $inicio && $fecha_actual <= $mes_1) || $altera_entrega->mes_1)
+                                        <td class="casilla editable"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#oe1Modal{{ $alumnos->id }}"
+                                            data-bs-toggle="tooltip"
+                                            title="Seguimiento">
                                             {{ $alumnos->oe_1 }}
-                                        </div>
-                                        @if ($fecha_actual >= $inicio && $fecha_actual <= $mes_1 || $altera_entrega->mes_1)
-                                            <div class="d-grid gap-2">
+                                        </td>
+                                        @include('modal.orientacion.mes1')
+                                    @else
+                                        <td class="p-0 text-muted"
+                                            data-bs-toggle="tooltip"
+                                            title="Seguimiento bloqueado">
+                                            {{ $alumnos->oe_1 }}
+                                        </td>
+                                    @endif
 
-                                                <a href="" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#oe1Modal{{ $alumnos->id }}"
-                                                    data-bs-whatever="@mdo">
-                                                    Seguimiento
-                                                </a>
-                                            </div>
-                                            @include('modal.orientacion.mes1')
-                                        @endif
-                                    </td>
-
+                                    <!--DOCENTE 2-->
                                     <td>
-                                        <div>
-                                            {{ $alumnos->mes_2 }}
-                                        </div>
-
-                                        @if ($alumnos->entrega_2 != null)
-                                            <b>
-                                                @php
-                                                    echo date('d/m/Y', strtotime($alumnos->entrega_2));
-                                                @endphp
-                                            </b>
-                                        @endif
+                                        <i class="bi bi-circle-fill"
+                                        style="color: {{ (!empty($alumnos->lights[1]->semaforos[0]->fondo) && $alumnos->lights[1]->semaforos[0]->fondo !== '#')
+                                            ? $alumnos->lights[1]->semaforos[0]->fondo
+                                            : 'transparent' }};">
+                                        </i>
+                                        {{ $alumnos->mes_2 }}
                                     </td>
 
                                     {{-- Tutor 2 --}}
-                                    <td>
-                                        <div>
+                                    @if (($fecha_actual >= $mes_1 && $fecha_actual <= $mes_2) || $altera_entrega->mes_2)
+                                        <td class="casilla editable"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#oe2Modal{{ $alumnos->id }}"
+                                            data-bs-toggle="tooltip"
+                                            title="Seguimiento">
                                             {{ $alumnos->oe_2 }}
-                                        </div>
-                                        @if (($fecha_actual >= $mes_1 && $fecha_actual <= $mes_2) || $altera_entrega->mes_2)
-                                            <div class="d-grid gap-2">
-                                                <a href="#" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#oe2Modal{{ $alumnos->id }}" data-bs-whatever="@mdo">
-                                                    Seguimiento
-                                                </a>
-                                            </div>
-                                            @include('modal.orientacion.mes2')
-                                        @endif
-                                    </td>
+                                        </td>
+                                        @include('modal.orientacion.mes2')
+                                    @else
+                                        <td class="p-0 text-muted"
+                                            data-bs-toggle="tooltip"
+                                            title="Seguimiento bloqueado">
+                                            {{ $alumnos->oe_2 }}
+                                        </td>
+                                    @endif
 
-
+                                    <!--DOCENTE 3-->
                                     <td>
-                                        <div>
-                                            {{ $alumnos->mes_3 }}
-                                        </div>
-                                        @if ($alumnos->entrega_3 != null)
-                                            <b>
-                                                @php
-                                                    echo date('d/m/Y', strtotime($alumnos->entrega_3));
-                                                @endphp
-                                            </b>
-                                        @endif
+                                        <i class="bi bi-circle-fill"
+                                        style="color: {{ (!empty($alumnos->lights[2]->semaforos[0]->fondo) && $alumnos->lights[2]->semaforos[0]->fondo !== '#')
+                                            ? $alumnos->lights[2]->semaforos[0]->fondo
+                                            : 'transparent' }};">
+                                        </i>
+                                        {{ $alumnos->mes_3 }}
                                     </td>
 
                                     {{-- Tutor 3 --}}
-                                    <td>
-                                        <div>
+                                    @if (($fecha_actual >= $mes_2 && $fecha_actual <= $mes_3) || $altera_entrega->mes_3)
+                                        <td class="casilla editable"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#oe3Modal{{ $alumnos->id }}"
+                                            data-bs-toggle="tooltip"
+                                            title="Seguimiento">
                                             {{ $alumnos->oe_3 }}
-                                        </div>
-                                        @if (($fecha_actual >= $mes_2 && $fecha_actual <= $mes_3) || $altera_entrega->mes_3)
-                                            <div class="d-grid gap-2">
-                                                <a href="#" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#oe3Modal{{ $alumnos->id }}" data-bs-whatever="@mdo">
-                                                    Seguimiento
-                                                </a>
-                                            </div>
-                                            @include('modal.orientacion.mes3')
-                                        @endif
-                                    </td>
+                                        </td>
+                                        @include('modal.orientacion.mes3')
+                                    @else
+                                        <td class="p-0 text-muted"
+                                            data-bs-toggle="tooltip"
+                                            title="Seguimiento bloqueado">
+                                            {{ $alumnos->oe_3 }}
+                                        </td>
+                                    @endif
 
-
+                                    <!--DOCENTE 4-->
                                     <td>
-                                        <div>
-                                            {{ $alumnos->mes_4 }}
-                                        </div>
-
-                                        @if ($alumnos->entrega_4 != null)
-                                            <b>
-                                                @php
-                                                    echo date('d/m/Y', strtotime($alumnos->entrega_4));
-                                                @endphp
-                                            </b>
-                                        @endif
+                                        <i class="bi bi-circle-fill"
+                                        style="color: {{ (!empty($alumnos->lights[3]->semaforos[0]->fondo) && $alumnos->lights[3]->semaforos[0]->fondo !== '#')
+                                            ? $alumnos->lights[3]->semaforos[0]->fondo
+                                            : 'transparent' }};">
+                                        </i>
+                                        {{ $alumnos->mes_4 }}
                                     </td>
 
                                     {{-- Tutor 4 --}}
-                                    <td>
-                                        <div>
+                                    @if (($fecha_actual >= $mes_3 && $fecha_actual <= $mes_4) || $altera_entrega->mes_4)
+                                        <td class="casilla editable"
+                                            data-bs-toggle="modal"
+                                            data-bs-target="#oe4Modal{{ $alumnos->id }}"
+                                            data-bs-toggle="tooltip"
+                                            title="Seguimiento">
                                             {{ $alumnos->oe_4 }}
-                                        </div>
-                                        @if (($fecha_actual >= $mes_3 && $fecha_actual <= $mes_4) || $altera_entrega->mes_4)
-                                            <div class="d-grid gap-2">
-                                                <a href="#" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                                                    data-bs-target="#oe4Modal{{ $alumnos->id }}" data-bs-whatever="@mdo">
-                                                    Seguimiento
-                                                </a>
-                                            </div>
-                                            @include('modal.orientacion.mes4')
-                                        @endif
-                                    </td>
-
+                                        </td>
+                                        @include('modal.orientacion.mes4')
+                                    @else
+                                        <td class="p-0 text-muted"
+                                            data-bs-toggle="tooltip"
+                                            title="Seguimiento bloqueado">
+                                            {{ $alumnos->oe_4 }}
+                                        </td>
+                                    @endif
                                     <td>
                                         {{ $alumnos->tutor->nombre . ' ' . $alumnos->tutor->ap_paterno . ' ' . $alumnos->tutor->ap_materno }}
                                     </td>

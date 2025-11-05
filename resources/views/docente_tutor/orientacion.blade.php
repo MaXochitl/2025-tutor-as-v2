@@ -2,7 +2,7 @@
 <div class="row row-tutor">
     <div class="col d-flex flex-column flex-shrink-0" style="padding: 20px;">
         <div class="col-8">
-            <div class="col-8 d-flex align-items-center">
+            <div class="col-8 d-flex align-items-center gap-2">
                 <a href="{{ route('alumnos-tutor.create') }} " type="button" class="btn btn-primary" data-bs-toggle="modal"
                     data-bs-target="#exampleModal" data-bs-whatever="@mdo">
                     <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
@@ -14,7 +14,7 @@
                 </a> <span style="margin-left: 10px;">Agregar alumnos Tutorados!</span> <!-- Añadido un margen a la izquierda -->
                 <br>
 
-                <div class="col-8" style="margin-top: 15px">
+                <div class="col-8 d-flex align-items-center gap-3">
                     <button type="button" class="btn btn-danger" data-bs-toggle="modal"
                         data-bs-target="#jefeDepartamentoModal">
                         <svg xmlns="http://www.w3.org/2000/svg" width="100" height="25" fill="currentColor"
@@ -27,6 +27,7 @@
 
             </div>
         </div>
+        <br>
 
         @if (session('hay_alumnos') == 'si')
             <div class="alert alert-danger">
@@ -80,14 +81,14 @@
                         <th class="title-table" scope="col">N° CONTROL</th>
                         <th class="title-table" scope="col">NOMBRE COMPLETO</th>
                         <th class="title-table" scope="col">TELEFONO</th>
-                        <th scope="col">MES 1</th>
-                        <th scope="col">SEGUIMIENTO O.E. </th>
-                        <th scope="col">MES 2</th>
-                        <th scope="col">SEGUIMIENTO O.E. </th>
-                        <th scope="col">MES 3</th>
-                        <th scope="col">SEGUIMIENTO O.E. </th>
-                        <th scope="col">MES 4</th>
-                        <th scope="col">SEGUIMIENTO O.E. </th>
+                        <th class="text-center" scope="col">MES 1</th>
+                        <th class="text-center" scope="col">SEGUIMIENTO O.E. </th>
+                        <th class="text-center" scope="col">MES 2</th>
+                        <th class="text-center" scope="col">SEGUIMIENTO O.E. </th>
+                        <th class="text-center" scope="col">MES 3</th>
+                        <th class="text-center" scope="col">SEGUIMIENTO O.E. </th>
+                        <th class="text-center" scope="col">MES 4</th>
+                        <th class="text-center" scope="col">SEGUIMIENTO O.E. </th>
                         <th scope="col">RESULTADOS</th>
                         <th scope="col">OPCIONES</th>
                     </tr>
