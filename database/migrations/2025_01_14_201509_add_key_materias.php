@@ -14,7 +14,7 @@ class AddKeyMaterias extends Migration
     public function up()
     {
         Schema::table('materias', function (Blueprint $table) {
-            $table->string('clave', 15)->nullable()->unique()->after('id');;
+            $table->string('clave', 15)->nullable()->after('id');
         });
     }
 
