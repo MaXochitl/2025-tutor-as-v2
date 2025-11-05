@@ -1,6 +1,6 @@
 <div class="modal fade" id="oe3Modal{{$alumnos->id}}" tabindex="-1" aria-labelledby="oe3Modal" aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content text-center">
             <div class="modal-header">
                 <h5 class="modal-title" id="oe3Modal{{$alumnos->id}}">
                     Alumno: {{ $alumnos->alumno->nombre . ' ' . $alumnos->alumno->ap_paterno . ' ' . $alumnos->alumno->ap_paterno }}

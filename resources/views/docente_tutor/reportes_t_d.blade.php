@@ -24,7 +24,7 @@
 
         <div class="container text-center">
             <div style="text-align: left">
-                <a href="" type="button" class="btn btn-warning m-2" data-bs-toggle="modal"
+                <a href="" type="button" class="btn btn-warning m-3 position-relative" data-bs-toggle="modal"
                     data-bs-target="#avisos-modal" data-bs-whatever="@mdo" data-bs-toggle="tooltip" data-bs-placement="bottom"
                     title="Avisos">
                     <svg style="color: white" xmlns="http://www.w3.org/2000/svg" width="25" height="25"
@@ -32,12 +32,15 @@
                         <path
                             d="M0 2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v8a2 2 0 0 1-2 2h-2.5a1 1 0 0 0-.8.4l-1.9 2.533a1 1 0 0 1-1.6 0L5.3 12.4a1 1 0 0 0-.8-.4H2a2 2 0 0 1-2-2V2zm3.5 1a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 2.5a.5.5 0 0 0 0 1h5a.5.5 0 0 0 0-1h-5z" />
                     </svg>
+                    <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        {{ count($avisos) }} <!-- Muestra el número de avisos -->
+                    </span>
                 </a>
                 @include('modal.avisos.avisos')
             </div>
 
             <div class="row img-font-all"
-                style="border-radius: 10px;margin-top: 30px;background-image: url({{ $tutor->carrera->fondo }});">
+                style="border-radius: 10px;  background-image: url({{ $tutor->carrera->fondo }});">
 
                 <div class="col-5" style="border-radius: 10px; background: white; margin: 5px">
                     <p class="head-alumnos-tutor"><b>Nombre Tutor de grupo: </b>

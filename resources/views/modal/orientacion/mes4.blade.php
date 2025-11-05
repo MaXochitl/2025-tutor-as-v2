@@ -1,7 +1,7 @@
 <div class="modal fade" id="oe4Modal{{ $alumnos->id }}" tabindex="-1" aria-labelledby="oe4Modal"
     aria-hidden="true">
     <div class="modal-dialog">
-        <div class="modal-content">
+        <div class="modal-content text-center">
             <div class="modal-header">
                 <h5 class="modal-title" id="oe4Modal{{ $alumnos->id }}">
                     Alumno:
