@@ -16,7 +16,7 @@
                     @csrf
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Numero de control:</label>
-                        <input name="numero_control" type="text" class="form-control mayus">
+                        <input name="numero_control" type="text" class="form-control mayus" required>
                     </div>
 
                     <div class="mb-3">
@@ -49,12 +49,10 @@
                             @endforeach
                         </select>
                     </div>
+                    <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Agregar Alumno</button>
+                    </div>
                 </form>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

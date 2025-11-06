@@ -3,7 +3,7 @@
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Agregar Alumno (Docente)</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Agregar alumno (Docente)</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -16,7 +16,7 @@
                     @csrf
                     <div class="mb-3">
                         <label for="recipient-name" class="col-form-label">Numero de control:</label>
-                        <input name="numero_control" type="text" class="form-control mayus">
+                        <input name="numero_control" type="text" class="form-control mayus" required>
                     </div>
 
                     <div class="mb-3">
@@ -40,12 +40,10 @@
                             <option value="16">16</option>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">Agregar Alumno</button>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary" >Agregar alumno</button>
+                </div>
                 </form>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

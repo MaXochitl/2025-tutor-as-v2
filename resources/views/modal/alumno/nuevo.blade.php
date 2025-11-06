@@ -7,11 +7,11 @@ $carreras = Carrera::all();
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="alumno-modal">
-                    Nuevo Alumno
+                    Nuevo alumno
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body">
+            <div class="modal-body" >
 
                 @if (count($errors) > 0)
                     @include('secciones.errores')
@@ -21,7 +21,7 @@ $carreras = Carrera::all();
                     @csrf
 
                     <div class="form-group">
-                        <label for="ncontrol" class="form-label">Numero Control</label>
+                        <label for="ncontrol" class="form-label">Numero control</label>
                         <input name="ncontrol" type="text" class="form-control " id="ncontrol" required>
                     </div>
 
@@ -31,12 +31,12 @@ $carreras = Carrera::all();
                     </div>
 
                     <div class="form-group">
-                        <label for="ap_paterno" class="form-label">Apellido Paterno</label>
+                        <label for="ap_paterno" class="form-label">Apellido paterno</label>
                         <input name="ap_paterno" type="text" class="form-control " id="ap_paterno" required>
                     </div>
 
                     <div class="form-group">
-                        <label for="ap_materno" class="form-label">Apellido Materno</label>
+                        <label for="ap_materno" class="form-label">Apellido materno</label>
                         <input name="ap_materno" type="text" class="form-control " id="ap_materno" required>
                     </div>
 
@@ -82,7 +82,7 @@ $carreras = Carrera::all();
 
 
                     <div class="form-group ">
-                        <label for="nacimiento" class="form-label">Fecha Nacimiento</label>
+                        <label for="nacimiento" class="form-label">Fecha nacimiento</label>
                         <input name="nacimiento" type="date" class="form-control" id="inicio" required>
                     </div>
 
@@ -103,7 +103,7 @@ $carreras = Carrera::all();
                     </div>
 
                     <div class="form-group ">
-                        <div style="text-align: center">
+                        <div class="modal-footer">
                             <button type="submit" class="btn btn-primary" style="margin-top: 20px">Guardar</button>
                         </div>
                     </div>

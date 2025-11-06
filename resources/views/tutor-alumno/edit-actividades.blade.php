@@ -4,7 +4,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="editActivityModalLabel-{{ $actividad->id }}">
-                    Editar Actividad 
+                    Editar actividad 
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -19,7 +19,7 @@
                     </div>
 
                     <div class="form-group mt-3">
-                        <label for="descripcion_actividad">Descripción de la Actividad</label>
+                        <label for="descripcion_actividad">Descripción de la actividad</label>
                         <textarea name="descripcion_actividad" class="form-control" id="descripcion_actividad" rows="3" required>{{ $actividad->descripcion_actividad }}</textarea>
                     </div>
 
@@ -50,9 +50,8 @@
                         <textarea name="recursos" class="form-control" id="recursos" rows="2">{{ $actividad->recursos }}</textarea>
                     </div>
 
-                    <div class="mt-4 text-center">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Guardar</button>
                     </div>
                 </form>
             </div>

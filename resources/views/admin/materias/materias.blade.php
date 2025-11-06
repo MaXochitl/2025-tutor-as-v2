@@ -6,11 +6,10 @@
 
     <div class="container">
         <div class="row ">
-
             <div class="col d-flex flex-column flex-shrink-0" style="padding: 20px; text-align: center">
                 <div>
                     <h1>
-                        Lista de Materias
+                        Lista de materias
                     </h1>
                 </div>
                 <div class="text-left p-2">
@@ -47,7 +46,9 @@
                         </div>
                     </form>
                 </div>
-                <table class="table table-striped">
+            </div>
+        </div>
+        <table class="table table-striped">
                     <thead>
                         <tr>
                             <th scope="col">Editar</th>
@@ -109,8 +110,6 @@
                     {{ $materias->appends(['busqueda' => request()->get('busqueda')])->links('pagination::bootstrap-4') }}
 
                 </div>
-            </div>
-        </div>
 
     </div>
 
