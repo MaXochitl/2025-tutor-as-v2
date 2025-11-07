@@ -160,13 +160,14 @@
     $('.formulario-eliminar').submit(function(e) {
         e.preventDefault();
         Swal.fire({
-            title: 'Estas Seguro de eliminar?',
-            text: "El docente se eliminara junto con todos sus registros!",
+            title: '¿Eliminar turor?',
+            text: "El docente se eliminara junto con todos sus registros, esta acccion es irreversible.",
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#3085d6',
             cancelButtonColor: '#d33',
-            confirmButtonText: 'Si!'
+            confirmButtonText: 'Si',
+            cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
                 this.submit();

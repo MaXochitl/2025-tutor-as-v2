@@ -9,7 +9,7 @@
             </div>
 
             <div class="modal-body">
-                <h1>Crear nuevo Auditor</h1>
+                <h1>Crear Nuevo Auditor</h1>
                 @if (count($errors) > 0)
                     @include('secciones.errores')
                 @endif
@@ -76,9 +76,6 @@
                     </div>
 
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

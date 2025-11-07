@@ -117,7 +117,7 @@
     @can('solo.tutor')
         @include('modal.materia.new-materia')
     @endcan
-@section('js')
+    @section('js')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @if (session('eliminar') == 'ok')
@@ -130,33 +130,26 @@
         </script>
     @endif
 
-
-
-
     <script>
         $('.form-delete-m').submit(function(e) {
             e.preventDefault();
-
-
+            
             Swal.fire({
-                title: 'Estas Seguro de eliminar?',
-                text: "La materia se eliminara definitivamente",
+                title: '¿Eliminar materia?',
+                text: "Esta accion es irreversible",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Si!'
+                confirmButtonText: 'Si',
+                cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-
                     this.submit();
                 }
             })
         });
     </script>
-
-
-
 
     @if (session('error') || $errors->any())
     <script>
