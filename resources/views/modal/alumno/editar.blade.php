@@ -11,7 +11,7 @@ $carreras = Carrera::all();
             <div class="modal-header">
 
                 <h5 class="modal-title" id="alumnoedit-modal">
-                    Editar Alumno
+                    Editar alumno
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
@@ -24,7 +24,7 @@ $carreras = Carrera::all();
                     @method('PUT')
                     @csrf
                     <div class="form-group ">
-                        <label for="ncontrol" class="form-label">Numero Control</label>
+                        <label for="ncontrol" class="form-label">Numero control</label>
                         <input name="ncontrol" type="text" class="form-control" id="ncontrol"
                             value="{{ $alum->id }}">
                     </div>
@@ -36,13 +36,13 @@ $carreras = Carrera::all();
                     </div>
 
                     <div class="form-group ">
-                        <label for="ap_paterno" class="form-label">Apellido Paterno</label>
+                        <label for="ap_paterno" class="form-label">Apellido paterno</label>
                         <input name="ap_paterno" type="text" class="form-control" id="ap_paterno"
                             value="{{ $alum->ap_paterno }}">
                     </div>
 
                     <div class="form-group ">
-                        <label for="ap_materno" class="form-label">Apellido Materno</label>
+                        <label for="ap_materno" class="form-label">Apellido materno</label>
                         <input name="ap_materno" type="text" class="form-control" id="ap_materno"
                             value="{{ $alum->ap_materno }}">
                     </div>
@@ -68,7 +68,7 @@ $carreras = Carrera::all();
                     </div>
 
                     <div class="form-group ">
-                        <label for="nacimiento" class="form-label">Fecha Nacimiento</label>
+                        <label for="nacimiento" class="form-label">Fecha nacimiento</label>
                         <input name="nacimiento" type="date" class="form-control" id="nacimiento"
                             value="{{ $alum->fecha_nacimiento }}">
                     </div>
@@ -127,7 +127,7 @@ $carreras = Carrera::all();
                     </div>
 
                     <div class="form-group ">
-                        <div style="text-align: center">
+                        <div style="text-align: right">
                             <button type="submit" class="btn btn-primary" style="margin-top: 20px">Guardar</button>
                         </div>
                     </div>

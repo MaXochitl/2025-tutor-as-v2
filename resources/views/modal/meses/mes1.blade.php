@@ -4,8 +4,7 @@
         <div class="modal-content text-center">
             <div class="modal-header">
                 <h5 class="modal-title" id="month1Modal{{ $alumnos->id }}">
-                    Alumno
-                    {{ $alumnos->alumno->nombre . ' ' . $alumnos->alumno->ap_paterno . ' ' . $alumnos->alumno->ap_materno }}<!--apellido paterno duplicado-->
+                    Alumno: {{ $alumnos->alumno->nombre . ' ' . $alumnos->alumno->ap_paterno . ' ' . $alumnos->alumno->ap_materno }}<!--apellido paterno duplicado-->
                 </h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 
@@ -35,10 +34,6 @@
                     </div>
                     <button type="submit" class="btn btn-primary">Guardar</button>
                 </form>
-
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

@@ -3,9 +3,8 @@
     <div class="container " style="margin-top: 20px">
         <div class="row col-md-7  text-center shadow-lg p-3 mb-5 bg-body " style="margin: auto;border-radius: 17px">
             <div class="form-group row">
-                <h1>Nueva Materia</h1>
+                <h1>Nueva materia</h1>
             </div>
-
             @if (count($errors) > 0)
                 @include('secciones.errores')
             @endif
@@ -17,7 +16,7 @@
 
                     <div class="col-md-9">
                         <div class="form-group row">
-                            <label for="materia" class="form-label">Nombre de la Materia</label>
+                            <label for="materia" class="form-label">Nombre de la materia</label>
                             <input name="materia" type="text" class="form-control" id="materia">
                         </div>
                     </div>
@@ -62,9 +61,6 @@
                             @endforeach
                         </select>
                     </div>
-
-
-
 
                     <div class="form-group row">
                         <div style="text-align: center">

@@ -19,9 +19,7 @@
                         <label for="fin" class="form-label">Fecha fin</label>
                         <input name="fin" type="date" class="form-control" id="fin">
                     </div>
-
-                   
-
+                    
                     <div class="form-group ">
                         <div style="text-align: center">
                             <button type="submit" class="btn btn-primary" style="margin-top: 20px">Guardar</button>
@@ -29,9 +27,6 @@
                     </div>
 
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

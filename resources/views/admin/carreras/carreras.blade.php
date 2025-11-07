@@ -116,13 +116,14 @@
 
 
             Swal.fire({
-                title: 'Estas Seguro de eliminar?',
-                text: "El alumno se eliminara definitivamente",
+                title: '¿Eliminar carrera?',
+                text: "Esta accion es irreversible",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Si!'
+                confirmButtonText: 'Si',
+                cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
 
