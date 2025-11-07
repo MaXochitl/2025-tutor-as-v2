@@ -43,15 +43,12 @@
                     </table>
 
                     <div class="form-group row">
-                        <div style="text-align: center">
+                        <div style="text-align: right">
 
                             <button type="submit" class="btn btn-primary" style="margin-top: 20px">Guardar</button>
                         </div>
                     </div>
                 </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             </div>
         </div>
     </div>

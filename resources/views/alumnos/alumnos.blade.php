@@ -20,7 +20,7 @@
             <div class="col d-flex flex-column">
                 <div class="text-center">
                     <h1>
-                        Lista de Alumnos
+                        Lista de alumnos
                     </h1>
                 </div>
                 <div class="row p-2">
@@ -60,10 +60,6 @@
                             </div>
                         </form>
                     </div>
-                </div>
-
-
-                <div class="table-responsive">
                     <div class="d-md-flex justify-content-md-end">
                         <form method="GET" action="{{ route('searchAlumno') }} ">
                             @csrf
@@ -87,13 +83,13 @@
                             </div>
                         </form>
                     </div>
-
+                </div>
+                
+                <div class="table-responsive">
                     <table id="table" class="table table-striped text-center" style="font-size: 13px">
                         <thead>
                             <tr>
-
                                 <th scope="col">EDITAR</th>
-
                                 <th scope="col">N° CONTROL</th>
                                 <th scope="col">NOMBRE COMPLETO</th>
                                 <th scope="col">SEXO</th>
