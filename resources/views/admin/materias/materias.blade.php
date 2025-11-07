@@ -6,11 +6,10 @@
 
     <div class="container">
         <div class="row ">
-
             <div class="col d-flex flex-column flex-shrink-0" style="padding: 20px; text-align: center">
                 <div>
                     <h1>
-                        Lista de Materias
+                        Lista de materias
                     </h1>
                 </div>
                 <div class="text-left p-2">
@@ -47,7 +46,9 @@
                         </div>
                     </form>
                 </div>
-                <table class="table table-striped">
+            </div>
+        </div>
+        <table class="table table-striped">
                     <thead>
                         <tr>
                             <th scope="col">Editar</th>
@@ -109,15 +110,13 @@
                     {{ $materias->appends(['busqueda' => request()->get('busqueda')])->links('pagination::bootstrap-4') }}
 
                 </div>
-            </div>
-        </div>
 
     </div>
 
     @can('solo.tutor')
         @include('modal.materia.new-materia')
     @endcan
-@section('js')
+    @section('js')
     <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @if (session('eliminar') == 'ok')
@@ -130,33 +129,26 @@
         </script>
     @endif
 
-
-
-
     <script>
         $('.form-delete-m').submit(function(e) {
             e.preventDefault();
-
-
+            
             Swal.fire({
-                title: 'Estas Seguro de eliminar?',
-                text: "La materia se eliminara definitivamente",
+                title: '¿Eliminar materia?',
+                text: "Esta accion es irreversible",
                 icon: 'warning',
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                confirmButtonText: 'Si!'
+                confirmButtonText: 'Si',
+                cancelButtonText: 'Cancelar'
             }).then((result) => {
                 if (result.isConfirmed) {
-
                     this.submit();
                 }
             })
         });
     </script>
-
-
-
 
     <script>
         @if (session('success'))
