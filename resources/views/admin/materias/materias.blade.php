@@ -158,29 +158,27 @@
 
 
 
-    @if (session('error') || $errors->any())
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            let errorMessage = '';
-
-            @if (session('error') == 'clave')
-                errorMessage += 'La clave ya existe, intenta con otra.<br>';
-            @endif
-
-            @if ($errors->any())
-                errorMessage += `{!! implode('<br>', $errors->all()) !!}`;
-            @endif
-
+        @if (session('success'))
             Swal.fire({
-                title: 'Error',
-                html: errorMessage,
-                icon: 'error',
-                confirmButtonText: 'Aceptar',
-                timer: 4000
+                icon: 'success',
+                title: '¡Éxito!',
+                text: '{{ session('success') }}',
+                confirmButtonColor: '#3085d6',
+                confirmButtonText: 'Aceptar'
             });
-        });
+        @endif
+
+        @if (session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '{{ session('error') }}',
+                confirmButtonColor: '#d33',
+                confirmButtonText: 'Aceptar'
+            });
+        @endif
     </script>
-@endif
 
 @endsection
 
