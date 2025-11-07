@@ -66,11 +66,17 @@
 
                         <div class="col-md-11">
                             <label for="carrera" class="form-label">Carrera</label>
-                            <select name="carrera" class="form-select" aria-label="Default select example">
-                                @foreach ($carreras as $item)
-                                    <option value="{{ $item->id }}">{{ $item->nombre_carrera }}</option>
-                                @endforeach
-                            </select>
+
+                            @can('solo.admin')
+                                <select name="carrera" class="form-select" aria-label="Default select example">
+                                    @foreach ($carreras as $item)
+                                        <option value="{{ $item->id }}">{{ $item->nombre_carrera }}</option>
+                                    @endforeach
+                                </select>
+                            @elsecan('solo.tutor')
+                                <input type="hidden" name="carrera" value="{{ $carrera_id }}">
+                                <input type="text" class="form-control" value="{{ App\Models\Carrera::find($carrera_id)->nombre_carrera }}" readonly>
+                            @endcan
                         </div>
 
                         <div class="form-group">

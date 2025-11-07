@@ -26,22 +26,22 @@ class MateriasController extends Controller
         $tutor = Tutor::find($id);
         $palabra = '';
 
-        $carrera = $tutor->carrera;
+        $carrera_id = null; // valor por defecto
 
-        if ($tutor->carrera_id != null) {
-            $carrera = $carrera->id;
-            $materias = Materia::where('carrera_id', $carrera)
+        if ($tutor && $tutor->carrera_id != null) {
+            $carrera_id = $tutor->carrera_id;
+            $materias = Materia::where('carrera_id', $carrera_id)
                 ->orderby('carrera_id', 'asc')
                 ->orderby('semestre', 'asc')
                 ->paginate(10);
         } else {
+            // para el admin 
             $materias = Materia::orderby('carrera_id', 'asc')
                 ->orderby('semestre', 'asc')
                 ->paginate(10);
         }
 
-
-        return view('admin.materias.materias', compact('materias', 'palabra'));
+        return view('admin.materias.materias', compact('materias', 'palabra', 'carrera_id'));
     }
 
     /**
