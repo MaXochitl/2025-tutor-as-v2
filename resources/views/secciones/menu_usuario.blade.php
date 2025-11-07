@@ -6,9 +6,8 @@ use App\Models\Registro;
 
 <li class="nav-item dropdown">
     <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-        {{ Auth::user()->name }}
-
         <img src="{{ Auth::user()->tutor->foto }} " alt="" height="50px" width="50px" class="img-icon" style="border-radius: 40px; padding: 0px ">
+        {{ Auth::user()->name }}
     </a>
     <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
         <li><a class="dropdown-item" href=" {{ route('tutor.edit', Auth::user()->tutor) }} ">Perfil</a></li>

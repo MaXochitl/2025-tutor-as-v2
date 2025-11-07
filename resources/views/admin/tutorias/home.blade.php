@@ -36,7 +36,7 @@
                             <div class="col-md-6 offset-md-3">
                                 <form class="input-group" method="POST" action="{{ route('searchTutor', $carrera) }}">
                                     @csrf
-                                    <input name="search_tutor" type="text" class="form-control" placeholder="Bucar"
+                                    <input name="search_tutor" type="text" class="form-control" placeholder="Buscar"
                                         aria-label="Buscar" id="search-input" value="{{ $palabra }}">
                                     <div class="input-group-append">
                                         <!-- Botón de buscar -->
