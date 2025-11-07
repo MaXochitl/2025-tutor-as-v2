@@ -202,19 +202,22 @@
                                 </div>
                             </td>
 
-                            <td>
-                                <div>
-                                    {{ $alumnos->reporte_final }}
-                                </div>
-                                @if (($fecha_actual >= $mes_4 && $fecha_actual <= $entrega_final) || $altera_entrega->mes_5)
-                                    <div class="d-grid gap-2">
-                                        <a href="{{ route('reporte.show', $alumnos->id) }} " type="button"
-                                            class="btn btn-primary">
-                                            RF
-                                        </a>
-                                    </div>
-                                @endif
+                        <!--RF con casilla-->
+                        @if (($fecha_actual >= $mes_4 && $fecha_actual <= $entrega_final) || $altera_entrega->mes_5)
+                            <td class="casilla editable text-center" 
+                                data-bs-toggle="tooltip" 
+                                title="Reporte Final"
+                                onclick="window.location='{{ route('reporte.show', $alumnos->id) }}'">
+                                <div style="height: 5px; background:{{ $alumnos->lights[4]->semaforos[0]->fondo }};"></div>
+                                <div>{{ $alumnos->reporte_final }}</div>
                             </td>
+                        @else
+                            <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Reporte final bloqueado">
+                                <div style="height: 5px; background:{{ $alumnos->lights[4]->semaforos[0]->fondo }};"></div>
+                                <div>{{ $alumnos->reporte_final }}</div>
+                            </td>
+                        @endif
+                        
                             <td>
                                 <div>
                                     <form action="{{ route('alumnos-tutor.destroy', $alumnos->id) }} "
