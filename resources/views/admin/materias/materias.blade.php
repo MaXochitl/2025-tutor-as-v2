@@ -54,8 +54,8 @@
                             <th scope="col">Clave</th>
                             <th scope="col">Materia</th>
                             <th scope="col">Semestre</th>
-                            <th scope="col">Carrera</th>
                             @can('solo.admin')
+                                <th scope="col">Carrera</th>
                                 <th scope="col">Eliminar</th>
                             @endcan
 
@@ -80,8 +80,8 @@
                                 <td>{{ $mater->clave }}</td>
                                 <td>{{ $mater->nombre }} </td>
                                 <td>{{ $mater->semestre }} </td>
-                                <td>{{ $mater->carrera->nombre_carrera }} </td>
                                 @can('solo.admin')
+                                    <td>{{ $mater->carrera->nombre_carrera }} </td>
                                     <td>
                                         <div>
                                             <form class="form-delete-m" action="{{ route('materia.destroy', $mater->id) }} "
