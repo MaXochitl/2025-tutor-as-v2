@@ -26,22 +26,22 @@ class MateriasController extends Controller
         $tutor = Tutor::find($id);
         $palabra = '';
 
-        $carrera = $tutor->carrera;
+        $carrera_id = null; // valor por defecto
 
-        if ($tutor->carrera_id != null) {
-            $carrera = $carrera->id;
-            $materias = Materia::where('carrera_id', $carrera)
+        if ($tutor && $tutor->carrera_id != null) {
+            $carrera_id = $tutor->carrera_id;
+            $materias = Materia::where('carrera_id', $carrera_id)
                 ->orderby('carrera_id', 'asc')
                 ->orderby('semestre', 'asc')
                 ->paginate(10);
         } else {
+            // para el admin 
             $materias = Materia::orderby('carrera_id', 'asc')
                 ->orderby('semestre', 'asc')
                 ->paginate(10);
         }
 
-
-        return view('admin.materias.materias', compact('materias', 'palabra'));
+        return view('admin.materias.materias', compact('materias', 'palabra', 'carrera_id'));
     }
 
     /**
@@ -67,23 +67,28 @@ class MateriasController extends Controller
         //
         $request->validate([
             'materia' => ['required'],
-            'clave' => ['required']
+            'clave' => ['required'],
+            'carrera' => ['required'],
+            'semestre' => ['required'],
         ]);
 
-        try {
-            Materia::create([
-                'nombre' => $request->materia,
-                'semestre' => $request->semestre,
-                'carrera_id' => $request->carrera,
-                'clave' => $request->clave
-            ]);
-        } catch (QueryException $e) {
-            if ($e->errorInfo[1] == 1062) { // Código de error para clave duplicada
-                return back()->with('error', 'clave');
-            }
-            throw $e;
+        // Verificar si ya existe una materia con la misma clave en la misma carrera
+        $existe = Materia::where('clave', $request->clave)
+                    ->where('carrera_id', $request->carrera)
+                    ->exists();
+
+        if ($existe) {
+            return back()->with('error', 'La clave ya existe, intenta con otra.');
         }
-        return redirect()->route('materia.index');
+
+        Materia::create([
+            'nombre' => $request->materia,
+            'semestre' => $request->semestre,
+            'carrera_id' => $request->carrera,
+            'clave' => $request->clave
+        ]);
+
+        return redirect()->route('materia.index')->with('success', 'Materia registrada correctamente.');
     }
 
     /**
@@ -117,13 +122,32 @@ class MateriasController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $materia = Materia::find($id);
-        $materia->nombre = $request->materia;
-        $materia->semestre = $request->semestre;
-        $materia->carrera_id = $request->carrera;
-        $materia->clave = $request->clave;
-        $materia->save();
-        return redirect()->route('materia.index');
+        // validar campos requeridos
+        $request->validate([
+            'materia' => ['required'],
+            'clave' => ['required'],
+        ]);
+
+        // buscar si ya existe otra materia con la misma clave en la misma carrera
+        $existe = Materia::where('clave', $request->clave)
+            ->where('carrera_id', $request->carrera)
+            ->where('id', '!=', $id) // excluir el registro actual
+            ->exists();
+
+        if ($existe) {
+            return back()->with('error', 'La clave ya existe, intenta con otra.');
+        }
+
+        // actualizar registro de una
+        $materia = Materia::findOrFail($id);
+        $materia->update([
+            'nombre' => $request->materia,
+            'semestre' => $request->semestre,
+            'carrera_id' => $request->carrera,
+            'clave' => $request->clave,
+        ]);
+
+        return redirect()->route('materia.index')->with('success', 'Materia actualizada correctamente.');
     }
 
     /**

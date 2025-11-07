@@ -50,13 +50,18 @@
                         <div class="col-12">
                             <div class="form-group">
                                 <label for="carrera" class="form-label">Carrera</label>
-                                <select name="carrera" class="form-select" required>
-                                    @foreach ($carreras as $item)
-                                        <option value="{{ $item->id }}" @if ($mater->carrera->id == $item->id) selected @endif>
-                                            {{ $item->nombre_carrera }}
-                                        </option>
-                                    @endforeach
-                                </select>
+                                @can('solo.admin')
+                                    <select name="carrera" class="form-select" aria-label="Default select example">
+                                        @foreach ($carreras as $item)
+                                            <option @if ($mater->carrera->id == $item->id) selected @endif value="{{ $item->id }}">
+                                                {{ $item->nombre_carrera }}
+                                            </option>
+                                        @endforeach
+                                    </select>
+                                @elsecan('solo.tutor')
+                                    <input type="hidden" name="carrera" value="{{ $mater->carrera_id }}">
+                                    <input type="text" class="form-control" value="{{ $mater->carrera->nombre_carrera }}" readonly>
+                                @endcan
                             </div>
                         </div>
 
