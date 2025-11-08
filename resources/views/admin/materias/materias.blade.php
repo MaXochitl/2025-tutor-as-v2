@@ -9,7 +9,7 @@
             <div class="col d-flex flex-column flex-shrink-0" style="padding: 20px; text-align: center">
                 <div>
                     <h1>
-                        Lista de materias
+                        {{ $titulo }}
                     </h1>
                 </div>
                 <div class="text-left p-2">

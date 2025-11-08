@@ -25,23 +25,28 @@ class MateriasController extends Controller
         $id = $user->tutor_id;
         $tutor = Tutor::find($id);
         $palabra = '';
-
+        $titulo = '';
         $carrera_id = null; // valor por defecto
 
         if ($tutor && $tutor->carrera_id != null) {
+            $carrera = $tutor->carrera; //obtener el name de la carrera del tuto
             $carrera_id = $tutor->carrera_id;
             $materias = Materia::where('carrera_id', $carrera_id)
                 ->orderby('carrera_id', 'asc')
                 ->orderby('semestre', 'asc')
                 ->paginate(10);
+
+            $titulo = 'Materias de ' . $carrera->nombre_carrera; 
         } else {
             // para el admin 
             $materias = Materia::orderby('carrera_id', 'asc')
                 ->orderby('semestre', 'asc')
                 ->paginate(10);
+
+                $titulo = 'Lista de materias';
         }
 
-        return view('admin.materias.materias', compact('materias', 'palabra', 'carrera_id'));
+        return view('admin.materias.materias', compact('materias', 'palabra', 'carrera_id', 'titulo'));
     }
 
     /**
@@ -165,27 +170,37 @@ class MateriasController extends Controller
 
     public function searchMateria(Request $request)
     {
-
         $user = User::find(Auth::user()->id);
         $id = $user->tutor_id;
         $tutor = Tutor::find($id);
 
-        $carrera = $tutor->carrera;
         $palabra = $request->busqueda;
+        $titulo = '';
+        $carrera_id = null;
 
-        if ($tutor->carrera_id != null) {
-            $carrera = $carrera->id;
+        if ($tutor && $tutor->carrera_id != null) {
+            // Es tutor con carrera asignada
+            $carrera = $tutor->carrera;
+            $carrera_id = $carrera->id;
+
             $materias = Materia::where('nombre', 'LIKE', '%' . $palabra . '%')
-                ->where('carrera_id', $carrera)
+                ->where('carrera_id', $carrera_id)
                 ->orderby('carrera_id', 'asc')
                 ->orderby('semestre', 'asc')
                 ->paginate(10);
+
+            $titulo = 'Materias de ' . $carrera->nombre_carrera;
         } else {
+            // Es administrador
             $materias = Materia::where('nombre', 'LIKE', '%' . $palabra . '%')
                 ->orderby('carrera_id', 'asc')
                 ->orderby('semestre', 'asc')
                 ->paginate(10);
+
+            $titulo = 'Todas las materias';
         }
-        return view('admin.materias.materias', compact('materias', 'palabra'));
+
+        return view('admin.materias.materias', compact('materias', 'palabra', 'carrera_id', 'titulo'));
     }
+
 }
