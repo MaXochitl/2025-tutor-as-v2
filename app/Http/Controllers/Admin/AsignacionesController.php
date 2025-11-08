@@ -189,10 +189,14 @@ class AsignacionesController extends Controller
         $semestre = $request->semestre;
         $grupo = $request->grupo;
 
-        // (1) VERIFICAR SI EL GRUPO Y SEMESTRE YA ESTÁN ASIGNADOS
-        // Comprobar si ya existe una asignación para el mismo periodo, semestre y grupo
-        // Si existe, no se permite crear otra y se muestra un error indicando que tutor ya tiene ese grupo
-        $existe = Asignacion_tutor::where('periodo_id', $periodo_id)
+        // (1) VERIFICAR SI EL GRUPO Y SEMESTRE YA ESTÁN ASIGNADOS PARA LA CARRERA
+        $tutor = Tutor::find($tutor_id);
+        $carrera_id = $tutor->carrera_id;
+        $tutoresMismaCarrera = Tutor::where('carrera_id', $carrera_id)->pluck('id');
+
+        // Comprobar si ya existe una asignación para el mismo periodo, semestre y grupo pero solo entre los tutores de la misma carrera
+        $existe = Asignacion_tutor::whereIn('tutor_id', $tutoresMismaCarrera)
+            ->where('periodo_id', $periodo_id)
             ->where('semestre', $semestre)
             ->where('grupo', $grupo)
             ->with('tutor') 
@@ -203,7 +207,10 @@ class AsignacionesController extends Controller
                 ? $existe->tutor->nombre . ' ' . $existe->tutor->ap_paterno . ' ' . $existe->tutor->ap_materno
                 : 'Desconocido';
 
-            return redirect()->back()->with('error', "El semestre $semestre grupo $grupo ya está asignado al tutor $nombreTutor.");
+            return redirect()->back()->with(
+                'error',
+                "El semestre $semestre grupo $grupo ya está asignado al tutor $nombreTutor dentro de la misma carrera."
+            );
         }
 
         // (2) ACTUALIZAR UN REGISTRO 'SIN ASIGNAR'
@@ -221,14 +228,11 @@ class AsignacionesController extends Controller
                 'grupo' => $grupo,
             ]);
 
-            $tutor = $sinAsignar->tutor;
-            $nombreTutor = $tutor
-                ? $tutor->nombre . ' ' . $tutor->ap_paterno
-                : 'Desconocido';
+            $nombreTutor = $tutor->nombre . ' ' . $tutor->ap_paterno;
 
             return redirect()
                 ->route('asignaciones.index')
-                ->with('success', "$semestre$grupo asignado a $nombreTutor");//para pruebas: ->with('success', "$semestre$grupo asignado a $nombreTutor (registro actualizado).");
+                ->with('success', "$semestre$grupo asignado a $nombreTutor.");
         }
 
         // (3) CREAR NUEVA ASIGNACION
@@ -240,10 +244,7 @@ class AsignacionesController extends Controller
             'grupo' => $grupo
         ]);
 
-        $tutor = $asignacion->tutor;
-        $nombreTutor = $tutor
-            ? $tutor->nombre . ' ' . $tutor->ap_paterno
-            : 'Desconocido';
+        $nombreTutor = $tutor->nombre . ' ' . $tutor->ap_paterno;
 
         return redirect()
             ->route('asignaciones.index')
