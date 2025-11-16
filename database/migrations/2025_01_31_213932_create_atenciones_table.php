@@ -14,11 +14,17 @@ class CreateAtencionesTable extends Migration
     public function up()
     {
         Schema::create('atenciones', function (Blueprint $table) {
-            $table->string('alumno_id')->primary();  // Define 'alumno_id' como clave primaria
-            $table->string('atencion'); 
-            $table->string('canalizado'); 
-            $table->string('area_canalizada')->nullable(); 
-            //$table->timestamps();
+
+            $table->bigIncrements('id');
+            $table->string('alumno_id');
+            $table->bigInteger('periodo_id')->unsigned();
+            $table->foreign('periodo_id')
+                  ->references('id')->on('periodos')
+                  ->onDelete('cascade');
+            $table->string('atencion');
+            $table->string('canalizado');
+            $table->string('area_canalizada')->nullable();
+
         });
     }
 

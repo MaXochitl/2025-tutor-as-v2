@@ -10,6 +10,7 @@ use App\Models\Periodo_tutorado_semaforo;
 use App\Models\Semaforo;
 use App\Models\Tutor;
 use App\Models\User;
+use App\Models\Atencion;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -428,10 +429,31 @@ class TutoriasController extends Controller
      */
     public function destroy($id)
     {
-        $id_tutor = Auth::user()->tutor->id;
-        $this->deleteHistLight($id);
-        Periodo_tutorado::find($id)->delete();
-        return redirect()->route('reportes_tutor.show', $id_tutor)->with('eliminar', 'ok');
+    $id_tutor = Auth::user()->tutor->id;
+    
+    // Obtener el registro antes de eliminarlo
+    $periodo_tutorado = Periodo_tutorado::select('id', 'alumno_id', 'periodo_id')
+        ->find($id);
+    
+    if (!$periodo_tutorado) {
+        return redirect()->route('reportes_tutor.show', $id_tutor)
+            ->with('error', 'Registro no encontrado');
+    }
+    
+    // Verificar si existe una atención y eliminarla
+    $atencion = Atencion::where('alumno_id', $periodo_tutorado->alumno_id)
+        ->where('periodo_id', $periodo_tutorado->periodo_id)
+        ->first();
+    
+    if ($atencion) {
+        $atencion->delete();
+    }
+    
+    // Eliminar el registro de periodo_tutorado
+    $periodo_tutorado->delete();
+    
+    return redirect()->route('reportes_tutor.show', $id_tutor)
+        ->with('eliminar', 'ok');
     }
 
     public function baja($id, $staus, $color)

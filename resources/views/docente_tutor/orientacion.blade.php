@@ -1,4 +1,3 @@
-
 <div class="row row-tutor">
     <div class="col d-flex flex-column flex-shrink-0" style="padding: 20px;">
         <div class="col-8">
@@ -69,9 +68,6 @@
             @else
                 <h5 class="mt-3 mb-2">Semestre: {{ $semestre }} - Grupo: {{ $grupo }}</h5>
             @endif
-
-        <!--A. Resaltar los semestres y grupos del tutor que no están dentro de sus semestresgrupos asignados por OE -->
-        <tr @if(!in_array($sgActual, $sgAsignados)) class="table-danger" @endif>
 
         <div class="table-responsive">
             <table class="table text-start table-striped" style="font-size: 12px"> <!--texto alineado a la izq-->
@@ -227,7 +223,8 @@
                                         <li>
                                             <button type="button"
                                                     class="dropdown-item canalizacion-btn"
-                                                    data-id="{{ $alumnos->alumno->id }}">
+                                                    data-id="{{ $alumnos->alumno->id }}"
+                                                    data-periodo="{{ $alumnos->periodo_id }}">
                                                 Atención Individual
                                             </button>
                                         </li>
@@ -277,6 +274,9 @@
                             <label for="alumno_id">Número de control</label>
                             <input type="text" name="alumno_id" id="alumno_id" class="form-control" readonly>
                         </div>
+
+                        <!-- Campo oculto para periodo_id -->
+                        <input type="hidden" name="periodo_id" id="periodo_id">
 
                         <!-- Atención individual -->
                         <div class="form-group mb-3">
@@ -405,9 +405,18 @@ document.addEventListener("DOMContentLoaded", function () {
             e.preventDefault();
             
             let alumnoId = this.getAttribute("data-id");
+            let periodoId = this.getAttribute("data-periodo"); // ✅ CAPTURAR periodo_id
+
+            // Validar que exista el periodo_id
+            if (!periodoId) {
+                console.error("No se encontró el periodo_id");
+                return;
+            }
 
             // Resetear formulario
             document.getElementById("alumno_id").value = alumnoId;
+            document.getElementById("periodo_id").value = periodoId; // ✅ ASIGNAR periodo_id
+            
             atencionSelect.value = "";
             atencionHidden.value = "";
             canalizadoSelect.value = "";
@@ -421,8 +430,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 deleteBtn.style.display = "none";
             }
 
-            // Hacer fetch para obtener datos existentes ANTES de abrir el modal
-            fetch(`/atenciones/${alumnoId}`)  // ← CAMBIO: Usar backticks
+            // ✅ CORRECCIÓN: Hacer fetch con periodo_id en la URL
+            fetch(`/atenciones/${alumnoId}?periodo_id=${periodoId}`)
                 .then(response => {
                     if (!response.ok) {
                         throw new Error('Error en la respuesta del servidor');
@@ -470,7 +479,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 .catch(error => {
                     console.error("Error al cargar datos:", error);
                     
-                    // CAMBIO: Mostrar el modal incluso si hay error
+                    // Mostrar el modal incluso si hay error
                     modal.show();
                     
                     // Opcional: mostrar mensaje en consola en lugar de alert
@@ -479,19 +488,16 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // Manejar el botón de eliminar
+    // ✅ CORRECCIÓN: Manejar el botón de eliminar con periodo_id
     const deleteBtn = document.getElementById("deleteAtencionBtn");
     
     if (deleteBtn) {
         deleteBtn.addEventListener("click", function() {
             const alumnoId = document.getElementById("alumno_id").value;
+            const periodoId = document.getElementById("periodo_id").value; // ✅ OBTENER periodo_id
             
-            if (!alumnoId) {
-                alert("No se puede eliminar. ID de alumno no válido.");
-                return;
-            }
-            
-            if (!confirm("¿Estás seguro de eliminar esta atención?")) {
+            if (!alumnoId || !periodoId) {
+                console.error("ID de alumno o periodo no válido");
                 return;
             }
             
@@ -500,7 +506,8 @@ document.addEventListener("DOMContentLoaded", function () {
             this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Eliminando...';
             this.disabled = true;
 
-            fetch(`/atenciones/${alumnoId}`, {  // ← CAMBIO: Usar backticks
+            // ✅ CORRECCIÓN: Enviar periodo_id en la URL
+            fetch(`/atenciones/${alumnoId}?periodo_id=${periodoId}`, {
                 method: 'DELETE',
                 headers: {
                     'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
@@ -518,12 +525,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 // Cerrar el modal
                 modal.hide();
 
+                // Mostrar mensaje de éxito (opcional)
+                console.log(data.message);
+
                 // Recargar la página para reflejar los cambios
                 window.location.reload();
             })
             .catch(error => {
                 console.error("Error:", error);
-                alert("Error al eliminar la canalización. Por favor, intenta de nuevo.");
                 
                 // Restaurar el botón
                 this.innerHTML = originalText;
