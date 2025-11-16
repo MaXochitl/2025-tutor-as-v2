@@ -21,12 +21,12 @@ class Atencion extends Model
 
     public function alumno()
     {
-        return $this->belongsTo(Alumno::class, 'alumno_id', 'id');
+        return $this->belongsTo(Alumno::class, 'alumno_id');
     }
 
     public function periodo()
     {
-        return $this->belongsTo(Periodo::class, 'periodo_id', 'id');
+        return $this->belongsTo(Periodo::class, 'periodo_id');
     }
 }
 
