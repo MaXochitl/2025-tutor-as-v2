@@ -81,7 +81,7 @@ class ReporteSemCarrerasController extends Controller
                 $totalTutoriaIndividual,
                 $totalEstudiantesCanalizados
             ), 
-            'Reporte_Semestral_Carreras_' . date('Y-m-d') . '.xlsx'
+            'F-OE-07 REPORTE SEMESTRAL DEL COORDINADOR INSTITUCIONAL DE TUTORIA'.'.xlsx'
         );
     }
 }
