@@ -33,7 +33,7 @@ class ReporteSemCarrerasController extends Controller
 
         foreach ($carreras as $carrera) {
             // Ejecutar el stored procedure para obtener datos por carrera
-            $resultados = DB::select('CALL ResumenPorCarrera(?, ?)', [$periodo_id, $carrera->id]);
+            $resultados = DB::select('CALL ReporteGeneral(?, ?)', [$periodo_id, $carrera->id]);
             
             if (!empty($resultados)) {
                 $resultado = $resultados[0];
@@ -44,7 +44,7 @@ class ReporteSemCarrerasController extends Controller
                 $estudiantesCanalizados = $resultado->estudiantes_canalizados ?? 0;
                 $areasCanalizadas = $resultado->areas_canalizadas ?? 'Ninguna';
                 
-                // Matrícula por carrera = tutoría grupal + cantidad tutores
+                // Matrícula por carrera
                 $matriculaCarrera = $tutoriaGrupal + $cantidadTutores;
                 
                 // Acumular totales
@@ -53,7 +53,6 @@ class ReporteSemCarrerasController extends Controller
                 $totalTutoriaIndividual += $tutoriaIndividual;
                 $totalEstudiantesCanalizados += $estudiantesCanalizados;
                 
-                // IMPORTANTE: El orden de las columnas según el layout del Excel
                 $data[] = [
                     $carrera->id,                    // Columna A - ID
                     $carrera->nombre_carrera,        // Columna B - Nombre (merged con A)
