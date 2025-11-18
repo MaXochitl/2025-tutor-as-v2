@@ -50,8 +50,17 @@ class ReporteSemCarrerasController extends Controller
         $totalAlumnos = $datos->sum('alumnos_count');
 
         // Generar excel del reporte semestral
-        return Excel::download(new ReporteSemCarrerasExport($data, $totalMatricula, 
-        $totalTutores, $totalAlumnos), 'Reporte_Semestral.xlsx');
+        return Excel::download(
+            new ReporteSemCarrerasExport(
+                $data, 
+                $totalMatricula, 
+                $totalTutores, 
+                $totalTutoriaGrupal,
+                $totalTutoriaIndividual,
+                $totalEstudiantesCanalizados
+            ), 
+            'F-OE-07 REPORTE SEMESTRAL DEL COORDINADOR INSTITUCIONAL DE TUTORIAS' . '.xlsx'
+        );
     }
 
 }

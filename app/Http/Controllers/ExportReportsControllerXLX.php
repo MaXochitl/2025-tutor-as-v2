@@ -108,7 +108,7 @@ class ExportReportsControllerXLX extends Controller
 
     return Excel::download(
         new ReportExport($tutores, $headings), 
-        'reporte_semestral_' . $carrera->nombre_carrera . '_' . date('Y-m-d') . '.xlsx'
+        'F-OE-06 REPORTE SEMESTRAL DEL COORDINADOR INSTITUCIONAL DE TUTORIA' . '.xlsx'
     );
     }
 
