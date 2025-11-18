@@ -5,33 +5,37 @@ namespace App\Exports;
 use Maatwebsite\Excel\Concerns\FromArray;
 use Maatwebsite\Excel\Concerns\WithDrawings;
 use Maatwebsite\Excel\Concerns\WithStyles;
+use Maatwebsite\Excel\Events\AfterSheet;
+use Maatwebsite\Excel\Concerns\WithEvents;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
 use PhpOffice\PhpSpreadsheet\Style\Border;
 use PhpOffice\PhpSpreadsheet\Worksheet\Drawing;
 use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 
-class ReporteSemCarrerasExport implements FromArray, WithDrawings, WithStyles
+class ReporteSemCarrerasExport implements FromArray, WithDrawings, WithStyles, WithEvents
 {
-    /**
-     * @return \Illuminate\Support\Collection
-     */
-    public function collection()
-    {
-        //
-    }
-
     private $data;
     protected $totalMatricula;
     protected $totalTutores;
-    protected $totalAlumnos;
+    protected $totalTutoriaGrupal;
+    protected $totalTutoriaIndividual;
+    protected $totalEstudiantesCanalizados;
 
-    // Constructor para aceptar datos y encabezados dinámicos
-    public function __construct(array $data, $totalMatricula, $totalTutores, $totalAlumnos)
-    {
+    // Constructor para aceptar datos y totales
+    public function __construct(
+        array $data, 
+        $totalMatricula, 
+        $totalTutores, 
+        $totalTutoriaGrupal,
+        $totalTutoriaIndividual,
+        $totalEstudiantesCanalizados
+    ) {
         $this->data = $data;
         $this->totalMatricula = $totalMatricula;
         $this->totalTutores = $totalTutores;
-        $this->totalAlumnos = $totalAlumnos;
+        $this->totalTutoriaGrupal = $totalTutoriaGrupal;
+        $this->totalTutoriaIndividual = $totalTutoriaIndividual;
+        $this->totalEstudiantesCanalizados = $totalEstudiantesCanalizados;
     }
 
     // Datos a exportar
@@ -137,11 +141,14 @@ class ReporteSemCarrerasExport implements FromArray, WithDrawings, WithStyles
             $sheet->getStyle("J$row")->getAlignment()->setHorizontal('center');
         }
 
-        // Fila final dinamica
+        // Fila final dinamica (TOTALES)
         $nextRow = $lastRow + 1;
         $sheet->setCellValue("A$nextRow", "Resultados");
         $sheet->setCellValue("C$nextRow", '' . $this->totalTutores);
-        $sheet->setCellValue("D$nextRow", '' . $this->totalAlumnos);
+        $sheet->setCellValue("D$nextRow", '' . $this->totalTutoriaGrupal);
+        $sheet->setCellValue("E$nextRow", '' . $this->totalTutoriaIndividual);
+        $sheet->mergeCells("F$nextRow:G$nextRow");
+        $sheet->setCellValue("F$nextRow", '' . $this->totalEstudiantesCanalizados);
         $sheet->setCellValue("J$nextRow", '' . $this->totalMatricula);
 
         // Estilo separado para la fila dinamica final
@@ -151,7 +158,6 @@ class ReporteSemCarrerasExport implements FromArray, WithDrawings, WithStyles
         $sheet->getStyle("A$nextRow:J$nextRow")->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setRGB('00007C');
         $sheet->getStyle("A$nextRow:J$nextRow")->getFont()->getColor()->setRGB('FFFFFF');
         $sheet->mergeCells("A$nextRow:B$nextRow");
-        $sheet->mergeCells("F$nextRow:G$nextRow");
         $sheet->mergeCells("H$nextRow:I$nextRow");
 
         // Apartados de firmas
@@ -187,9 +193,9 @@ class ReporteSemCarrerasExport implements FromArray, WithDrawings, WithStyles
         $sheet->setCellValue("J$messageRow", "F-OE-07");
 
         $sheet->getStyle("B$messageRow")->getFont()->setItalic(true);
-        $sheet->getStyle("I$messageRow")->getFont()->setItalic(true);
+        $sheet->getStyle("J$messageRow")->getFont()->setItalic(true);
         $sheet->getStyle("B$messageRow")->getAlignment()->setHorizontal('left');
-        $sheet->getStyle("I$messageRow")->getAlignment()->setHorizontal('right');
+        $sheet->getStyle("J$messageRow")->getAlignment()->setHorizontal('right');
 
         return [];
     }
@@ -202,7 +208,6 @@ class ReporteSemCarrerasExport implements FromArray, WithDrawings, WithStyles
 
                 // Ajusta el tamaño de la fila para la imagen
                 $sheet->getRowDimension(1)->setRowHeight(70);
-
             },
         ];
     }
@@ -217,6 +222,4 @@ class ReporteSemCarrerasExport implements FromArray, WithDrawings, WithStyles
         $drawing->setCoordinates('A1'); // Coordenadas donde se insertará
         return $drawing;
     }
-
 }
-
