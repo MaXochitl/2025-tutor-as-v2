@@ -15,11 +15,7 @@ class ReporteSemCarrerasController extends Controller
     {
         // Obtener el periodo activo
         $periodoView = Periodo_view::first();
-        
-        if (!$periodoView) {
-            return back()->with('error', 'No hay periodo configurado en la vista');
-        }
-        
+
         $periodo_id = $periodoView->periodo_id;
 
         // Obtener todas las carreras
@@ -32,7 +28,6 @@ class ReporteSemCarrerasController extends Controller
         $totalEstudiantesCanalizados = 0;
 
         foreach ($carreras as $carrera) {
-            // Ejecutar el stored procedure para obtener datos por carrera
             $resultados = DB::select('CALL ReporteGeneral(?, ?)', [$periodo_id, $carrera->id]);
             
             if (!empty($resultados)) {
@@ -44,10 +39,8 @@ class ReporteSemCarrerasController extends Controller
                 $estudiantesCanalizados = $resultado->estudiantes_canalizados ?? 0;
                 $areasCanalizadas = $resultado->areas_canalizadas ?? 'Ninguna';
                 
-                // Matrícula por carrera
                 $matriculaCarrera = $tutoriaGrupal + $cantidadTutores;
                 
-                // Acumular totales
                 $totalTutores += $cantidadTutores;
                 $totalTutoriaGrupal += $tutoriaGrupal;
                 $totalTutoriaIndividual += $tutoriaIndividual;
@@ -68,10 +61,8 @@ class ReporteSemCarrerasController extends Controller
             }
         }
 
-        // La matrícula total es tutoría grupal + cantidad de tutores
         $totalMatricula = $totalTutoriaGrupal + $totalTutores;
 
-        // Generar excel del reporte semestral
         return Excel::download(
             new ReporteSemCarrerasExport(
                 $data, 
