@@ -70,44 +70,48 @@ class ExportReportsControllerXLX extends Controller
     public function show($id)
     {
     $periodoView = Periodo_view::first();
-    
-    if (!$periodoView) {
-        return back()->with('error', 'No hay periodo configurado en la vista');
-    }
-    
     $periodo_id = $periodoView->periodo_id;
     $carrera = Carrera::find($id);
-    
-    if (!$carrera) {
-        return back()->with('error', 'Carrera no encontrada');
-    }
-
     $tutores = DB::select('CALL ReportesCarrera(?, ?)', [$periodo_id, $id]);
-    
-    if (empty($tutores)) {
-        return back()->with('warning', 'No hay tutores con grupos asignados para generar el reporte en este periodo');
-    }
 
-    $tutores = array_map(function ($tutor) {
-        return (array)$tutor;
-    }, $tutores);
+    // Organizacion de datos del procedure.
+    $data = [];
+    foreach ($tutores as $tutor) {
+        $tutor = (array)$tutor;
+        $data[] = [
+            $tutor['tutor_nombre'] ?? '',           
+            '',                                         
+            $tutor['grupo'] ?? '',                    
+            $tutor['tutorias_grupales'] ?? 0,       
+            $tutor['tutorias_individuales'] ?? 0,
+            '',                                       
+            $tutor['estudiantes_canalizados'] ?? 0,
+            '',                                       
+            '', 
+            $tutor['areas_canalizadas'] ?? '',                          
+            '',                                         
+        ];
+    }
 
     date_default_timezone_set('America/Mexico_City');
     
+    // Cabeceras de la tabla.
     $headings = [
-        [' '],
-        [' '],
-        [' '],
-        [' '],
-        ['INSTITUTO TECNOLÓGICO SUPERIOR DE TANTOYUCA'],
-        ['REPORTE SEMESTRAL DEL COORDINADOR DE TUTORÍA DEL DEPARTAMENTO ACADÉMICO'],
-        ['Programa Educativo:', '', $carrera->nombre_carrera, '', '', '', ''],
-        ['Fecha: ', date('d/m/Y'), 'Hora: ' . date('h:i A')],
-        ['ID Tutor', 'Nombre del Tutor', 'Grupo', 'Tutoría Grupal', 'Tutoría Individual', 'Estudiantes Canalizados', 'Áreas Canalizadas'],
+    [' '],
+    [' '],
+    [' '],
+    [' '],
+    [' '],
+    ['REPORTE SEMESTRAL DEL COORDINADOR INSTITUCIONAL DE TUTORÍA'],
+    ['Nombre del Coordinador Institucional de Tutorías:', '', '', '', '', '', '', '', ' Fecha:', date('d/m/Y')],
+    ['Programa Educativo:', '', $carrera->nombre_carrera, '', '', '', '', '', ' Hora:', date('h:i A')],
+    [' '],
+    ['Lista de tutores','', "Semestre y\nGrupo", "Estudiantes atendidos\nen el semestre", '', "Estudiantes canalizados\nen el semestre",'','', 'Área canalizada'],
+    ['', '','', "Tutoría\nGrupal", "Tutoría\nIndividual", '', ''],
     ];
 
     return Excel::download(
-        new ReportExport($tutores, $headings), 
+        new ReportExport($data, $headings), 
         'F-OE-06 REPORTE SEMESTRAL DEL COORDINADOR INSTITUCIONAL DE TUTORIA' . '.xlsx'
     );
     }

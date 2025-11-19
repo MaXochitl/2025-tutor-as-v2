@@ -43,86 +43,127 @@ class ReportExport implements FromArray, WithHeadings, WithStyles
     // Estilos
     public function styles(Worksheet $sheet)
     {
-
         // Agregar una imagen al encabezado
-        //$sheet->getHeaderFooter()->setOddHeader('&C&HEncabezado con imagen');
-
         $drawing = new Drawing();
         $drawing->setName('Logo');
         $drawing->setDescription('Logo');
-        $drawing->setPath(public_path('/tutores/tecnologico.jpg')); // Ruta a tu imagen
-        $drawing->setHeight(50); // Altura de la imagen
-        $drawing->setWidth(700); // Altura de la imagen
-        $drawing->setCoordinates('A1'); // Celda donde se coloca
+        $drawing->setPath(public_path('/tutores/tecnologico.jpg'));
+        $drawing->setHeight(50);
+        $drawing->setWidth(900);
+        $drawing->setCoordinates('A1'); 
         $drawing->setWorksheet($sheet);
         //Ajuste del pie de pagina
         $sheet->getHeaderFooter()
-            ->setOddFooter('&L&K000000 R00/0824 &R&K000000 F-OE-06');
-
+        ->setOddFooter("\n\n&L&K000000 R00/0824 &R&K000000 F-OE-06");
 
         // Combinar celdas
         $sheet->mergeCells('A1:I1'); // Combina las celdas A1 hasta F1
         $sheet->mergeCells('A2:I2'); // Combina las celdas A2 hasta F2
         $sheet->mergeCells('A3:B3'); // Combina A3 a C3 para Programa Educativo
         $sheet->mergeCells('C3:G3'); // Combina A3 a C3 para Programa Educativo
+        $sheet->mergeCells('A10:B11'); // Combina "Lista de tutores" verticalmente
+        $sheet->getStyle('A10:B11')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('A10:B11')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->mergeCells('C10:C11'); //Combina "Semestre y grupo"
+        $sheet->mergeCells('D10:E10'); //Combina "Estudiantes..."
+        $sheet->mergeCells('F10:H11'); //Combina "Estudiantes..."
+        $sheet->getStyle('F10:H11')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('F10:H11')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
+        $sheet->mergeCells('I10:K11'); //Combina "AREA CANALIZADA"
+        $sheet->getStyle('I10:K11')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+        $sheet->getStyle('I10:K11')->getAlignment()->setHorizontal(\PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER);
 
+        // Ajusta el ancho de ambas columnas
+        $sheet->getColumnDimension('A')->setWidth(20);
+        $sheet->getColumnDimension('B')->setWidth(20);
+
+        //FILA 6
+        $sheet->mergeCells('A6:K6');
+
+        // Aplicar estilo blanco con fondo azul centrado
+        $sheet->getStyle('A6:H6')->applyFromArray([
+            'font' => [
+                'bold' => true,
+                'color' => ['rgb' => 'FFFFFF'], // blanco
+                'size' => 12
+            ],
+            'alignment' => [
+                'horizontal' => \PhpOffice\PhpSpreadsheet\Style\Alignment::HORIZONTAL_CENTER,
+                'vertical'   => \PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER,
+            ],
+            'fill' => [
+                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
+                'startColor' => ['rgb' => '1B396A'], // azul institucional
+            ],
+        ]);
 
         // Centrar texto
         $sheet->getStyle('A1:I1')->getAlignment()->setHorizontal('center');
-        // $sheet->getStyle('A2:F2')->getAlignment()->setHorizontal('center');
-        //$sheet->getStyle('A3:F3')->getAlignment()->setHorizontal('center');
 
         // Estilo de texto
         $sheet->getStyle('A1:F1')->getFont()->setBold(true)->setSize(14); // Primera fila: negrita y tamaño 14
         $sheet->getStyle('A2:F2')->getFont()->setBold(true)->setSize(12); // Segunda fila: negrita y tamaño 12
-        $sheet->getStyle('A5:G5')->getFont()->setBold(true)->setSize(14); // Primera fila: negrita y tamaño 14
+        $sheet->getStyle('A5:H5')->getFont()->setBold(true)->setSize(14); // Primera fila: negrita y tamaño 14
         $sheet->getStyle('A3:F3')->getFont()->setItalic(true); // Tercera fila: cursiva
-        $sheet->getStyle('A9:H9')->getFont()->setBold(true);
-        $sheet->getStyle('A9:H9')->applyFromArray([
+        //FILA 9
+
+        //FILA 10
+        // DESPUÉS aplicar el formato
+        $sheet->getStyle('A10:F11')->getAlignment()->setWrapText(true);
+        $sheet->getStyle('A10:F11')->getFont()->setBold(true);
+        $sheet->getStyle('A10:F11')->getAlignment()->setVertical(\PhpOffice\PhpSpreadsheet\Style\Alignment::VERTICAL_CENTER);
+
+        // Ajustar altura si es necesario
+        $sheet->getRowDimension(10)->setRowHeight(30);
+        $sheet->getRowDimension(11)->setRowHeight(30);
+        $sheet->getStyle('A10:K10')->applyFromArray([
             'font' => [
                 'bold' => true,
-                'color' => ['rgb' => 'f2f2f2'], // Color del texto (blanco)
-            ],
-            'fill' => [
-                'fillType' => \PhpOffice\PhpSpreadsheet\Style\Fill::FILL_SOLID,
-                'startColor' => ['rgb' => '1b396a'], // Amarillo
             ],
         ]);
+
+        //FILA 11
+        $sheet->getStyle('A11:K11')->getAlignment()->setWrapText(true);
+        $sheet->getStyle('A11:K11')->getFont()->setBold(true);
+        $sheet->getStyle('A11:K11')->applyFromArray([
+            'font' => [
+                'bold' => true,
+            ],
+        ]);
+
         $sheet->getColumnDimension('B')->setWidth(30);
 
 
         // Agregar nombres en la misma fila (esquinas opuestas)
-        $lastRow = count($this->data) + 10; // Calcular la última fila de datos (ajustar según cabeceras)
+        $lastRow = count($this->data) + 14;
 
         $sheet->setCellValue('A' . ($lastRow + 1), 'Lic. Emma Valeria Ramírez Guzmán'); // Esquina izquierda
-        $sheet->setCellValue('H' . ($lastRow + 1), 'MC. Sonia Cruz Rivero'); // Esquina derecha
+        $sheet->setCellValue('K' . ($lastRow + 1), 'MC. Sonia Cruz Rivero'); // Esquina derecha
 
         $sheet->setCellValue('A' . ($lastRow + 2), 'Encargada de la oficina de Orientacion'); // Esquina izquierda
-        $sheet->setCellValue('H' . ($lastRow + 2), 'Jefa del Dpto. Desarrollo Académico'); // Esquina derecha
+        $sheet->setCellValue('K' . ($lastRow + 2), 'Jefa del Dpto. Desarrollo Académico'); // Esquina derecha
 
 
         // Aplicar estilos a los nombres
         $sheet->getStyle('A' . ($lastRow + 2))
             ->getFont()->setBold(true)->setSize(12);
-        $sheet->getStyle('H' . ($lastRow + 2))
+        $sheet->getStyle('K' . ($lastRow + 2))
             ->getFont()->setBold(true)->setSize(12);
 
         // Aplicar estilos a los cargos
         $sheet->getStyle('A' . ($lastRow + 1))
             ->getFont()->setItalic(false)->setSize(10);
-        $sheet->getStyle('H' . ($lastRow + 1))
+        $sheet->getStyle('K' . ($lastRow + 1))
             ->getFont()->setItalic(false)->setSize(10);
 
         // Alinear texto
         $sheet->getStyle('A' . ($lastRow + 1))->getAlignment()->setHorizontal('left');
-        $sheet->getStyle('H' . ($lastRow + 1))->getAlignment()->setHorizontal('right');
+        $sheet->getStyle('K' . ($lastRow + 1))->getAlignment()->setHorizontal('right');
         $sheet->getStyle('A' . ($lastRow + 2))->getAlignment()->setHorizontal('left');
-        $sheet->getStyle('H' . ($lastRow + 2))->getAlignment()->setHorizontal('right');
+        $sheet->getStyle('K' . ($lastRow + 2))->getAlignment()->setHorizontal('right');
 
         return [];
     }
-
-
 
     public function drawings()
     {
@@ -130,11 +171,7 @@ class ReportExport implements FromArray, WithHeadings, WithStyles
         $drawing->setName('Logo');
         $drawing->setDescription('Logo del Instituto');
 
-        // Usar barra normal '/' o DIRECTORY_SEPARATOR para que funcione correctamente
         $drawing->setPath(public_path() . '/tutores/encabezado.png'); // Ruta a la imagen con barra normal
-
-        // Alternativamente, usando DIRECTORY_SEPARATOR
-        // $drawing->setPath(public_path() . DIRECTORY_SEPARATOR . 'tutores' . DIRECTORY_SEPARATOR . 'encabezado.png');
 
         $drawing->setHeight(90); // Altura de la imagen
         $drawing->setCoordinates('A1'); // Celda donde se colocará
