@@ -21,7 +21,6 @@ class ReporteSemCarrerasExport implements FromArray, WithDrawings, WithStyles, W
     protected $totalTutoriaIndividual;
     protected $totalEstudiantesCanalizados;
 
-    // Constructor para aceptar datos y totales
     public function __construct(
         array $data, 
         $totalMatricula, 
@@ -38,46 +37,40 @@ class ReporteSemCarrerasExport implements FromArray, WithDrawings, WithStyles, W
         $this->totalEstudiantesCanalizados = $totalEstudiantesCanalizados;
     }
 
-    // Datos a exportar
     public function array(): array
     {
-        // Agregar filas vacías para ajustar los datos a partir de A11
         $emptyRows = array_fill(0, 10, ['']);
         return array_merge($emptyRows, $this->data);
     }
 
-    // Estilos
     public function styles(Worksheet $sheet)
     {
         $fecha = date("d/m/Y");
 
-        // Estilo de bordes para todo el encabezado
         $sheet->getStyle('A5:J10')->getBorders()->getAllBorders()->setBorderStyle(Border::BORDER_THIN);
         $sheet->getStyle('A5:J10')->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setRGB('FFFFFF');
 
-        // Encabezado principal
-        $sheet->mergeCells('A5:J5'); // Unión de celdas
+        $sheet->mergeCells('A5:J5');
         $sheet->setCellValue('A5', 'REPORTE SEMESTRAL DEL COORDINADOR DE TUTORÍA DEL DEPARTAMENTO ACADÉMICO');
         $sheet->getStyle('A5')->getFill()->setFillType(Fill::FILL_SOLID)->getStartColor()->setRGB('00007C');
         $sheet->getStyle('A5')->getFont()->getColor()->setRGB('FFFFFF');
         $sheet->getStyle('A5')->getAlignment()->setHorizontal('center');
         $sheet->getStyle('A5:J10')->getFont()->setBold(true);
 
-        $sheet->mergeCells('A6:H6');
-        $sheet->setCellValue('A6', 'Nombre del Coordinador Institucional de Tutoría: Lic. Emma Valeria Ramírez Guzmán');
+        $sheet->mergeCells('A6:G6');
+        $sheet->setCellValue('A6', 'Nombre del Coordinador Institucional de Tutoría: ');
 
-        $sheet->mergeCells('I6:J7');
-        $sheet->setCellValue('I6', "Fecha: $fecha");
-        $sheet->getStyle('I6')->getAlignment()->setHorizontal('center');
+        $sheet->mergeCells('H6:J7');
+        $sheet->setCellValue('H6', "Fecha: $fecha");
+        $sheet->getStyle('H6')->getAlignment()->setHorizontal('center');
+        $sheet->getStyle('H6')->getAlignment()->setVertical('center');
 
         $sheet->mergeCells('D8:E9');
         $sheet->setCellValue('D8', "Estudiantes atendidos\nen el semestre");
         $sheet->getStyle('D8:E9')->getAlignment()->setHorizontal('center');
 
-        // Habilitar ajuste de texto para que se muestre completo
         $sheet->getStyle('D8:E9')->getAlignment()->setWrapText(true);
 
-        // Fila de encabezados
         $sheet->getStyle('A8:J8')->getAlignment()->setHorizontal('center');
         $sheet->getStyle('D10:E10')->getAlignment()->setHorizontal('center');
 
@@ -101,7 +94,6 @@ class ReporteSemCarrerasExport implements FromArray, WithDrawings, WithStyles, W
 
         $sheet->setCellValue('J8', 'Matrícula');
 
-        //Celdas del encabezado unidas
         $sheet->mergeCells('A1:A4');
         $sheet->mergeCells('A8:B10');
         $sheet->mergeCells('C8:C10');
@@ -109,11 +101,9 @@ class ReporteSemCarrerasExport implements FromArray, WithDrawings, WithStyles, W
         $sheet->mergeCells('H8:I10');
         $sheet->mergeCells('J8:J10');
 
-        //Matricula (parte del encabezado)
-        $sheet->mergeCells('A7:H7'); // Fusionar celdas
+        $sheet->mergeCells('A7:G7');
         $sheet->setCellValue('A7', "Matrícula del Instituto Tecnológico actual: " . $this->totalMatricula);
 
-        // Ajustar el tamaño de las celdas
         $sheet->getColumnDimension('A')->setWidth(4);
         $sheet->getColumnDimension('B')->setWidth(42);
         $sheet->getColumnDimension('C')->setWidth(10);
@@ -123,13 +113,10 @@ class ReporteSemCarrerasExport implements FromArray, WithDrawings, WithStyles, W
         $sheet->getColumnDimension('G')->setWidth(6);
         $sheet->getColumnDimension('H')->setWidth(6);
 
-        // Llenado de columnas dinamicamente
         $lastRow = 10 + count($this->data);
         $sheet->getStyle("A11:J$lastRow")->getBorders()->getAllBorders()->setBorderStyle(Border::BORDER_THIN);
 
-        // Suponiendo que $lastRow es la última fila con datos
         for ($row = 11; $row <= $lastRow; $row++) {
-            // Unir las celdas F y H en la fila $row
             $sheet->mergeCells("F$row:G$row");
             $sheet->mergeCells("H$row:I$row");
             $sheet->getStyle("A$row")->getAlignment()->setHorizontal('center');
@@ -141,7 +128,6 @@ class ReporteSemCarrerasExport implements FromArray, WithDrawings, WithStyles, W
             $sheet->getStyle("J$row")->getAlignment()->setHorizontal('center');
         }
 
-        // Fila final dinamica (TOTALES)
         $nextRow = $lastRow + 1;
         $sheet->setCellValue("A$nextRow", "Resultados");
         $sheet->setCellValue("C$nextRow", '' . $this->totalTutores);
@@ -151,7 +137,6 @@ class ReporteSemCarrerasExport implements FromArray, WithDrawings, WithStyles, W
         $sheet->setCellValue("F$nextRow", '' . $this->totalEstudiantesCanalizados);
         $sheet->setCellValue("J$nextRow", '' . $this->totalMatricula);
 
-        // Estilo separado para la fila dinamica final
         $sheet->getStyle("A$nextRow:J$nextRow")->getFont()->setBold(true);
         $sheet->getStyle("A$nextRow:J$nextRow")->getAlignment()->setHorizontal('center');
         $sheet->getStyle("A$nextRow:J$nextRow")->getBorders()->getAllBorders()->setBorderStyle(Border::BORDER_THIN);
@@ -160,11 +145,9 @@ class ReporteSemCarrerasExport implements FromArray, WithDrawings, WithStyles, W
         $sheet->mergeCells("A$nextRow:B$nextRow");
         $sheet->mergeCells("H$nextRow:I$nextRow");
 
-        // Apartados de firmas
-        $signatureRow1 = $nextRow + 4; // Primera fila de firmas, dejando una fila vacía después de la dinámica
-        $signatureRow2 = $signatureRow1 + 1; // Segunda fila de firmas
+        $signatureRow1 = $nextRow + 12;
+        $signatureRow2 = $signatureRow1 + 2;
 
-        // Líneas para las firmas
         $sheet->setCellValue("B$signatureRow1", "__________________________________________");
         $sheet->mergeCells("E$signatureRow1:I$signatureRow1");
         $sheet->setCellValue("E$signatureRow1", "__________________________________________");
@@ -172,25 +155,20 @@ class ReporteSemCarrerasExport implements FromArray, WithDrawings, WithStyles, W
         $sheet->getStyle("B$signatureRow1")->getAlignment()->setHorizontal('center');
         $sheet->getStyle("E$signatureRow1:I$signatureRow1")->getAlignment()->setHorizontal('center');
 
-        // Títulos de las firmas con saltos de línea
         $sheet->setCellValue("B$signatureRow2", "Nombre y firma del jefe de\ndepartamento académico");
         $sheet->mergeCells("E$signatureRow2:I$signatureRow2");
         $sheet->setCellValue("E$signatureRow2", "Nombre y firma del Coordinador de Tutoría\ndel Departamento Académico");
 
-        // Estilo para los títulos de las firmas
         $sheet->getStyle("B$signatureRow2")->getFont()->setBold(true);
         $sheet->getStyle("E$signatureRow2:I$signatureRow2")->getFont()->setBold(true);
-        $sheet->getStyle("B$signatureRow2")->getAlignment()->setHorizontal('center');
-        $sheet->getStyle("E$signatureRow2:I$signatureRow2")->getAlignment()->setHorizontal('center');
 
-        $sheet->getStyle("B$signatureRow2")->getAlignment()->setWrapText(true);
-        $sheet->getStyle("E$signatureRow2:I$signatureRow2")->getAlignment()->setWrapText(true);
+        $sheet->getStyle("B$signatureRow2")->getAlignment()->setHorizontal('center')->setWrapText(true);
+        $sheet->getStyle("E$signatureRow2:I$signatureRow2")->getAlignment()->setHorizontal('center')->setWrapText(true);
 
-        //Identificación del documento
         $messageRow = $signatureRow2 + 4;
 
-        $sheet->setCellValue("B$messageRow", "R00-0824");
-        $sheet->setCellValue("J$messageRow", "F-OE-07");
+        $sheet->getHeaderFooter()
+            ->setOddFooter('&L&K000000 R00-0824 &R&K000000 F-OE-07');
 
         $sheet->getStyle("B$messageRow")->getFont()->setItalic(true);
         $sheet->getStyle("J$messageRow")->getFont()->setItalic(true);
@@ -205,8 +183,6 @@ class ReporteSemCarrerasExport implements FromArray, WithDrawings, WithStyles, W
         return [
             AfterSheet::class => function (AfterSheet $event) {
                 $sheet = $event->sheet->getDelegate();
-
-                // Ajusta el tamaño de la fila para la imagen
                 $sheet->getRowDimension(1)->setRowHeight(70);
             },
         ];
@@ -214,12 +190,14 @@ class ReporteSemCarrerasExport implements FromArray, WithDrawings, WithStyles, W
 
     public function drawings()
     {
-        $drawing = new Drawing();
-        $drawing->setName('Logo');
-        $drawing->setDescription('Logo del informe');
-        $drawing->setPath(public_path('tutores/logo_reporteSC.png')); // Ruta a la imagen
-        $drawing->setHeight(69); // Altura de la imagen
-        $drawing->setCoordinates('A1'); // Coordenadas donde se insertará
-        return $drawing;
+    $drawing = new Drawing();
+    $drawing->setName('Logo');
+    $drawing->setDescription('Logo del informe');
+    $drawing->setPath(public_path('/tutores/tecnologico.jpg'));
+    $drawing->setHeight(69);
+    $drawing->setWidth(950); 
+    $drawing->setCoordinates('A1');
+
+    return $drawing;
     }
 }
