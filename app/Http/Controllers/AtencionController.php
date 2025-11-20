@@ -50,7 +50,7 @@ class AtencionController extends Controller
         'area_canalizada' => 'nullable|string',
     ]);
 
-    // ✅ USAR updateOrCreate: Si existe lo actualiza, si no existe lo crea
+    // USAR updateOrCreate: Si existe lo actualiza, si no existe lo crea
     $atencion = Atencion::updateOrCreate(
         [
             // Condiciones para buscar el registro (clave única compuesta)

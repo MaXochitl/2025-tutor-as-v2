@@ -1,18 +1,6 @@
 <div class="row row-tutor">
     <div class="col d-flex flex-column flex-shrink-0" style="padding: 20px;">
         
-        @if (session('hay_alumnos') == 'si')
-            <div class="alert alert-danger">
-                Ya está registrado!
-            </div>
-        @endif
-
-        @if (session('existe_alumno') == 'no')
-            <div class="alert alert-danger">
-                El alumno no está registrado, puedes registrarlo en la sección Alumnos.
-            </div>
-        @endif
-
         <div class="col-12 d-flex align-items-center gap-3">
             <!-- Botón para agregar actividades -->  
             <a type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addActivityModal">

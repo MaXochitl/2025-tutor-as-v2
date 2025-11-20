@@ -36,7 +36,7 @@
 
         @if (session('existe_alumno') == 'no')
             <div class="alert alert-danger">
-                El alumno no esta registrado puedes registrarlo en la seccion Alumnos
+                Alumno no encontrado. Verifique el NC o regístrelo en "Alumnos".
             </div>
         @endif
 
@@ -405,7 +405,7 @@ document.addEventListener("DOMContentLoaded", function () {
             e.preventDefault();
             
             let alumnoId = this.getAttribute("data-id");
-            let periodoId = this.getAttribute("data-periodo"); // ✅ CAPTURAR periodo_id
+            let periodoId = this.getAttribute("data-periodo"); // CAPTURAR periodo_id
 
             // Validar que exista el periodo_id
             if (!periodoId) {
@@ -415,7 +415,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
             // Resetear formulario
             document.getElementById("alumno_id").value = alumnoId;
-            document.getElementById("periodo_id").value = periodoId; // ✅ ASIGNAR periodo_id
+            document.getElementById("periodo_id").value = periodoId; // ASIGNAR periodo_id
             
             atencionSelect.value = "";
             atencionHidden.value = "";
@@ -430,7 +430,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 deleteBtn.style.display = "none";
             }
 
-            // ✅ CORRECCIÓN: Hacer fetch con periodo_id en la URL
+            // CORRECCIÓN: Hacer fetch con periodo_id en la URL
             fetch(`/atenciones/${alumnoId}?periodo_id=${periodoId}`)
                 .then(response => {
                     if (!response.ok) {
@@ -488,13 +488,13 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 
-    // ✅ CORRECCIÓN: Manejar el botón de eliminar con periodo_id
+    // CORRECCIÓN: Manejar el botón de eliminar con periodo_id
     const deleteBtn = document.getElementById("deleteAtencionBtn");
     
     if (deleteBtn) {
         deleteBtn.addEventListener("click", function() {
             const alumnoId = document.getElementById("alumno_id").value;
-            const periodoId = document.getElementById("periodo_id").value; // ✅ OBTENER periodo_id
+            const periodoId = document.getElementById("periodo_id").value; // OBTENER periodo_id
             
             if (!alumnoId || !periodoId) {
                 console.error("ID de alumno o periodo no válido");
@@ -506,7 +506,7 @@ document.addEventListener("DOMContentLoaded", function () {
             this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Eliminando...';
             this.disabled = true;
 
-            // ✅ CORRECCIÓN: Enviar periodo_id en la URL
+            // CORRECCIÓN: Enviar periodo_id en la URL
             fetch(`/atenciones/${alumnoId}?periodo_id=${periodoId}`, {
                 method: 'DELETE',
                 headers: {

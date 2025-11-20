@@ -15,8 +15,15 @@
                     @method('PUT')
                     @csrf
                     <div class="mb-3">
-                        <label for="recipient-name" class="col-form-label">Numero de control:</label>
-                        <input name="numero_control" type="text" class="form-control mayus" required>
+                        <label for="recipient-name" class="col-form-label">Número de control:</label>
+
+                        <input name="numero_control" 
+                            type="text" 
+                            class="form-control" 
+                            required
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="right"
+                            title="La búsqueda distingue entre mayúsculas y minúsculas. Escribe el NC exactamente como está registrado en alumnos.">
                     </div>
 
                     <div class="mb-3">
