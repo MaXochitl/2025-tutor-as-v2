@@ -197,3 +197,4 @@ Route::get('probar', function () {
 Route::resource('reportes_tutor', ReportesController::class)->names('reportes_tutor')->middleware(['auth']);
 //Auth::routes(['register' => false]);
 
+Route::delete('/atenciones/{id}', [AtencionController::class, 'destroy'])->name('atenciones.destroy');

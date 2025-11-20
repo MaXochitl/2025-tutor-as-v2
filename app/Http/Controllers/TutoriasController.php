@@ -10,6 +10,7 @@ use App\Models\Periodo_tutorado_semaforo;
 use App\Models\Semaforo;
 use App\Models\Tutor;
 use App\Models\User;
+use App\Models\Atencion;
 use DateTime;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -55,42 +56,14 @@ class TutoriasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request) 
     {
-        //return 'hola';
-        $periodo_eval = Periodo_view::find(1);
-        $periodo = $periodo_eval->periodo_id; // Periodo::max('id');-----------------------------------esta linea esta pendiente
-        $id_tutor = Auth::user()->tutor->id;
+        // Este método quedó obsoleto.
+        // Su lógica fue reemplazada por inserAlumno() porque maneja mejor
+        // la validación, el tipo de alumno, la actualización de grupo
+        // y el registro de indicaciones.
 
-        $request->validate([
-            'numero_control' => ['required']
-        ]);
-
-        $existe = Alumno::find($request->numero_control);
-
-        if ($existe == null) {
-            return redirect()->route('reportes_tutor.show', $id_tutor)->with('existe_alumno', 'no');
-        }
-
-        $alumno = Periodo_tutorado::where('alumno_id', $request->numero_control)
-            ->where('periodo_id', $periodo)
-            ->where('tutor_id', $id_tutor)
-            ->count();
-
-        if ($alumno == 0) {
-            $alumno_add = Periodo_tutorado::create([
-                'periodo_id' => $periodo,
-                'tutor_id' => $id_tutor,
-                'alumno_id' => $request->numero_control,
-                'semestre' => $request->semestre,
-                'status' => 1,
-                'semaforo_id' => 4
-
-            ]);
-            return redirect()->route('reportes_tutor.show', $id_tutor);
-        }
-
-        return redirect()->route('reportes_tutor.show', $id_tutor)->with('hay_alumnos', 'si');
+        return abort(410, 'El método store() está obsoleto. Usa inserAlumno().');
     }
 
     public function inserAlumno(Request $request, $tipo)
@@ -111,8 +84,7 @@ class TutoriasController extends Controller
             ]);
         }
 
-
-        $existe = Alumno::find($request->numero_control);
+        $existe = Alumno::whereRaw('BINARY id = ?', [$request->numero_control])->first();//tomar en cuenta mayus o minus
 
         if ($existe == null) {
             return redirect()->route('reportes_tutor.show', $id_tutor)->with('existe_alumno', 'no');
@@ -428,10 +400,31 @@ class TutoriasController extends Controller
      */
     public function destroy($id)
     {
-        $id_tutor = Auth::user()->tutor->id;
-        $this->deleteHistLight($id);
-        Periodo_tutorado::find($id)->delete();
-        return redirect()->route('reportes_tutor.show', $id_tutor)->with('eliminar', 'ok');
+    $id_tutor = Auth::user()->tutor->id;
+    
+    // Obtener el registro antes de eliminarlo
+    $periodo_tutorado = Periodo_tutorado::select('id', 'alumno_id', 'periodo_id')
+        ->find($id);
+    
+    if (!$periodo_tutorado) {
+        return redirect()->route('reportes_tutor.show', $id_tutor)
+            ->with('error', 'Registro no encontrado');
+    }
+    
+    // Verificar si existe una atención y eliminarla
+    $atencion = Atencion::where('alumno_id', $periodo_tutorado->alumno_id)
+        ->where('periodo_id', $periodo_tutorado->periodo_id)
+        ->first();
+    
+    if ($atencion) {
+        $atencion->delete();
+    }
+    
+    // Eliminar el registro de periodo_tutorado
+    $periodo_tutorado->delete();
+    
+    return redirect()->route('reportes_tutor.show', $id_tutor)
+        ->with('eliminar', 'ok');
     }
 
     public function baja($id, $staus, $color)

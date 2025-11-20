@@ -1,4 +1,3 @@
-
 <div class="row row-tutor">
     <div class="col d-flex flex-column flex-shrink-0" style="padding: 20px;">
         <div class="col-8">
@@ -37,7 +36,7 @@
 
         @if (session('existe_alumno') == 'no')
             <div class="alert alert-danger">
-                El alumno no esta registrado puedes registrarlo en la seccion Alumnos
+                Alumno no encontrado. Verifique el NC o regístrelo en "Alumnos".
             </div>
         @endif
 
@@ -69,9 +68,6 @@
             @else
                 <h5 class="mt-3 mb-2">Semestre: {{ $semestre }} - Grupo: {{ $grupo }}</h5>
             @endif
-
-        <!--A. Resaltar los semestres y grupos del tutor que no están dentro de sus semestresgrupos asignados por OE -->
-        <tr @if(!in_array($sgActual, $sgAsignados)) class="table-danger" @endif>
 
         <div class="table-responsive">
             <table class="table text-start table-striped" style="font-size: 12px"> <!--texto alineado a la izq-->
@@ -217,188 +213,38 @@
                                 <div>{{ $alumnos->reporte_final }}</div>
                             </td>
                         @endif
-                        
                             <td>
-                                <div>
-                                    <form action="{{ route('alumnos-tutor.destroy', $alumnos->id) }} "
-                                        class="formulario-eliminar" method="POST">
-                                        @csrf
-                                        @method('DELETE')
-                                        <div class="btn-group">
-                                            <button type="submit" class="btn btn-danger dropdown-toggle"
-                                                data-bs-toggle="dropdown" aria-expanded="false">
-                                                Opciones
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown">
+                                        Opciones
+                                    </button>
+
+                                    <ul class="dropdown-menu">
+                                        <li>
+                                            <button type="button"
+                                                    class="dropdown-item canalizacion-btn"
+                                                    data-id="{{ $alumnos->alumno->id }}"
+                                                    data-periodo="{{ $alumnos->periodo_id }}">
+                                                Atención Individual
                                             </button>
-                                            <ul class="dropdown-menu">
-                                                <li>
-                                                    <button type="button" class="dropdown-item canalizacion-btn"
-                                                        data-bs-toggle="modal" data-bs-target="#modalFormulario"
-                                                        data-id="{{ $alumnos->alumno->id }}">
-                                                        Canalización
-                                                    </button>
+                                        </li>
+                                        <li>
+                                            <form action="{{ route('alumnos-tutor.destroy', $alumnos->id) }}"
+                                                method="POST"
+                                                class="formulario-eliminar">
+                                                @csrf
+                                                @method('DELETE')
 
-                                                <li><button type="submit" class="dropdown-item"
-                                                        href="#">Eliminar</button>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </form>
+                                                <button type="submit" class="dropdown-item text-danger">
+                                                    Eliminar
+                                                </button>
+                                            </form>
+                                        </li>
 
-
-                                    <!-- Modal Crear Actividad -->
-                                    <div class="modal fade" id="modalFormulario" tabindex="-1"
-                                        aria-labelledby="modalFormularioLabel" aria-hidden="true">
-                                        <div class="modal-dialog modal-dialog-centered">
-                                            <div class="modal-content">
-                                                <div class="modal-header">
-                                                    <h5 class="modal-title" id="modalFormularioLabel">Canalización
-                                                    </h5>
-                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                                        aria-label="Cerrar"></button>
-                                                </div>
-                                                <div class="modal-body">
-                                                    <div id="loadingIndicator" style="display: none;">Cargando...
-                                                    </div>
-                                                    <div id="formContent">
-                                                        <form id="formAlumno" method="POST"
-                                                            action="{{ route('atenciones.store') }}">
-                                                            @csrf
-                                                            <!-- Número de Control -->
-                                                            <div class="form-group">
-                                                                <label for="alumno_id">Número de control</label>
-                                                                <input type="text" name="alumno_id" id="alumno_id"
-                                                                    class="form-control" readonly>
-                                                            </div>
-
-                                                            <!-- Atención -->
-                                                            <div class="form-group">
-                                                                <label for="atencion">Atención</label>
-                                                                <select name="atencion" id="atencion"
-                                                                    class="form-select" required>
-                                                                    <option value="">Selecciona</option>
-                                                                    <option value="Grupal">Grupal</option>
-                                                                    <option value="Individual">Individual</option>
-                                                                    <option value="Grupal/Individual">Grupal/Individual
-                                                                    </option>
-                                                                </select>
-                                                            </div>
-
-                                                            <!-- Canalizado -->
-                                                            <div class="form-group">
-                                                                <label for="canalizado">¿Canalizado?</label>
-                                                                <select name="canalizado" id="canalizado"
-                                                                    class="form-select" required>
-                                                                    <option value="">Selecciona</option>
-                                                                    <option value="Sí">Sí</option>
-                                                                    <option value="No">No</option>
-                                                                </select>
-                                                            </div>
-
-                                                            <!-- Área canalizada -->
-                                                            <div class="form-group">
-                                                                <label for="area_canalizada">Área canalizada</label>
-                                                                <input type="text" name="area_canalizada"
-                                                                    id="area_canalizada" class="form-control">
-                                                            </div>
-
-                                                            <!-- Botón de Enviar -->
-                                                            <div class="modal-footer">
-                                                            <button type="submit" class="btn btn-primary" >Guardar</button>
-                                                            </div>
-                                                        </form>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <!-- MODAL JEFE DE CARRERA-->
-                                    <div class="modal fade" id="jefeDepartamentoModal" tabindex="-1"
-                                        aria-labelledby="jefeDepartamentoModalLabel" aria-hidden="true">
-                                        <div class="modal-dialog">
-                                            <div class="modal-content">
-                                                <form action="{{ route('reporte.pdf', ['id' => $tutor->id]) }}"
-                                                    method="GET" target="_blank">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="jefeDepartamentoModalLabel">
-                                                            Generar Reporte</h5>
-                                                        <button type="button" class="btn-close"
-                                                            data-bs-dismiss="modal" aria-label="Close"></button>
-                                                    </div>
-                                                    <div class="modal-body">
-                                                        <div class="mb-3">
-                                                            <label for="jefe_departamento" class="form-label">Nombre
-                                                                del Jefe del Departamento</label>
-                                                            <input type="text" name="jefe_departamento"
-                                                                id="jefe_departamento" class="form-control" required>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer">
-                                                        <button type="submit" class="btn btn-primary">Generar
-                                                            PDF</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-
-
-                                    <script>
-                                        document.addEventListener("DOMContentLoaded", function() {
-                                            document.querySelectorAll(".canalizacion-btn").forEach(button => {
-                                                button.addEventListener("click", function() {
-                                                    let alumnoId = this.getAttribute("data-id");
-
-                                                    // Muestra el indicador de carga
-                                                    document.getElementById("loadingIndicator").style.display = "block";
-                                                    document.getElementById("formContent").style.display = "none";
-
-                                                    // Realiza la petición AJAX
-                                                    fetch(`/atenciones/${alumnoId}`)
-                                                        .then(response => {
-                                                            if (!response.ok) {
-                                                                throw new Error("Error en la respuesta del servidor");
-                                                            }
-                                                            return response.json();
-                                                        })
-                                                        .then(data => {
-                                                            // Oculta el indicador de carga y muestra el formulario
-                                                            document.getElementById("loadingIndicator").style.display = "none";
-                                                            document.getElementById("formContent").style.display = "block";
-
-                                                            // Verifica si los elementos existen antes de asignar valores
-                                                            if (document.getElementById("alumno_id")) {
-                                                                document.getElementById("alumno_id").value = data.id || "";
-                                                            }
-
-                                                            if (document.getElementById("atencion")) {
-                                                                document.getElementById("atencion").value = data.atencion || "";
-                                                            }
-                                                            if (document.getElementById("canalizado")) {
-                                                                document.getElementById("canalizado").value = data.canalizado ||
-                                                                    "";
-                                                            }
-                                                            if (document.getElementById("area_canalizada")) {
-                                                                document.getElementById("area_canalizada").value = data
-                                                                    .area_canalizada || "";
-                                                            }
-                                                        })
-                                                        .catch(error => {
-                                                            console.error("Error al cargar datos:", error);
-                                                            document.getElementById("loadingIndicator").style.display = "none";
-                                                            document.getElementById("formContent").style.display = "block";
-                                                        });
-                                                });
-                                            });
-                                        });
-                                    </script>
-
-
-
+                                    </ul>
                                 </div>
                             </td>
-
+                            </div>
                         </tr>
                     @endforeach
                 </tbody>
@@ -406,5 +252,293 @@
         </div>
         @endforeach
     </div>
+
+<!-- Modal Atencion individual -->
+<div class="modal fade" id="modalFormulario" tabindex="-1"
+    aria-labelledby="modalFormularioLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalFormularioLabel">Atención Individual</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+
+            <div class="modal-body">
+                <div id="formContent">
+                    <form id="formAlumno" method="POST" action="{{ route('atenciones.store') }}">
+                        @csrf
+
+                        <!-- Número de Control -->
+                        <div class="form-group mb-3">
+                            <label for="alumno_id">Número de control</label>
+                            <input type="text" name="alumno_id" id="alumno_id" class="form-control" readonly>
+                        </div>
+
+                        <!-- Campo oculto para periodo_id -->
+                        <input type="hidden" name="periodo_id" id="periodo_id">
+
+                        <!-- Atención individual -->
+                        <div class="form-group mb-3">
+                            <label for="atencion_individual">¿Atención individual?</label>
+                            <select id="atencion_individual" class="form-select" required>
+                                <option value="">Selecciona</option>
+                                <option value="Individual">Sí</option>
+                                <option value="No">No</option>
+                            </select>
+                            <input type="hidden" name="atencion" id="atencion">
+                        </div>
+
+                        <!-- Canalizado -->
+                        <div class="form-group mb-3">
+                            <label for="canalizado">¿Requiere canalización a algún área?</label>
+                            <select name="canalizado" id="canalizado" class="form-select" disabled required>
+                                <option value="">Selecciona</option>
+                                <option value="SI">Sí</option>
+                                <option value="NO">No</option>
+                            </select>
+                        </div>
+
+                        <!-- Área canalizada -->
+                        <div class="form-group mb-3">
+                            <label for="area_canalizada">Área canalizada</label>
+                            <input type="text" name="area_canalizada" id="area_canalizada"
+                                class="form-control" disabled>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" 
+                                    id="deleteAtencionBtn" 
+                                    class="btn btn-danger me-auto">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                    <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                </svg>
+                                Eliminar atencion
+                            </button>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+    <!-- Modal Jefe de Carrera -->
+    <div class="modal fade" id="jefeDepartamentoModal" tabindex="-1"
+        aria-labelledby="jefeDepartamentoModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <form action="{{ route('reporte.pdf', ['id' => $tutor->id]) }}"
+                    method="GET" target="_blank">
+
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="jefeDepartamentoModalLabel">Generar Reporte</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+                        <div class="mb-3">
+                            <label for="jefe_departamento" class="form-label">
+                                Nombre del Jefe del Departamento
+                            </label>
+                            <input type="text" name="jefe_departamento" id="jefe_departamento"
+                                class="form-control" required>
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Generar PDF</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
 </div>
 @include("modal.alumno.add-alumno")
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    const modalElement = document.getElementById("modalFormulario");
+    const modal = new bootstrap.Modal(modalElement);
+
+    const atencionSelect = document.getElementById("atencion_individual");
+    const atencionHidden = document.getElementById("atencion");
+
+    const canalizadoSelect = document.getElementById("canalizado");
+    const areaInput = document.getElementById("area_canalizada");
+
+    // Función para habilitar/deshabilitar campos según la selección
+    atencionSelect.addEventListener("change", function () {
+        const value = this.value;
+        atencionHidden.value = value;
+
+        if (value === "Individual") {
+            canalizadoSelect.disabled = false;
+        } else {
+            canalizadoSelect.value = "";
+            canalizadoSelect.disabled = true;
+            areaInput.value = "";
+            areaInput.disabled = true;
+        }
+    });
+
+    // Habilitar área canalizada si se selecciona "Sí" en canalizado
+    canalizadoSelect.addEventListener("change", function () {
+        if (this.value === "SI") {
+            areaInput.disabled = false;
+        } else {
+            areaInput.value = "";
+            areaInput.disabled = true;
+        }
+    });
+
+    // Cargar datos cuando se hace clic en el botón
+    document.querySelectorAll(".canalizacion-btn").forEach(button => {
+        button.addEventListener("click", function (e) {
+            e.preventDefault();
+            
+            let alumnoId = this.getAttribute("data-id");
+            let periodoId = this.getAttribute("data-periodo"); // CAPTURAR periodo_id
+
+            // Validar que exista el periodo_id
+            if (!periodoId) {
+                console.error("No se encontró el periodo_id");
+                return;
+            }
+
+            // Resetear formulario
+            document.getElementById("alumno_id").value = alumnoId;
+            document.getElementById("periodo_id").value = periodoId; // ASIGNAR periodo_id
+            
+            atencionSelect.value = "";
+            atencionHidden.value = "";
+            canalizadoSelect.value = "";
+            canalizadoSelect.disabled = true;
+            areaInput.value = "";
+            areaInput.disabled = true;
+            
+            // Ocultar el botón de eliminar inicialmente
+            const deleteBtn = document.getElementById("deleteAtencionBtn");
+            if (deleteBtn) {
+                deleteBtn.style.display = "none";
+            }
+
+            // CORRECCIÓN: Hacer fetch con periodo_id en la URL
+            fetch(`/atenciones/${alumnoId}?periodo_id=${periodoId}`)
+                .then(response => {
+                    if (!response.ok) {
+                        throw new Error('Error en la respuesta del servidor');
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    console.log('Datos recibidos:', data);
+
+                    // Asignar número de control
+                    document.getElementById("alumno_id").value = data.id || alumnoId;
+
+                    // Si existe una atención previa
+                    if (data.exists && data.atencion) {
+                        
+                        // Mostrar el botón de eliminar
+                        document.getElementById("deleteAtencionBtn").style.display = "inline-block";
+                        
+                        // Configurar atención individual
+                        if (data.atencion === "Individual") {
+                            atencionSelect.value = "Individual";
+                            atencionHidden.value = "Individual";
+                            canalizadoSelect.disabled = false;
+
+                            // Configurar canalizado
+                            if (data.canalizado) {
+                                canalizadoSelect.value = data.canalizado;
+                                
+                                // Si está canalizado, habilitar y llenar área
+                                if (data.canalizado === "SI") {
+                                    areaInput.disabled = false;
+                                    areaInput.value = data.area_canalizada || "";
+                                }
+                            }
+                        } else {
+                            // Si no es individual
+                            atencionSelect.value = "No";
+                            atencionHidden.value = "No";
+                        }
+                    }
+
+                    // Mostrar el modal
+                    modal.show();
+                })
+                .catch(error => {
+                    console.error("Error al cargar datos:", error);
+                    
+                    // Mostrar el modal incluso si hay error
+                    modal.show();
+                    
+                    // Opcional: mostrar mensaje en consola en lugar de alert
+                    console.warn("No se pudieron cargar datos previos, mostrando formulario vacío");
+                });
+        });
+    });
+
+    // CORRECCIÓN: Manejar el botón de eliminar con periodo_id
+    const deleteBtn = document.getElementById("deleteAtencionBtn");
+    
+    if (deleteBtn) {
+        deleteBtn.addEventListener("click", function() {
+            const alumnoId = document.getElementById("alumno_id").value;
+            const periodoId = document.getElementById("periodo_id").value; // OBTENER periodo_id
+            
+            if (!alumnoId || !periodoId) {
+                console.error("ID de alumno o periodo no válido");
+                return;
+            }
+            
+            // Mostrar indicador de carga en el botón
+            const originalText = this.innerHTML;
+            this.innerHTML = '<span class="spinner-border spinner-border-sm" role="status"></span> Eliminando...';
+            this.disabled = true;
+
+            // CORRECCIÓN: Enviar periodo_id en la URL
+            fetch(`/atenciones/${alumnoId}?periodo_id=${periodoId}`, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Error al eliminar');
+                }
+                return response.json();
+            })
+            .then(data => {
+                // Cerrar el modal
+                modal.hide();
+
+                // Mostrar mensaje de éxito (opcional)
+                console.log(data.message);
+
+                // Recargar la página para reflejar los cambios
+                window.location.reload();
+            })
+            .catch(error => {
+                console.error("Error:", error);
+                
+                // Restaurar el botón
+                this.innerHTML = originalText;
+                this.disabled = false;
+            });
+        });
+    }
+});
+</script>
