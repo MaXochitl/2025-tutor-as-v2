@@ -26,7 +26,21 @@
 
                     <div class="form-group mt-3">
                         <label for="fecha">Fecha</label>
-                        <input name="fecha" type="date" class="form-control" id="fecha" required >
+                        <input 
+                            name="fecha" 
+                            type="date" 
+                            class="form-control" 
+                            id="fecha" 
+                            required
+                            min="{{ count($periodo) > 0 ? $periodo[0]->inicio : '' }}"
+                            max="{{ count($periodo) > 0 ? $periodo[0]->fin : '' }}"
+                            title="La fecha debe estar entre {{ count($periodo) > 0 ? date('d/m/Y', strtotime($periodo[0]->inicio)) : '' }} y {{ count($periodo) > 0 ? date('d/m/Y', strtotime($periodo[0]->fin)) : '' }}"
+                        >
+                        @if(count($periodo) > 0)
+                            <small class="form-text text-muted">
+                                Fecha válida: {{ date('d/m/Y', strtotime($periodo[0]->inicio)) }} - {{ date('d/m/Y', strtotime($periodo[0]->fin)) }}
+                            </small>
+                        @endif
                     </div>
 
                     <div class="form-group mt-3">
