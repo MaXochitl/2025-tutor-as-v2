@@ -7,6 +7,9 @@ use App\Models\Asignacion_tutor;
 use App\Models\Tutor;
 use App\Models\Carrera;
 use App\Models\User;
+use App\Models\Periodo_View;
+use App\Models\Periodo;
+use App\Models\Periodo_Tutorado;
 use DateTime;
 use Exception;
 use Illuminate\Http\Request;
@@ -60,12 +63,60 @@ class TutoresController extends Controller
     {
         $carrera = $id;
         $palabra = '';
-        //el $id es el id de la carrera al que pertenecen los tutores
-        //$tutores = Tutor::all()->where('carrera_id', $id);
+
+        // Obtener todos los tutores de la carrera
         $tutores = Tutor::where('carrera_id', $id)->paginate(15);
 
-        return view('admin.tutorias.home', compact('tutores', 'carrera', 'palabra'));
+        // Obtener el ultimo periodo
+        $periodoView = Periodo_view::find(1);
+        $periodo = Periodo::find($periodoView->periodo_id);
+
+        // Clasificar tutores (verificar quienes seran tutores y quienes docentes)
+        $tutoresDePeriodo = collect();
+        $docentes = collect();
+
+        foreach ($tutores as $tutor) {
+            if ($this->esTutorActivo($tutor, $periodo)) {//si existe un periodo_tutorado vinculado al tutor (guardar)
+                $tutoresDePeriodo->push($tutor);
+            }elseif ($this->esTutorAsignado($tutor, $periodo)) {//si existe un Asignacion_tutor vinculado al tutor (guardar)
+                $tutoresDePeriodo->push($tutor);
+            }
+        }
+
+        $docentes = $tutores->diff($tutoresDePeriodo);//tutores restantes son docentes (guardar)
+
+        return view('admin.tutorias.home', compact(
+            'tutoresDePeriodo',
+            'docentes',
+            'carrera',
+            'palabra'
+        ));
     }
+
+    /**
+     * Verifica si un tutor tiene alumnos tutorados en el período actual
+     * Se considera tutor si el docente se asigno alumnos
+     */
+    private function esTutorActivo($tutor, $periodo)
+    {
+        return Periodo_tutorado::where('tutor_id', $tutor->id)
+            ->where('periodo_id', $periodo->id)
+            ->where('tipo', 1)
+            ->exists();
+    }
+
+    /**
+     * Verifica si un tutor está asignado en el período actual
+     * Se considera tutor si OE le asigno al docente uno o +grupos
+     */
+    private function esTutorAsignado($tutor, $periodo)
+    {
+        return Asignacion_tutor::where('tutor_id', $tutor->id)
+            ->where('periodo_id', $periodo->id)
+            ->where('semestre', '!=', '0')           // semestre NO debe ser "0"
+            ->where('grupo', '!=', 'sin asignar')    // grupo NO debe ser "sin asignar"
+            ->exists();
+    } 
 
     /**
      * Show the form for editing the specified resource.
@@ -156,14 +207,42 @@ class TutoresController extends Controller
         return back()->with('reset', 'ok');
     }
 
+    //editarlo
     public function searchTutor(Request $request, $carrera)
     {
-        $tutores = Tutor::where('carrera_id', $carrera)
-            ->where('nombre', 'LIKE', '%' . $request->search_tutor . '%')
-            ->paginate(15);
-
         $palabra = $request->search_tutor;
 
-        return view('admin.tutorias.home', compact('tutores', 'carrera', 'palabra'));
+        // Obtener tutores que coincidan con el texto buscado
+        $tutores = Tutor::where('carrera_id', $carrera)
+            ->where(function ($q) use ($palabra) {
+                $q->where('nombre', 'LIKE', "%$palabra%")
+                ->orWhere('ap_paterno', 'LIKE', "%$palabra%")
+                ->orWhere('ap_materno', 'LIKE', "%$palabra%");
+            })
+            ->paginate(15);
+
+        // Obtener periodo actual
+        $periodoView = Periodo_view::find(1);
+        $periodo = Periodo::find($periodoView->periodo_id);
+
+        // Clasificar resultados
+        $tutoresDePeriodo = collect();
+        $docentes = collect();
+
+        foreach ($tutores as $tutor) {
+            if ($this->esTutorActivo($tutor, $periodo) || $this->esTutorAsignado($tutor, $periodo)) {
+                $tutoresDePeriodo->push($tutor);
+            } else {
+                $docentes->push($tutor);
+            }
+        }
+
+        return view('admin.tutorias.home', compact(
+            'tutoresDePeriodo',
+            'docentes',
+            'carrera',
+            'palabra'
+        ));
     }
+
 }
