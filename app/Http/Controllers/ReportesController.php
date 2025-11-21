@@ -65,85 +65,84 @@ class ReportesController extends Controller
      */
     public function show($id)
     {
-    $user = User::find(Auth::user()->id);
-    $id = $user->tutor_id;
-     
-    $tutor_id = Auth::user()->tutor_id;
-    
-    $periodo = Periodo::orderby('id', 'desc')->get();
-    $alumnos_tutor = [];
+        //
 
-    if (count($periodo) > 0) {
-        $actividades = Actividades_tutoria::join('periodos', function($join) {
-                $join->whereRaw('actividades_tutorias.fecha BETWEEN periodos.inicio AND periodos.fin');
-            })
-            ->where('actividades_tutorias.tutor_id', $tutor_id)
-            ->where('periodos.id', $periodo[0]->id)
-            ->select('actividades_tutorias.*')
-            ->orderBy('actividades_tutorias.fecha')
-            ->get();
+        $user = User::find(Auth::user()->id);
+        $id = $user->tutor_id;
+        
+        //Agregar llamado de base de datos  
+        $tutor_id = Auth::user()->tutor_id;
+        $actividades = Actividades_tutoria::where('tutor_id', $tutor_id)->get();        
 
-        $alumnos_tutor = Periodo_tutorado::where('tutor_id', $id)
-            ->where('periodo_id', $periodo[0]->id)
-            ->where('tipo', 1)
-            ->orderby('semaforo_id', 'desc')
-            ->get();
+        $periodo = Periodo::orderby('id', 'desc')->get();
+        $alumnos_tutor = [];
 
-        $docente_alumno = Periodo_tutorado::
-            where('periodo_id', $periodo[0]->id)
-            ->where('tipo', 2)
-            ->orderby('semaforo_id', 'desc')
-            ->get();
 
-        if (count($alumnos_tutor) == 0) {
-            $tutorado = null;
-        } else {
-            foreach ($alumnos_tutor as $key => $value) {
-                $tutorado[] = strtolower($value->alumno_id);
+        if (count($periodo) > 0) {
+            $alumnos_tutor = Periodo_tutorado::where('tutor_id', $id)
+                ->where('periodo_id', $periodo[0]->id)
+                ->where('tipo', 1)
+                ->orderby('semaforo_id', 'desc')
+                ->get();
+
+            $docente_alumno = Periodo_tutorado:: //where('tutor_id', $id)
+                where('periodo_id', $periodo[0]->id)
+                ->where('tipo', 2)
+                ->orderby('semaforo_id', 'desc')
+                ->get();
+
+            if (count($alumnos_tutor) == 0) {
+                $tutorado = null;
+            } else {
+                foreach ($alumnos_tutor as $key => $value) {
+                    $tutorado[] = strtolower($value->alumno_id);
+                }
             }
+            //return $tutorado;
+        } else {
+            return view('docente_tutor.reportes_t_d', compact('periodo'));
         }
-    } else {
-        return view('docente_tutor.reportes_t_d', compact('periodo'));
-    }
 
-    $semaforo = Semaforo::where('id', '<', 5)->get();
+        $semaforo = Semaforo::where('id', '<', 5)->get();
 
-    $asignado = Asignacion_tutor::where('periodo_id', $periodo->max('id'))
-        ->where('tutor_id', $id)
-        ->get();
+        $asignado = Asignacion_tutor::where('periodo_id', $periodo->max('id'))
+            ->where('tutor_id', $id)
+            ->get();
 
-    $tutor = Tutor::find($id);
-    $temporal = $this->cuentaBajas($id, 2, $periodo[0]->id);
-    $baja = $this->cuentaBajas($id, 3, $periodo[0]->id);
-    $verde = $this->cuentaColores($id, 1, $periodo[0]->id);
-    $naranja = $this->cuentaColores($id, 2, $periodo[0]->id);
-    $rojo = $this->cuentaColores($id, 3, $periodo[0]->id);
-    $avisos = Aviso::all();
-    $asigno = 1;
+        $tutor = Tutor::find($id);
+        $temporal = $this->cuentaBajas($id, 2, $periodo[0]->id);
+        $baja = $this->cuentaBajas($id, 3, $periodo[0]->id);
+        $verde = $this->cuentaColores($id, 1, $periodo[0]->id);
+        $naranja = $this->cuentaColores($id, 2, $periodo[0]->id);
+        $rojo = $this->cuentaColores($id, 3, $periodo[0]->id);
+        $avisos = Aviso::all();
+        $asigno = 1;
 
-    if (count($asignado) == 0) {
-        $asigno = 0;
-    }
-    $altera_entrega = Altera_entrega::find(1);
+        if (count($asignado) == 0) {
+            $asigno = 0;
+        }
+        $altera_entrega = Altera_entrega::find(1);
 
-    return view('docente_tutor.reportes_t_d', compact(
-        'alumnos_tutor',
-        'semaforo',
-        'baja',
-        'temporal',
-        'avisos',
-        'verde',
-        'naranja',
-        'rojo',
-        'periodo',
-        'asignado',
-        'asigno',
-        'tutor',
-        'docente_alumno',
-        'tutorado',
-        'altera_entrega',
-        'actividades'
-    ));
+        return view('docente_tutor.reportes_t_d', compact(
+            'alumnos_tutor',
+            'semaforo',
+            'baja',
+            'temporal',
+            'avisos',
+            'verde',
+            'naranja',
+            'rojo',
+            'periodo',
+            'asignado',
+            'asigno',
+            'tutor',
+            'docente_alumno',
+            'tutorado',
+            'altera_entrega',
+            //asignarlo en return
+            'actividades'
+            //
+        ));
     }
 
     /**
