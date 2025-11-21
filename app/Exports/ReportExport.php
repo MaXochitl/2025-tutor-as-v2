@@ -163,11 +163,11 @@ class ReportExport implements FromArray, WithHeadings, WithStyles
 
         $signatureStart = $resultadosRow + 4;
 
-        $sheet->setCellValue("A{$signatureStart}", "__________________________________________");
-        $sheet->setCellValue("K{$signatureStart}", "_________________________________________________________");
+        $sheet->setCellValue("A{$signatureStart}", "___________________________________________");
+        $sheet->setCellValue("K{$signatureStart}", "_________________________________________________");
 
-        $sheet->setCellValue("A" . ($signatureStart + 1), 'Nombre y firma del Jefe de Departamento Académico');
-        $sheet->setCellValue("K" . ($signatureStart + 1), 'Nombre y firma del Coordinador de Tutoría del Departamento Académico');
+        $sheet->setCellValue("A" . ($signatureStart + 1), 'Nombre y firma del jefe de departamento académico');
+        $sheet->setCellValue("K" . ($signatureStart + 1), 'Nombre y firma del Coordinador de Tutoría del Departamento');
 
         $sheet->getStyle("A" . ($signatureStart + 1))->getFont()->setBold(true)->setSize(10);
         $sheet->getStyle("K" . ($signatureStart + 1))->getFont()->setBold(true)->setSize(10);
