@@ -13,12 +13,10 @@ class ReporteSemCarrerasController extends Controller
 {
     public function importInformeSC()
     {
-        // Obtener el periodo activo
         $periodoView = Periodo_view::first();
-
+        
         $periodo_id = $periodoView->periodo_id;
 
-        // Obtener todas las carreras
         $carreras = Carrera::all();
         
         $data = [];
@@ -38,7 +36,7 @@ class ReporteSemCarrerasController extends Controller
                 $tutoriaIndividual = $resultado->tutoria_individual ?? 0;
                 $estudiantesCanalizados = $resultado->estudiantes_canalizados ?? 0;
                 $areasCanalizadas = $resultado->areas_canalizadas ?? 'Ninguna';
-                
+            
                 $matriculaCarrera = $tutoriaGrupal + $cantidadTutores;
                 
                 $totalTutores += $cantidadTutores;
@@ -62,7 +60,7 @@ class ReporteSemCarrerasController extends Controller
         }
 
         $totalMatricula = $totalTutoriaGrupal + $totalTutores;
-
+        
         return Excel::download(
             new ReporteSemCarrerasExport(
                 $data, 
@@ -72,7 +70,7 @@ class ReporteSemCarrerasController extends Controller
                 $totalTutoriaIndividual,
                 $totalEstudiantesCanalizados
             ), 
-            'Reporte_Semestral_Carreras_' . date('Y-m-d') . '.xlsx'
+            'F-OE-07 REPORTE SEMESTRAL DEL COORDINADOR INSTITUCIONAL DE TUTORIA'.'.xlsx'
         );
     }
 }
