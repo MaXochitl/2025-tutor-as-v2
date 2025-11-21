@@ -104,8 +104,7 @@ public function store(Request $request)
     ]);
 
     
-    return redirect()->route('reportes_tutor.show', $actividad->id)
-                     ->with('success', 'Actividad creada exitosamente.');
+    return redirect()->route('reportes_tutor.show', $actividad->id);
 }
 
   
@@ -133,8 +132,7 @@ public function update(Request $request, $id)
     
     $actividad->update($request->all());
 
-    return redirect()->route('reportes_tutor.show', $actividad->id)
-    ->with('success', 'Actividad eliminada exitosamente.');
+    return redirect()->route('reportes_tutor.show', $actividad->id);
 }
 
 
@@ -144,8 +142,7 @@ public function update(Request $request, $id)
         $actividad = Actividades_tutoria::findOrFail($id); 
         $actividad->delete(); 
 
-        return redirect()->route('reportes_tutor.show', $actividad->id)
-                         ->with('success', 'Actividad eliminada exitosamente.');
+        return redirect()->route('reportes_tutor.show', $actividad->id);
     }
     
 }
