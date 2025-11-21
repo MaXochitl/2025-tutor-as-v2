@@ -10,3 +10,22 @@
     background-color: #d5e5fb;
     box-shadow: 0 0 4px rgba(59, 130, 246, 0.4);
 }
+
+/* selector de fila */
+table tr:hover:not(thead tr) { 
+    background-color: #e3f2fd;
+}
+
+/* columna de resultados en Admin */
+.casilla-materias {
+    background-color: #fff3d9 !important;
+    border: 1px solid rgb(236, 161, 0);
+    transition: 0.2s;
+    cursor: pointer;
+    min-width: 100px;
+}
+
+.casilla-materias:hover {
+    background-color: #ffdab8 !important;
+    box-shadow: 0 0 4px rgba(200, 170, 0, 0.25);
+}

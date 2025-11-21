@@ -24,7 +24,7 @@
 
             @if (session('existe_alumno') == 'no')
                 <div class="alert alert-danger">
-                    El alumno no esta registrado puedes registrarlo en la seccion Alumnos
+                    Alumno no encontrado. Verifique el NC o regístrelo en "Alumnos".
                 </div>
             @endif
             <br>

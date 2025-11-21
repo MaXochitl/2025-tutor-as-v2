@@ -86,25 +86,19 @@
         <tr>
             <td style="border: none; padding: 40px;">
                 <div style="border-top: 1px solid black; margin-top: 20px;"></div>
-                <strong>Firma del Coordinador Institucional de Tutorias</strong>
-                <br>
-                <span>Lic. Emma Valeria Ramírez Guzmán</span>
+                <strong>Nombre y firma del Tutor de grupo</strong>
             </td>
             <td style="border: none; padding: 40px;">
                 <div style="border-top: 1px solid black; margin-top: 20px;"></div>
-                <strong>Firma del Jefe del Departamento:</strong>
-                <br>
-                <span>{{ $jefeDepartamento }}</span>
+                <strong>Nombre y firma del coordinador Institucional de Tutorias</strong>
             </td>
             <td style="border: none; padding: 40px;">
                 <div style="border-top: 1px solid black; margin-top: 20px;"></div>
-                <strong>Firma del Coordinador de Tutorias del Programa Educativo</strong>
-                <br>
-                <span>{{ $tutor->nombre }} {{ $tutor->ap_paterno }} {{ $tutor->ap_materno }}</span>
+                <strong>Nombre y firma del coordinador de Tutorias del programa educativo correspondiente</strong>
             </td>
         </tr>
     </table>
-
+    
     <footer>
     <p style="display: inline-block; margin: 0 20px 0 0;">R00/0824</p>
     <p style="display: inline-block; margin: 0 0 0 600px;">F-OE-08</p>

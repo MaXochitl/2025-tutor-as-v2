@@ -56,42 +56,14 @@ class TutoriasController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request) 
     {
-        //return 'hola';
-        $periodo_eval = Periodo_view::find(1);
-        $periodo = $periodo_eval->periodo_id; // Periodo::max('id');-----------------------------------esta linea esta pendiente
-        $id_tutor = Auth::user()->tutor->id;
+        // Este método quedó obsoleto.
+        // Su lógica fue reemplazada por inserAlumno() porque maneja mejor
+        // la validación, el tipo de alumno, la actualización de grupo
+        // y el registro de indicaciones.
 
-        $request->validate([
-            'numero_control' => ['required']
-        ]);
-
-        $existe = Alumno::find($request->numero_control);
-
-        if ($existe == null) {
-            return redirect()->route('reportes_tutor.show', $id_tutor)->with('existe_alumno', 'no');
-        }
-
-        $alumno = Periodo_tutorado::where('alumno_id', $request->numero_control)
-            ->where('periodo_id', $periodo)
-            ->where('tutor_id', $id_tutor)
-            ->count();
-
-        if ($alumno == 0) {
-            $alumno_add = Periodo_tutorado::create([
-                'periodo_id' => $periodo,
-                'tutor_id' => $id_tutor,
-                'alumno_id' => $request->numero_control,
-                'semestre' => $request->semestre,
-                'status' => 1,
-                'semaforo_id' => 4
-
-            ]);
-            return redirect()->route('reportes_tutor.show', $id_tutor);
-        }
-
-        return redirect()->route('reportes_tutor.show', $id_tutor)->with('hay_alumnos', 'si');
+        return abort(410, 'El método store() está obsoleto. Usa inserAlumno().');
     }
 
     public function inserAlumno(Request $request, $tipo)
@@ -112,8 +84,7 @@ class TutoriasController extends Controller
             ]);
         }
 
-
-        $existe = Alumno::find($request->numero_control);
+        $existe = Alumno::whereRaw('BINARY id = ?', [$request->numero_control])->first();//tomar en cuenta mayus o minus
 
         if ($existe == null) {
             return redirect()->route('reportes_tutor.show', $id_tutor)->with('existe_alumno', 'no');
@@ -207,6 +178,31 @@ class TutoriasController extends Controller
     }
 
 
+        public function showDocente($id)
+    {
+
+        $palabra = '';
+        $periodo_view = Periodo_view::find(1);
+        $periodo = Periodo::find($periodo_view->periodo_id);
+        $alumnos_tutor = [];
+
+        $alumnos_tutor = Periodo_tutorado::where('tutor_id', $id)
+            ->where('periodo_id', $periodo->id)
+            ->where('tipo', 2)
+            ->orderby('semaforo_id', 'desc')
+            ->paginate(15);
+
+        $semaforo = Semaforo::where('id', '<', 5)->get();
+
+        if (count($alumnos_tutor) == 0) {
+            $tutor = Tutor::find($id);
+            $id_carrera = $tutor->carrera->id;
+            return view('docente-alumno.docente-alumnos', compact('alumnos_tutor', 'id_carrera', 'periodo', 'palabra'));
+        } else {
+            return view('docente-alumno.docente-alumnos', compact('alumnos_tutor', 'semaforo', 'periodo', 'palabra'));
+        }
+    }
+
 
     public function searchAlumnoTutorado(Request $request, $id)
     {
@@ -261,6 +257,40 @@ class TutoriasController extends Controller
     }
 
 
+    public function searchAlumnoDocente(Request $request, $id)
+    {
+        $palabra = $request->search_tutor;
+        
+        $periodo_view = Periodo_view::find(1);
+        $periodo = Periodo::find($periodo_view->periodo_id);
+
+        // BUSCAR SOLO ALUMNOS REPORTADOS POR DOCENTE (tipo = 2)
+        $alumnos_tutor = Periodo_tutorado::where('tutor_id', $id)
+            ->where('periodo_id', $periodo->id)
+            ->where('tipo', 2)
+            ->whereHas('alumno', function ($query) use ($palabra) {
+                $query->where('nombre', 'like', "%$palabra%")
+                    ->orWhere('id', 'like', "%$palabra%")
+                    ->orWhere('ap_paterno', 'like', "%$palabra%")
+                    ->orWhere('ap_materno', 'like', "%$palabra%");
+            })
+            ->orderby('semaforo_id', 'desc')
+            ->paginate(15);
+
+        $semaforo = Semaforo::where('id', '<', 5)->get();
+
+        if (count($alumnos_tutor) == 0) {
+            $tutor = Tutor::find($id);
+            $id_carrera = $tutor->carrera->id;
+            return view('docente-alumno.docente-alumnos', compact(
+                'alumnos_tutor', 'id_carrera', 'periodo', 'palabra'
+            ));
+        }
+
+        return view('docente-alumno.docente-alumnos', compact(
+            'alumnos_tutor', 'semaforo', 'periodo', 'palabra'
+        ));
+    }
 
 
     public function cuentaSexo($id, $sex, $periodo)

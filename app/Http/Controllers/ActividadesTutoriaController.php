@@ -24,15 +24,24 @@ class ActividadesTutoriaController extends Controller
     
     public function pdfActividades(Request $request)
 {
-
     $user = User::find(Auth::user()->id);
     $tutor = Auth::user()->tutor;
     $tutorId = $tutor->id;
-    $actividades = Actividades_tutoria::where('tutor_id', $tutorId)->get();
-    $periodo = Periodo::max('id');
+    
     $periodos = Periodo::orderby('id', 'desc')->get();
-    $id = $user->tutor_id;    
-    $asignado = Asignacion_tutor::where('periodo_id', $periodos->max('id'))
+    $periodo = $periodos->max('id');
+    $id = $user->tutor_id;
+    
+    $actividades = Actividades_tutoria::join('periodos', function($join) {
+            $join->whereRaw('actividades_tutorias.fecha BETWEEN periodos.inicio AND periodos.fin');
+        })
+        ->where('actividades_tutorias.tutor_id', $tutorId)
+        ->where('periodos.id', $periodo)
+        ->select('actividades_tutorias.*')
+        ->orderBy('actividades_tutorias.fecha')
+        ->get();
+    
+    $asignado = Asignacion_tutor::where('periodo_id', $periodo)
         ->where('tutor_id', $id)
         ->get();
     
@@ -58,7 +67,6 @@ class ActividadesTutoriaController extends Controller
         'mujeres' => $mujeres,
         'total' => $total,
         'name' => $name,
-
     ]);
 
     return $pdf->stream('F-OE-04FORMATO DE PLAN DE TRABAJO DE TUTORIAS.pdf');
@@ -96,8 +104,7 @@ public function store(Request $request)
     ]);
 
     
-    return redirect()->route('reportes_tutor.show', $actividad->id)
-                     ->with('success', 'Actividad creada exitosamente.');
+    return redirect()->route('reportes_tutor.show', $actividad->id);
 }
 
   
@@ -125,8 +132,7 @@ public function update(Request $request, $id)
     
     $actividad->update($request->all());
 
-    return redirect()->route('reportes_tutor.show', $actividad->id)
-    ->with('success', 'Actividad eliminada exitosamente.');
+    return redirect()->route('reportes_tutor.show', $actividad->id);
 }
 
 
@@ -136,8 +142,7 @@ public function update(Request $request, $id)
         $actividad = Actividades_tutoria::findOrFail($id); 
         $actividad->delete(); 
 
-        return redirect()->route('reportes_tutor.show', $actividad->id)
-                         ->with('success', 'Actividad eliminada exitosamente.');
+        return redirect()->route('reportes_tutor.show', $actividad->id);
     }
     
 }
