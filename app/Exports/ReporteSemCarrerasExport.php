@@ -145,8 +145,10 @@ class ReporteSemCarrerasExport implements FromArray, WithDrawings, WithStyles, W
         $sheet->mergeCells("A$nextRow:B$nextRow");
         $sheet->mergeCells("H$nextRow:I$nextRow");
 
-        $signatureRow1 = $nextRow + 12;
-        $signatureRow2 = $signatureRow1 + 2;
+        $signatureStart = $nextRow + 4; 
+
+        $signatureRow1 = $signatureStart;
+        $signatureRow2 = $signatureStart + 2;
 
         $sheet->setCellValue("B$signatureRow1", "__________________________________________");
         $sheet->mergeCells("E$signatureRow1:I$signatureRow1");
@@ -157,11 +159,10 @@ class ReporteSemCarrerasExport implements FromArray, WithDrawings, WithStyles, W
 
         $sheet->setCellValue("B$signatureRow2", "Nombre y firma del jefe de\ndepartamento académico");
         $sheet->mergeCells("E$signatureRow2:I$signatureRow2");
-        $sheet->setCellValue("E$signatureRow2", "Nombre y firma del Coordinador de Tutoría\ndel Departamento Académico");
+        $sheet->setCellValue("E$signatureRow2", "Nombre y firma del Coordinador de Tutoría\ndel Departamento");
 
         $sheet->getStyle("B$signatureRow2")->getFont()->setBold(true);
         $sheet->getStyle("E$signatureRow2:I$signatureRow2")->getFont()->setBold(true);
-
         $sheet->getStyle("B$signatureRow2")->getAlignment()->setHorizontal('center')->setWrapText(true);
         $sheet->getStyle("E$signatureRow2:I$signatureRow2")->getAlignment()->setHorizontal('center')->setWrapText(true);
 
