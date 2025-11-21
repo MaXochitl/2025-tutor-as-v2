@@ -111,13 +111,13 @@
                                 data-bs-toggle="modal"
                                 data-bs-target="#month1Modal{{ $alumnos->id }}"
                                 data-bs-toggle="tooltip"
-                                title="Seguimiento">
+                                title="Seguimiento 1">
                                 <div style="height: 5px; background:{{ $alumnos->lights[0]->semaforos[0]->fondo }};"></div>
                                 <div>{{ $alumnos->mes_1 }}</div>
                             </td>
                             @include('modal.meses.mes1')
                         @else
-                            <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento bloqueado">
+                            <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento 1 bloqueado">
                                 <div style="height: 5px; background:{{ $alumnos->lights[0]->semaforos[0]->fondo }};"></div>
                                 <div>{{ $alumnos->mes_1 }}</div>
                             </td>
@@ -135,13 +135,13 @@
                                 data-bs-toggle="modal"
                                 data-bs-target="#month2Modal{{ $alumnos->id }}"
                                 data-bs-toggle="tooltip"
-                                title="Seguimiento">
+                                title="Seguimiento 2">
                                 <div style="height: 5px; background:{{ $alumnos->lights[1]->semaforos[0]->fondo }};"></div>
                                 <div>{{ $alumnos->mes_2 }}</div>
                             </td>
                             @include('modal.meses.mes2')
                         @else
-                            <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento bloqueado">
+                            <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento 2 bloqueado">
                                 <div style="height: 5px; background:{{ $alumnos->lights[1]->semaforos[0]->fondo }};"></div>
                                 <div>{{ $alumnos->mes_2 }}</div>
                             </td>
@@ -158,13 +158,13 @@
                                 data-bs-toggle="modal"
                                 data-bs-target="#month3Modal{{ $alumnos->id }}"
                                 data-bs-toggle="tooltip"
-                                title="Seguimiento">
+                                title="Seguimiento 3">
                                 <div style="height: 5px; background:{{ $alumnos->lights[2]->semaforos[0]->fondo }};"></div>
                                 <div>{{ $alumnos->mes_3 }}</div>
                             </td>
                             @include('modal.meses.mes3')
                         @else
-                            <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento bloqueado">
+                            <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento 3 bloqueado">
                                 <div style="height: 5px; background:{{ $alumnos->lights[2]->semaforos[0]->fondo }};"></div>
                                 <div>{{ $alumnos->mes_3 }}</div>
                             </td>
@@ -180,13 +180,13 @@
                                 data-bs-toggle="modal"
                                 data-bs-target="#month4Modal{{ $alumnos->id }}"
                                 data-bs-toggle="tooltip"
-                                title="Seguimiento">
+                                title="Seguimiento 4">
                                 <div style="height: 5px; background:{{ $alumnos->lights[3]->semaforos[0]->fondo }};"></div>
                                 <div>{{ $alumnos->mes_4 }}</div>
                             </td>
                             @include('modal.meses.mes4')
                         @else
-                            <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento bloqueado">
+                            <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento 4 bloqueado">
                                 <div style="height: 5px; background:{{ $alumnos->lights[3]->semaforos[0]->fondo }};"></div>
                                 <div>{{ $alumnos->mes_4 }}</div>
                             </td>
