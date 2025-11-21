@@ -69,61 +69,49 @@ class ExportReportsControllerXLX extends Controller
      */
     public function show($id)
     {
-        $periodo = Periodo_view::find(1);
-        $periodo = $periodo->periodo_id;
-        $carrera = Carrera::find($id);
+    $periodoView = Periodo_view::first();
+    $periodo_id = $periodoView->periodo_id;
+    $carrera = Carrera::find($id);
+    $tutores = DB::select('CALL ReportesCarrera(?, ?)', [$periodo_id, $id]);
 
-
-        $tutores = DB::select('CALL ResumenRegistros(?,?)', [$periodo, $id]);
-        $periodo_tutorado = [];
-        foreach ($tutores as  $value) {
-            $periodo_tutorado[] = Periodo_tutorado::where('tutor_id', $value->tutor_id)
-                ->where('tipo', 1)
-                ->where('periodo_id', $periodo)
-                ->pluck('id')
-                ->toArray();
-        }
-
-        $sum_falls = [];
-        foreach ($periodo_tutorado as  $value) {
-            $sum_falls[] = Periodo_semaforo::whereIn('periodo_id', $value)
-                ->whereBetween('semaforo_id', [2, 3])
-                ->distinct()
-                ->count(['periodo_id']);
-        }
-
-        $tutores = array_map(function ($tutor) {
-            return (array)$tutor; // Convierte cada objeto stdClass en un array
-        }, $tutores);
-
-        for ($i = 0; $i < count($tutores); $i++) {
-            $tutores[$i]['falls'] = $sum_falls[$i];
-        }
-        // return $tutores;
-        /*
-        $data = [
-            ['Ing. Carmen Karely Pro Torres', '2° A', 13, 10, 10, 'Orientación Educativa'],
-            ['Ing. Marcelino Cruz del Ángel', '4° A', 9, 2, 2, 'Orientación Educativa'],
-            ['M.G.E.R. Sofía Elizabeth García Martínez', '6° A', 13, 4, 4, 'Orientación Educativa'],
-            ['Dr. José Jaime González Elizondo', '8° A', 11, 1, 1, 'Orientación Educativa'],
+    $data = [];
+    $contador = 1;
+    foreach ($tutores as $tutor) {
+        $tutor = (array)$tutor;
+        $data[] = [
+            $contador,
+            $tutor['tutor_nombre'] ?? '',                                                  
+            $tutor['grupo'] ?? '',                    
+            $tutor['tutorias_grupales'] ?? 0,       
+            $tutor['tutorias_individuales'] ?? 0,                                       
+            $tutor['estudiantes_canalizados'] ?? 0,
+            '',
+            '',
+            $tutor['areas_canalizadas'] ?? '',                                                                   
         ];
-        */
-        date_default_timezone_set('America/Mexico_City');
-        // Cabeceras dinámicas
-        $headings = [
-            [' '],
-            [' '],
-            [' '],
-            [' '],
-            ['INSTITUTO TECNOLÓGICO SUPERIOR DE TANTOYUCA'],
-            ['REPORTE SEMESTRAL DEL COORDINADOR DE TUTORÍA DEL DEPARTAMENTO ACADÉMICO'],
-            ['Programa Educativo:', '', $carrera->nombre_carrera, '', '', '', ''], // Dinámico
-            ['Fecha: ', date('d/m/Y'), 'Hora: ' . date('h:i A')],
-            ['Matricula', 'Lista de tutores', 'Grupo', 'Tutoría Grupal', 'Tutoría Individual', 'Estudiantes canalizados en el semestre', 'Área canalizada'],
-        ];
+        $contador++;
+    }
 
-        // Descargar el archivo Excel
-        return Excel::download(new ReportExport($tutores, $headings), 'reporte_semestral.xlsx');
+    date_default_timezone_set('America/Mexico_City');
+    
+    // Cabeceras de la tabla.
+    $headings = [
+    [' '],
+    [' '],
+    [' '],
+    [' '],
+    [' '],
+    ['REPORTE SEMESTRAL DEL COORDINADOR INSTITUCIONAL DE TUTORÍA'],
+    ['Nombre del Coordinador Institucional de Tutorías:', '', '', '', '', '', '', '', ' Fecha:', date('d/m/Y')],
+    ['Programa Educativo:', '', $carrera->nombre_carrera, '', '', '', '', '', ' Hora:', date('h:i A')],
+    ['Lista de tutores','', "Semestre y\nGrupo", "Estudiantes atendidos\nen el semestre", '', "Estudiantes canalizados\nen el semestre",'','', 'Área canalizada'],
+    ['', '','', "Tutoría\nGrupal", "Tutoría\nIndividual", '', ''],
+    ];
+
+    return Excel::download(
+        new ReportExport($data, $headings), 
+        'F-OE-06 REPORTE SEMESTRAL DEL COORDINADOR INSTITUCIONAL DE TUTORIA' . '.xlsx'
+    );
     }
 
     /**
