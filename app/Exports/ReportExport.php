@@ -161,25 +161,21 @@ class ReportExport implements FromArray, WithHeadings, WithStyles
         $sheet->setCellValue("E{$resultadosRow}", "=SUM(E{$dataStartRow}:E{$dataEndRow})");
         $sheet->setCellValue("F{$resultadosRow}", "=SUM(F{$dataStartRow}:H{$dataEndRow})");
 
-        // Firmas
-        $lastRow = count($this->data) + 25;
+        $signatureStart = $resultadosRow + 4;
 
-        $sheet->setCellValue('A' . ($lastRow + 1), 'Lic. Emma Valeria Ramírez Guzmán');
-        $sheet->setCellValue('K' . ($lastRow + 1), 'MC. Sonia Cruz Rivero');
+        $sheet->setCellValue("A{$signatureStart}", "__________________________________________");
+        $sheet->setCellValue("K{$signatureStart}", "_________________________________________________________");
 
-        $sheet->setCellValue('A' . ($lastRow + 2), 'Encargada de la oficina de Orientacion');
-        $sheet->setCellValue('K' . ($lastRow + 2), 'Jefa del Dpto. Desarrollo Académico');
+        $sheet->setCellValue("A" . ($signatureStart + 1), 'Nombre y firma del Jefe de Departamento Académico');
+        $sheet->setCellValue("K" . ($signatureStart + 1), 'Nombre y firma del Coordinador de Tutoría del Departamento Académico');
 
-        $sheet->getStyle('A' . ($lastRow + 2))->getFont()->setBold(true)->setSize(12);
-        $sheet->getStyle('K' . ($lastRow + 2))->getFont()->setBold(true)->setSize(12);
+        $sheet->getStyle("A" . ($signatureStart + 1))->getFont()->setBold(true)->setSize(10);
+        $sheet->getStyle("K" . ($signatureStart + 1))->getFont()->setBold(true)->setSize(10);
 
-        $sheet->getStyle('A' . ($lastRow + 1))->getFont()->setItalic(false)->setSize(10);
-        $sheet->getStyle('K' . ($lastRow + 1))->getFont()->setItalic(false)->setSize(10);
-
-        $sheet->getStyle('A' . ($lastRow + 1))->getAlignment()->setHorizontal('left');
-        $sheet->getStyle('K' . ($lastRow + 1))->getAlignment()->setHorizontal('right');
-        $sheet->getStyle('A' . ($lastRow + 2))->getAlignment()->setHorizontal('left');
-        $sheet->getStyle('K' . ($lastRow + 2))->getAlignment()->setHorizontal('right');
+        $sheet->getStyle("A{$signatureStart}")->getAlignment()->setHorizontal('left');
+        $sheet->getStyle("K{$signatureStart}")->getAlignment()->setHorizontal('right');
+        $sheet->getStyle("A" . ($signatureStart + 1))->getAlignment()->setHorizontal('left');
+        $sheet->getStyle("K" . ($signatureStart + 1))->getAlignment()->setHorizontal('right');
 
         $fullStartRow = 6;
         $fullEndRow = $resultadosRow;
