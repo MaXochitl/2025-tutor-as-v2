@@ -131,7 +131,7 @@
                                             <td>{{ $item->telefono }}</td>
                                             <td>{{ $item->domicilio }}</td>
                                             <td style="text-align: center">
-                                                <a href="{{ route('alumnos-tutor.show', $item->id) }}" {{-- esta ruta se cambiara a futuro --}}
+                                                <a href="{{ route('alumnos-docente.show', $item->id) }}"
                                                     class="btn btn-primary">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30"
                                                         fill="currentColor" class="bi bi-person-lines-fill" viewBox="0 0 16 16">
@@ -152,7 +152,4 @@
         </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
-    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
 @endsection

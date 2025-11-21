@@ -150,7 +150,9 @@ Route::get('/reporte-pdf/{id}', [AtencionController::class, 'createPDF'])->name(
 
 /**  ________________________________________----------------------------___________________________________________________------------------------TUTOR Y ADMIN */
 Route::resource('alumnos-tutor', TutoriasController::class)->middleware(['auth'])->names('alumnos-tutor');
+Route::get('alumnos-docente/{id}', [TutoriasController::class, 'showDocente'])->middleware(['auth'])->name('alumnos-docente.show');//vista especial para docentes
 Route::post('searchAluTutor/{id}', [TutoriasController::class, 'searchAlumnoTutorado'])->name('searchAluTutor');
+Route::post('searchAlumnoDocente/{id}', [TutoriasController::class, 'searchAlumnoDocente'])->middleware(['auth'])->name('searchAluDocente');//busqueda especial para docentes
 Route::get('getPeriodoView', [TutoriasController::class, 'getPeriodoView'])->name('getPeriodoView');
 
 Route::put('/addAlumno/{tipo}', [
@@ -197,3 +199,4 @@ Route::get('probar', function () {
 Route::resource('reportes_tutor', ReportesController::class)->names('reportes_tutor')->middleware(['auth']);
 //Auth::routes(['register' => false]);
 
+Route::delete('/atenciones/{id}', [AtencionController::class, 'destroy'])->name('atenciones.destroy');
