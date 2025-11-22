@@ -1,0 +1,10 @@
+/* selector de fila */
+table tr:hover:not(thead tr) { 
+    background-color: #e3f2fd;
+}
+
+/* borde de tabla */
+table.table-bordered td, 
+table.table-bordered th {
+    border: 1px solid #5f676d5e; /* gris */
+}

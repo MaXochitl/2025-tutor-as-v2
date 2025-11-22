@@ -11,11 +11,6 @@
     box-shadow: 0 0 4px rgba(59, 130, 246, 0.4);
 }
 
-/* selector de fila */
-table tr:hover:not(thead tr) { 
-    background-color: #e3f2fd;
-}
-
 /* columna de resultados en Admin */
 .casilla-materias {
     background-color: #fff3d9 !important;
