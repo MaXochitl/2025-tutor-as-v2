@@ -34,7 +34,7 @@
         </div>
             
         <!-- Título centrado arriba del docente -->
-        <h2 class="text-center mt-3 mb-4">ALUMNOS REPORTADOS POR EL DOCENTE</h2>
+        <h2 class="text-center mt-3 mb-4">ALUMNOS CANALIZADOS POR EL DOCENTE</h2>
 
         <!-- Tarjeta del docente -->
         <div class="row img-font-all"
@@ -97,9 +97,10 @@
             </div>
 
             <!-- Tabla -->
-            <table class="table table-striped text-start" style="font-size: 11px">
+            <table class="table table-bordered table-striped text-start" style="font-size: 12px">
                 <thead>
                     <tr>
+                        <th scope="col">N°</th>
                         <th scope="col">N° CONTROL</th>
                         <th scope="col">NOMBRE COMPLETO</th>
                         <th scope="col">TELÉFONO</th>
@@ -119,8 +120,14 @@
                 </thead>
 
                 <tbody>
+                    @php
+                        $contador = 1;
+                        $tutor_id = $alumnos_tutor[0]->tutor->id ?? null;
+                    @endphp
+
                     @foreach ($alumnos_tutor as $alumnos)
                         <tr>
+                            <th scope="row">{{ $contador++ }}</th>
                             <td style="background: {{ $alumnos->semaforo->fondo }}">
                                 <p>{{ $alumnos->alumno->id }}</p>
                             </td>
@@ -132,7 +139,7 @@
                             <td>{{ $alumnos->alumno->telefono }}</td>
 
                             <!-- DOCENTE 1 -->
-                            <td class="p-0 cell-padding cell-justificada" style="padding-top: 6px !important;">
+                            <td class="cell-padding cell-justificada" style="padding-top: 6px !important;">
                                 <i class="bi bi-circle-fill"
                                 style="color: {{ (!empty($alumnos->lights[0]->semaforos[0]->fondo) && $alumnos->lights[0]->semaforos[0]->fondo !== '#')
                                                     ? $alumnos->lights[0]->semaforos[0]->fondo
@@ -154,7 +161,7 @@
                             </td>
 
                             <!-- DOCENTE 2 -->
-                            <td class="p-0 cell-padding cell-justificada" style="padding-top: 6px !important;">
+                            <td class="cell-padding cell-justificada" style="padding-top: 6px !important;">
                                 <i class="bi bi-circle-fill"
                                 style="color: {{ (!empty($alumnos->lights[1]->semaforos[0]->fondo) && $alumnos->lights[1]->semaforos[0]->fondo !== '#')
                                                     ? $alumnos->lights[1]->semaforos[0]->fondo
@@ -176,7 +183,7 @@
                             </td>
 
                             <!-- DOCENTE 3 -->
-                            <td class="p-0 cell-padding cell-justificada" style="padding-top: 6px !important;">
+                            <td class="cell-padding cell-justificada" style="padding-top: 6px !important;">
                                 <i class="bi bi-circle-fill"
                                 style="color: {{ (!empty($alumnos->lights[2]->semaforos[0]->fondo) && $alumnos->lights[2]->semaforos[0]->fondo !== '#')
                                                     ? $alumnos->lights[2]->semaforos[0]->fondo
@@ -198,7 +205,7 @@
                             </td>
 
                             <!-- DOCENTE 4 -->
-                            <td class="p-0 cell-padding cell-justificada" style="padding-top: 6px !important;">
+                            <td class="cell-padding cell-justificada" style="padding-top: 6px !important;">
                                 <i class="bi bi-circle-fill"
                                 style="color: {{ (!empty($alumnos->lights[3]->semaforos[0]->fondo) && $alumnos->lights[3]->semaforos[0]->fondo !== '#')
                                                     ? $alumnos->lights[3]->semaforos[0]->fondo
