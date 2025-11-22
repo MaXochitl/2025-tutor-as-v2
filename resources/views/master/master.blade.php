@@ -32,6 +32,7 @@
     <link rel="stylesheet" href="{{ URL::asset('css/structure/navBar.css') }} ">
     <link rel="stylesheet" href="{{ URL::asset('css/structure/style_forms.css') }} ">
     <link rel="stylesheet" href="{{ URL::asset('css/alumnos_tutor/tutor_alumnos.css') }} ">
+    <link rel="stylesheet" href="{{ URL::asset('css/table/table.css') }}">
     <link rel="stylesheet" href="{{ URL::asset('css/table/box.css') }}"> <!--css casillas visuales de color-->
 
 
