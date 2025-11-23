@@ -2,8 +2,6 @@
 <html lang="en">
 
 <head>
-
-
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -20,20 +18,25 @@
         
         $inicio = $meses[date('n', strtotime($periodo->inicio)) - 1] . '  ' . date('Y', strtotime($periodo->inicio));
         $fin = $meses[date('n', strtotime($periodo->fin)) - 1] . '  ' . date('Y', strtotime($periodo->fin));
-        $contador = 1;
     @endphp
 
-    @foreach ($tutores as $item)
+    @foreach ($asignacionesIndividuales as $item)
+        @php
+            $tutor = $item['tutor'];
+            $asignacion = $item['asignacion'];
+            $numero = $item['numero'];
+        @endphp
+
         <div style="text-align: center; padding-top: 30px; height: 800px; font-size: 16px;">
             <div style="text-align: left;">
-                <img style=" padding-left: 40px" src="./tutores/encabezado.jpg" height="60px" width="600px" alt="">
+                <img style="padding-left: 40px" src="./tutores/encabezado.jpg" height="50px" width="600px" alt="">
                 <div style="width: 550px; margin-left: 70px">
 
                     <div style="text-align: right; margin-top: 20px">
-                        @if ($contador < 9)
-                            Memorándum Nº OE /0{{ $contador++ }} /{{ date('Y') }}
+                        @if ($numero < 9)
+                            Memorándum Nº OE /0{{ $numero }} /{{ date('Y') }}
                         @else
-                            Memorándum Nº OE /{{ $contador++ }} /{{ date('Y') }}
+                            Memorándum Nº OE /{{ $numero }} /{{ date('Y') }}
                         @endif
                         <br>
                         <b>ASUNTO: El que se indica</b>
@@ -43,9 +46,8 @@
 
                     <div style="margin-top: 20px">
                         <b>
-
                             @php
-                                $name = $item->nombre . ' ' . $item->ap_paterno . ' ' . $item->ap_materno;
+                                $name = $tutor->nombre . ' ' . $tutor->ap_paterno . ' ' . $tutor->ap_materno;
                                 echo $name;
                             @endphp
                             <br>
@@ -56,60 +58,17 @@
                     </div>
 
                     <div style="text-align: justify; margin-top: 30px">
-                        
-<!-- codigo para soportar uno o multiples semestresgrupos-->
-@php
-    $asignacionesPeriodo = $item->asignaciones
-        ->where('periodo_id', $periodo->id)
-        ->sortBy(function ($a) {
-            return sprintf('%02d%s', $a->semestre, strtoupper($a->grupo));
-        })
-        ->values();
-
-    $count = $asignacionesPeriodo->count();
-
-    if ($count > 1) {
-        // Si hay más de un grupo, agregar “y” antes del último
-        $listaSemGrup = $asignacionesPeriodo
-            ->slice(0, $count - 1)
-            ->map(fn($a) => $a->semestre . '°' . strtoupper($a->grupo))
-            ->implode(', ')
-            . ' y ' .
-            $asignacionesPeriodo->last()->semestre . '°' .
-            strtoupper($asignacionesPeriodo->last()->grupo);
-    } else {
-        // Solo un grupo
-        $single = $asignacionesPeriodo->first();
-        if ($single && $single->semestre != 0 && $single->grupo != 'sin asignar') {
-            $listaSemGrup = $single->semestre . '°' . strtoupper($single->grupo);
-        } else {
-            $listaSemGrup = 'NO ASIGNADO'; // = 'No asignado'; para mostrar algo
-        }
-    }
-
-    $esPlural = $count > 1;
-@endphp
-
                         &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;Por medio del presente se le otorga la
-                        asignación como tutor
-<!-- mostrar de forma correcta el o los semestresgrupos-->
-@if ($esPlural)
-    de los semestres y grupos
-@else
-    del semestre y grupo
-@endif
-@if ($listaSemGrup == 'NO ASIGNADO')
-    <b>{{ $listaSemGrup }}</b><!-- resaltar en negritas el error al personal de OE-->
-@else
-    {{ $listaSemGrup }}<!-- mostrar normal sin resaltar-->
-@endif
-
+                        asignación como tutor del
+                        {{ $asignacion->semestre . '°' }}
+                        semestre grupo
+                        {{ $asignacion->grupo }}
                         de la carrera
                         de
                         @php
-                            
-                            echo $item->carrera->nombre_carrera;
-                        @endphp para el periodo {{ $inicio }} - {{ $fin }} . En seguimiento a
+                            echo $tutor->carrera->nombre_carrera;
+                        @endphp 
+                        para el periodo {{ $inicio }} - {{ $fin }}. En seguimiento a
                         su solicitud recibida en el área de orientación educativa para participar en el programa
                         institucional de tutorías, Comprometiéndose a cumplir con los requisitos que refiere la
                         convocatoria en la que estipula tener el compromiso en el seguimiento de los alumnos de forma
@@ -128,6 +87,7 @@
                     <div style="margin-top: 30px; text-align: center">
                         <b>ATENTAMENTE</b>
                     </div>
+
                     <div style="margin-top: 50px; font-size: 15px">
                         <table style="margin: auto; text-align: center">
                             <tr style="height: 100px;">
@@ -136,7 +96,6 @@
                                     </div>
                                 </td>
                                 <td></td>
-
                             </tr>
 
                             <tr>
@@ -150,33 +109,27 @@
                                 <td>{{ $datos[1]->cargo_2 }}</td>
                                 <td>{{ $datos[1]->cargo_3 }}</td>
                             </tr>
-
                         </table>
                     </div>
 
-
                 </div>
             </div>
-
         </div>
-        <div style="margin-top: 10px; font-size: 15px;background: rgb(211, 211, 211)">
+
+        <div style="margin-top: 10px; font-size: 15px; background: rgb(211, 211, 211)">
             <table style="margin: auto; text-align: center">
                 <tr style="height: 100px;">
                     <td style="text-align: left">
-
-                        <img src="./tutores/logo.png" height="100px" width="100px" width="400px" alt="">
-
+                        <img src="./tutores/logo.png" height="100px" width="100px" alt="">
                     </td>
                     <td>
                         Desv. Lindero – Tametate S/N, Col. La Morita <br>
                         CP 92100, Tantoyuca, Veracruz <br>
                         Tel. (01 789) 8931680, 8931552 <br>
                         https://itsta.edu.mx
-
                     </td>
                     <td style="text-align: right">
-                        <img src="./tutores/logo2.png" height="100px" width="100px" width="600px" alt="">
-
+                        <img src="./tutores/logo2.png" height="100px" width="100px" alt="">
                     </td>
                 </tr>
             </table>
@@ -184,3 +137,4 @@
     @endforeach
 
 </body>
+</html>
