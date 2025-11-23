@@ -72,14 +72,14 @@
                                         data-bs-toggle="modal"
                                         data-bs-target="#month1Modal{{ $alumnos->id }}"
                                         data-bs-toggle="tooltip"
-                                        title="Seguimiento">
+                                        title="Seguimiento 1">
 
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[0]->semaforos[0]->fondo) && $alumnos->lights[0]->semaforos[0]->fondo !== '#')
                                             ? $alumnos->lights[0]->semaforos[0]->fondo
                                             : 'transparent' }};">
                                         </i>
-                                        {{ $alumnos->mes_1 }}
+                                        {{ $alumnos->mes_1 ? ucfirst($alumnos->mes_1) : '' }}
 
                                         @can('show.date')
                                             @if ($alumnos->entrega_1)
@@ -95,13 +95,13 @@
                                 @else
                                     <td class="p-0 text-muted"
                                         data-bs-toggle="tooltip"
-                                        title="Seguimiento bloqueado">
+                                        title="Seguimiento 1 bloqueado">
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[0]->semaforos[0]->fondo) && $alumnos->lights[0]->semaforos[0]->fondo !== '#')
                                             ? $alumnos->lights[0]->semaforos[0]->fondo
                                             : 'transparent' }};">
                                         </i>
-                                        {{ $alumnos->mes_1 }}
+                                        {{ $alumnos->mes_1 ? ucfirst($alumnos->mes_1) : '' }}
 
                                         @can('show.date')
                                             @if ($alumnos->entrega_1)
@@ -116,7 +116,7 @@
 
                                 <td>
                                     <div>
-                                        {{ $alumnos->oe_1 }}
+                                        {{ ucfirst($alumnos->oe_1) }}
                                     </div>
                                     @can('mes.admin', Model::class)
                                         <div class="d-grid gap-2">
@@ -136,14 +136,14 @@
                                         data-bs-toggle="modal"
                                         data-bs-target="#month2Modal{{ $alumnos->id }}"
                                         data-bs-toggle="tooltip"
-                                        title="Seguimiento">
+                                        title="Seguimiento 2">
 
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[1]->semaforos[0]->fondo) && $alumnos->lights[1]->semaforos[0]->fondo !== '#')
                                             ? $alumnos->lights[1]->semaforos[0]->fondo
                                             : 'transparent' }};">
                                         </i>
-                                        {{ $alumnos->mes_2 }}
+                                        {{ $alumnos->mes_2 ? ucfirst($alumnos->mes_2) : '' }}
 
                                         @can('show.date')
                                             @if ($alumnos->entrega_2)
@@ -156,13 +156,13 @@
 
                                     @include('modal.meses.mes2')
                                 @else
-                                    <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento bloqueado">
+                                    <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento 2 bloqueado">
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[1]->semaforos[0]->fondo) && $alumnos->lights[1]->semaforos[0]->fondo !== '#')
                                             ? $alumnos->lights[1]->semaforos[0]->fondo
                                             : 'transparent' }};">
                                         </i>
-                                        {{ $alumnos->mes_2 }}
+                                        {{ $alumnos->mes_2 ? ucfirst($alumnos->mes_2) : '' }}
 
                                         @can('show.date')
                                             @if ($alumnos->entrega_2)
@@ -176,7 +176,7 @@
 
                                 <td>
                                     <div>
-                                        {{ $alumnos->oe_2 }}
+                                        {{ ucfirst($alumnos->oe_2) }}
                                     </div>
                                     @can('mes.admin')
                                         <div class="d-grid gap-2">
@@ -196,14 +196,14 @@
                                         data-bs-toggle="modal"
                                         data-bs-target="#month3Modal{{ $alumnos->id }}"
                                         data-bs-toggle="tooltip"
-                                        title="Seguimiento">
+                                        title="Seguimiento 3">
 
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[2]->semaforos[0]->fondo) && $alumnos->lights[2]->semaforos[0]->fondo !== '#')
                                             ? $alumnos->lights[2]->semaforos[0]->fondo
                                             : 'transparent' }};">
                                         </i>
-                                        {{ $alumnos->mes_3 }}
+                                        {{ $alumnos->mes_3 ? ucfirst($alumnos->mes_3) : '' }}}
 
                                         @can('show.date')
                                             @if ($alumnos->entrega_3)
@@ -216,13 +216,13 @@
 
                                     @include('modal.meses.mes3')
                                 @else
-                                    <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento bloqueado">
+                                    <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento 3 bloqueado">
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[2]->semaforos[0]->fondo) && $alumnos->lights[2]->semaforos[0]->fondo !== '#')
                                             ? $alumnos->lights[2]->semaforos[0]->fondo
                                             : 'transparent' }};">
                                         </i>
-                                        {{ $alumnos->mes_3 }}
+                                        {{ $alumnos->mes_3 ? ucfirst($alumnos->mes_3) : '' }}
                                         @can('show.date')
                                             @if ($alumnos->entrega_3)
                                                 <small class="text-muted">
@@ -235,7 +235,7 @@
 
                                 <td>
                                     <div>
-                                        {{ $alumnos->oe_3 }}
+                                        {{ ucfirst($alumnos->oe_3) }}
                                     </div>
                                     @can('mes.admin', Model::class)
                                         <div class="d-grid gap-2">
@@ -256,14 +256,14 @@
                                         data-bs-toggle="modal"
                                         data-bs-target="#month4Modal{{ $alumnos->id }}"
                                         data-bs-toggle="tooltip"
-                                        title="Seguimiento">
+                                        title="Seguimiento 4">
 
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[3]->semaforos[0]->fondo) && $alumnos->lights[3]->semaforos[0]->fondo !== '#')
                                             ? $alumnos->lights[3]->semaforos[0]->fondo
                                             : 'transparent' }};">
                                         </i>
-                                        {{ $alumnos->mes_4 }}
+                                        {{ $alumnos->mes_4 ? ucfirst($alumnos->mes_4) : '' }}
 
                                         @can('show.date')
                                             @if ($alumnos->entrega_4)
@@ -276,13 +276,13 @@
 
                                     @include('modal.meses.mes4')
                                 @else
-                                    <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento bloqueado">
+                                    <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento 4 bloqueado">
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[3]->semaforos[0]->fondo) && $alumnos->lights[3]->semaforos[0]->fondo !== '#')
                                             ? $alumnos->lights[3]->semaforos[0]->fondo
                                             : 'transparent' }};">
                                         </i>
-                                        {{ $alumnos->mes_4 }}
+                                        {{ $alumnos->mes_4 ? ucfirst($alumnos->mes_4) : '' }}
 
                                         @can('show.date')
                                             @if ($alumnos->entrega_4)
@@ -296,7 +296,7 @@
 
                                 <td>
                                     <div>
-                                        {{ $alumnos->oe_4 }}
+                                        {{ ucfirst($alumnos->oe_4) }}
                                     </div>
                                     @can('mes.admin')
                                         <div class="d-grid gap-2">

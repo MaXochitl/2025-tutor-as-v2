@@ -43,7 +43,7 @@
                 style="border-radius: 10px;  background-image: url({{ $tutor->carrera->fondo }});">
 
                 <div class="col-5" style="border-radius: 10px; background: white; margin: 5px">
-                    <p class="head-alumnos-tutor"><b>Nombre Tutor de grupo: </b>
+                    <p class="head-alumnos-tutor"><b>Nombre: </b>
                         {{ $tutor->nombre . ' ' . $tutor->ap_paterno . ' ' . $tutor->ap_materno }}
                     </p>
                     <p class="head-alumnos-tutor"><b>Carrera: </b> {{ $tutor->carrera->nombre_carrera }}
@@ -109,54 +109,120 @@
         <div class="row row-tutor">
 
             <div class="bd-example">
-                <nav>
-                    <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
-                        <a class="nav-link tabs_s show active" id="nav-home-tab" data-bs-toggle="tab" href="#nav-home" role="tab"
-                            aria-controls="nav-home" aria-selected="false">Orientación</a>
+            @php
+                // Verificar si hay asignación de grupo
+                $tieneAsignacion = $asigno != 0 && !($asignado[0]->semestre == 0 || $asignado[0]->grupo == 'sin asignar');
+            @endphp
 
-                                <a class="nav-link tabs_s" id="nav-profile-tab" data-bs-toggle="tab" href="#nav-profile" role="tab"
-                                aria-controls="nav-profile" aria-selected="true">Tutor</a>
+            <nav>
+                <div class="nav nav-tabs mb-3" id="nav-tab" role="tablist">
+                    {{-- Pestaña Orientación - bloqueada si no hay asignación --}}
+                    <a class="nav-link tabs_s {{ $tieneAsignacion ? 'show active' : 'disabled' }}" 
+                    id="nav-home-tab" 
+                    data-bs-toggle="{{ $tieneAsignacion ? 'tab' : '' }}" 
+                    href="{{ $tieneAsignacion ? '#nav-home' : '#' }}" 
+                    role="tab"
+                    aria-controls="nav-home" 
+                    aria-selected="{{ $tieneAsignacion ? 'false' : 'false' }}"
+                    {{ !$tieneAsignacion ? 'onclick="return false;" style="cursor: not-allowed; opacity: 0.5;"' : '' }}>
+                        Orientación
+                    </a>
 
+                    {{-- Pestaña Tutor - bloqueada si no hay asignación --}}
+                    <a class="nav-link tabs_s {{ !$tieneAsignacion ? 'disabled' : '' }}" 
+                    id="nav-profile-tab" 
+                    data-bs-toggle="{{ $tieneAsignacion ? 'tab' : '' }}" 
+                    href="{{ $tieneAsignacion ? '#nav-profile' : '#' }}" 
+                    role="tab"
+                    aria-controls="nav-profile" 
+                    aria-selected="false"
+                    {{ !$tieneAsignacion ? 'onclick="return false;" style="cursor: not-allowed; opacity: 0.5;"' : '' }}>
+                        Tutor
+                    </a>
 
-                        <a class="nav-link tabs_s" id="nav-contact-tab" data-bs-toggle="tab" href="#nav-contact" role="tab"
-                            aria-controls="nav-contact" aria-selected="false">Docente</a>
+                    {{-- Pestaña Docente - siempre activa --}}
+                    <a class="nav-link tabs_s {{ !$tieneAsignacion ? 'show active' : '' }}" 
+                    id="nav-contact-tab" 
+                    data-bs-toggle="tab" 
+                    href="#nav-contact" 
+                    role="tab"
+                    aria-controls="nav-contact" 
+                    aria-selected="{{ !$tieneAsignacion ? 'true' : 'false' }}">
+                        Docente
+                    </a>
 
-                            <!-- Nuevo modulo actividades pdf  -->
-                        <a class="nav-link tabs_s" id="nav-activities-tab" data-bs-toggle="tab" href="#nav-activities" role="tab"
-                            aria-controls="nav-activities" aria-selected="false">Actividades</a>    
-
-                    </div>
-                </nav>
-
-                <div class="tab-content" id="nav-tabContent">
-                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
+                    {{-- Pestaña Actividades - bloqueada si no hay asignación --}}
+                    <a class="nav-link tabs_s {{ !$tieneAsignacion ? 'disabled' : '' }}" 
+                    id="nav-activities-tab" 
+                    data-bs-toggle="{{ $tieneAsignacion ? 'tab' : '' }}" 
+                    href="{{ $tieneAsignacion ? '#nav-activities' : '#' }}" 
+                    role="tab"
+                    aria-controls="nav-activities" 
+                    aria-selected="false"
+                    {{ !$tieneAsignacion ? 'onclick="return false;" style="cursor: not-allowed; opacity: 0.5;"' : '' }}>
+                        Actividades
+                    </a>
+                </div>
+            </nav>
+            
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade {{ $tieneAsignacion ? 'show active' : '' }}" 
+                    id="nav-home" 
+                    role="tabpanel" 
+                    aria-labelledby="nav-home-tab">
+                    @if($tieneAsignacion)
                         @include('docente_tutor.orientacion')
-                    </div>
-                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
+                    @else
+                        <div class="alert alert-warning">
+                            <strong>Atención:</strong> Necesita tener un grupo asignado para acceder a esta sección.
+                        </div>
+                    @endif
+                </div>
+                
+                <div class="tab-pane fade" 
+                    id="nav-profile" 
+                    role="tabpanel" 
+                    aria-labelledby="nav-profile-tab">
+                    @if($tieneAsignacion)
                         @include('docente_tutor.tutor')
-                    </div>
-                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                        @include('docente_tutor.docente')
-
-                    </div>
-                    <!-- Modificacion aqui -->
-                    <div class="tab-pane fade" id="nav-activities" role="tabpanel" aria-labelledby="nav-activities-tab">
+                    @else
+                        <div class="alert alert-warning">
+                            <strong>Atención:</strong> Necesita tener un grupo asignado para acceder a esta sección.
+                        </div>
+                    @endif
+                </div>
+                
+                <div class="tab-pane fade {{ !$tieneAsignacion ? 'show active' : '' }}" 
+                    id="nav-contact" 
+                    role="tabpanel" 
+                    aria-labelledby="nav-contact-tab">
+                    @include('docente_tutor.docente')
+                </div>
+                
+                <div class="tab-pane fade" 
+                    id="nav-activities" 
+                    role="tabpanel" 
+                    aria-labelledby="nav-activities-tab">
+                    @if($tieneAsignacion)
                         @include('docente_tutor.actividades')
-                    </div>
-                    <!--  Hasta Aqui  -->
+                    @else
+                        <div class="alert alert-warning">
+                            <strong>Atención:</strong> Necesita tener un grupo asignado para acceder a esta sección.
+                        </div>
+                    @endif
                 </div>
             </div>
-        @else
-            <div class="container text-center">
-                <div class="row img-font-all" style="border-radius: 10px;margin-top: 30px; background: rgb(8, 2, 126)">
-                    <div class="col-5" style="border-radius: 10px; background: white; margin: 5px">
-                        <p class="head-alumnos-tutor"><b>Orientación Educativa Se encuentra Trabajando Espera Indicaciónes
-                            </b>
-                        </p>
+            @else
+                <div class="container text-center">
+                    <div class="row img-font-all" style="border-radius: 10px;margin-top: 30px; background: rgb(8, 2, 126)">
+                        <div class="col-5" style="border-radius: 10px; background: white; margin: 5px">
+                            <p class="head-alumnos-tutor"><b>Orientación Educativa Se encuentra Trabajando Espera Indicaciónes
+                                </b>
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-    @endif
+            @endif
     @include('modal.alumno.add-alumno')
     @include('modal.alumno.add-alumno2')
 
@@ -198,5 +264,4 @@
             });
         });
     </script>
-
 @endsection
