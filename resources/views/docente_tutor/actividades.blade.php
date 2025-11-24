@@ -71,12 +71,12 @@
 
         <br>
         <div class="overflow-scroll table-responsive">
-            <table class="table text-center table-striped" style="font-size: 12px">
+            <table class="table table-bordered text-start table-striped" style="font-size: 12px">
                 <thead>
                     <tr>
-                        <th scope="col">NUMERO DE SESIONES</th>
+                        <th scope="col">N° DE SESIONES</th>
                         <th scope="col">TEMA</th>
-                        <th scope="col">DESCRIPCION DE LA ACTIVIDAD</th>
+                        <th scope="col">DESCRIPCIÓN DE LA ACTIVIDAD</th>
                         <th scope="col">FECHA</th>
                         <th scope="col">TIEMPO</th>
                         <th scope="col">RECURSOS</th>
@@ -87,18 +87,18 @@
                 @foreach ($actividades as $index => $actividad)
                     <tr>
                         <td>{{ $index + 1 }}</td> 
-                        <td>{{ $actividad->tema }}</td>
-                        <td>{{ $actividad->descripcion_actividad }}</td>
+                        <td>{{ ucfirst($actividad->tema) }}</td>
+                        <td>{{ ucfirst($actividad->descripcion_actividad) }}</td>
                         <td>{{ $actividad->fecha->format('d/m/Y') }}</td> 
                         <td>
                                 @php
                                         $hora = \Carbon\Carbon::parse($actividad->tiempo);
                                 @endphp
                                 {{ $hora->format('H:i') }} hrs </td>
-                        <td>{{ $actividad->recursos }}</td>
+                        <td>{{ ucfirst($actividad->recursos) }}</td>
                         <td>
                             <div class="btn-group">
-                                <button type="button" class="btn btn-secondary dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                                <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                     Opciones
                                 </button>
                                     <ul class="dropdown-menu">

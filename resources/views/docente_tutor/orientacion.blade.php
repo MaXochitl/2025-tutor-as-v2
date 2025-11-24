@@ -112,20 +112,20 @@
                                 data-bs-target="#month1Modal{{ $alumnos->id }}"
                                 data-bs-toggle="tooltip"
                                 title="Seguimiento 1">
-                                <div style="height: 5px; background:{{ $alumnos->lights[0]->semaforos[0]->fondo }};"></div>
-                                <div>{{ $alumnos->mes_1 }}</div>
+                                    <div style="height: 5px; background:{{ $alumnos->lights[0]->semaforos[0]->fondo }};"></div>
+                                    <div>{{ ucfirst($alumnos->mes_1) }}</div>
                             </td>
                             @include('modal.meses.mes1')
                         @else
-                            <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento 1 bloqueado">
+                            <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 1 bloqueado">
                                 <div style="height: 5px; background:{{ $alumnos->lights[0]->semaforos[0]->fondo }};"></div>
-                                <div>{{ $alumnos->mes_1 }}</div>
+                                <div>{{ ucfirst($alumnos->mes_1) }}</div>
                             </td>
                         @endif
 
                             <td>
                                 <div>
-                                    {{ $alumnos->oe_1 }}
+                                    {{ ucfirst($alumnos->oe_1) }}
                                 </div>
                             </td>
 
@@ -137,18 +137,18 @@
                                 data-bs-toggle="tooltip"
                                 title="Seguimiento 2">
                                 <div style="height: 5px; background:{{ $alumnos->lights[1]->semaforos[0]->fondo }};"></div>
-                                <div>{{ $alumnos->mes_2 }}</div>
+                                <div>{{ ucfirst($alumnos->mes_2) }}</div>
                             </td>
                             @include('modal.meses.mes2')
                         @else
-                            <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento 2 bloqueado">
+                            <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 2 bloqueado">
                                 <div style="height: 5px; background:{{ $alumnos->lights[1]->semaforos[0]->fondo }};"></div>
-                                <div>{{ $alumnos->mes_2 }}</div>
+                                <div>{{ ucfirst($alumnos->mes_2) }}</div>
                             </td>
                         @endif
                             <td>
                                 <div>
-                                    {{ $alumnos->oe_2 }}
+                                    {{ ucfirst($alumnos->oe_2) }}
                                 </div>
                             </td>
 
@@ -160,18 +160,18 @@
                                 data-bs-toggle="tooltip"
                                 title="Seguimiento 3">
                                 <div style="height: 5px; background:{{ $alumnos->lights[2]->semaforos[0]->fondo }};"></div>
-                                <div>{{ $alumnos->mes_3 }}</div>
+                                <div>{{ ucfirst($alumnos->mes_3) }}</div>
                             </td>
                             @include('modal.meses.mes3')
                         @else
-                            <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento 3 bloqueado">
+                            <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 3 bloqueado">
                                 <div style="height: 5px; background:{{ $alumnos->lights[2]->semaforos[0]->fondo }};"></div>
-                                <div>{{ $alumnos->mes_3 }}</div>
+                                <div>{{ ucfirst($alumnos->mes_3) }}</div>
                             </td>
                         @endif
 
                             <td>
-                                <div>{{ $alumnos->oe_3 }}</div>
+                                {{ ucfirst($alumnos->oe_3) }}
                             </td>
 
                         <!--MES 4 btn seguim invicible-->
@@ -182,19 +182,19 @@
                                 data-bs-toggle="tooltip"
                                 title="Seguimiento 4">
                                 <div style="height: 5px; background:{{ $alumnos->lights[3]->semaforos[0]->fondo }};"></div>
-                                <div>{{ $alumnos->mes_4 }}</div>
+                                <div>{{ ucfirst($alumnos->mes_4) }}</div>
                             </td>
                             @include('modal.meses.mes4')
                         @else
-                            <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento 4 bloqueado">
+                            <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 4 bloqueado">
                                 <div style="height: 5px; background:{{ $alumnos->lights[3]->semaforos[0]->fondo }};"></div>
-                                <div>{{ $alumnos->mes_4 }}</div>
+                                <div>{{ ucfirst($alumnos->mes_4) }}</div>
                             </td>
                         @endif
 
                             <td>
                                 <div>
-                                    {{ $alumnos->oe_4 }}
+                                    {{ ucfirst($alumnos->oe_4) }}
                                 </div>
                             </td>
 
@@ -205,17 +205,17 @@
                                 title="Reporte Final"
                                 onclick="window.location='{{ route('reporte.show', $alumnos->id) }}'">
                                 <div style="height: 5px; background:{{ $alumnos->lights[4]->semaforos[0]->fondo }};"></div>
-                                <div>{{ $alumnos->reporte_final }}</div>
+                                <div>{{ ucfirst($alumnos->reporte_final) }}</div>
                             </td>
                         @else
-                            <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Reporte final bloqueado">
+                            <td class="text-muted" data-bs-toggle="tooltip" title="Reporte final bloqueado">
                                 <div style="height: 5px; background:{{ $alumnos->lights[4]->semaforos[0]->fondo }};"></div>
-                                <div>{{ $alumnos->reporte_final }}</div>
+                                <div>{{ ucfirst($alumnos->reporte_final) }}</div>
                             </td>
                         @endif
                             <td>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-danger dropdown-toggle" data-bs-toggle="dropdown">
+                                    <button type="button" class="btn btn-danger btn-sm dropdown-toggle" data-bs-toggle="dropdown">
                                         Opciones
                                     </button>
 

@@ -78,7 +78,7 @@
                                         </td>
                                         @include('modal.orientacion.mes1')
                                     @else
-                                        <td class="p-0 text-muted"
+                                        <td class="text-muted"
                                             data-bs-toggle="tooltip"
                                             title="Seguimiento 1 bloqueado">
                                             {{ ucfirst($alumnos->oe_1) }}
@@ -113,7 +113,7 @@
                                         </td>
                                         @include('modal.orientacion.mes2')
                                     @else
-                                        <td class="p-0 text-muted"
+                                        <td class="text-muted"
                                             data-bs-toggle="tooltip"
                                             title="Seguimiento 2 bloqueado">
                                             {{ ucfirst($alumnos->oe_2) }}
@@ -148,7 +148,7 @@
                                         </td>
                                         @include('modal.orientacion.mes3')
                                     @else
-                                        <td class="p-0 text-muted"
+                                        <td class="text-muted"
                                             data-bs-toggle="tooltip"
                                             title="Seguimiento 3 bloqueado">
                                             {{ ucfirst($alumnos->oe_3) }}
@@ -182,7 +182,7 @@
                                         </td>
                                         @include('modal.orientacion.mes4')
                                     @else
-                                        <td class="p-0 text-muted"
+                                        <td class="text-muted"
                                             data-bs-toggle="tooltip"
                                             title="Seguimiento 4 bloqueado">
                                             {{ ucfirst($alumnos->oe_4) }}

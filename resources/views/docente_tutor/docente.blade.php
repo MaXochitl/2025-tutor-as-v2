@@ -93,7 +93,7 @@
 
                                     @include('modal.meses.mes1')
                                 @else
-                                    <td class="p-0 text-muted"
+                                    <td class="text-muted"
                                         data-bs-toggle="tooltip"
                                         title="Seguimiento 1 bloqueado">
                                         <i class="bi bi-circle-fill"
@@ -156,7 +156,7 @@
 
                                     @include('modal.meses.mes2')
                                 @else
-                                    <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento 2 bloqueado">
+                                    <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 2 bloqueado">
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[1]->semaforos[0]->fondo) && $alumnos->lights[1]->semaforos[0]->fondo !== '#')
                                             ? $alumnos->lights[1]->semaforos[0]->fondo
@@ -203,7 +203,7 @@
                                             ? $alumnos->lights[2]->semaforos[0]->fondo
                                             : 'transparent' }};">
                                         </i>
-                                        {{ $alumnos->mes_3 ? ucfirst($alumnos->mes_3) : '' }}}
+                                        {{ $alumnos->mes_3 ? ucfirst($alumnos->mes_3) : '' }}
 
                                         @can('show.date')
                                             @if ($alumnos->entrega_3)
@@ -216,7 +216,7 @@
 
                                     @include('modal.meses.mes3')
                                 @else
-                                    <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento 3 bloqueado">
+                                    <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 3 bloqueado">
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[2]->semaforos[0]->fondo) && $alumnos->lights[2]->semaforos[0]->fondo !== '#')
                                             ? $alumnos->lights[2]->semaforos[0]->fondo
@@ -276,7 +276,7 @@
 
                                     @include('modal.meses.mes4')
                                 @else
-                                    <td class="p-0 text-muted" data-bs-toggle="tooltip" title="Seguimiento 4 bloqueado">
+                                    <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 4 bloqueado">
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[3]->semaforos[0]->fondo) && $alumnos->lights[3]->semaforos[0]->fondo !== '#')
                                             ? $alumnos->lights[3]->semaforos[0]->fondo
@@ -318,7 +318,7 @@
                                             @csrf
                                             @method('DELETE')
                                             <div class="btn-group">
-                                                <button type="submit" class="btn btn-danger dropdown-toggle"
+                                                <button type="submit" class="btn btn-danger btn-sm dropdown-toggle"
                                                     data-bs-toggle="dropdown" aria-expanded="false">
                                                     Opciones
                                                 </button>
