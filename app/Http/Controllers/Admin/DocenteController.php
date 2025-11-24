@@ -8,7 +8,7 @@ use App\Models\Periodo_view;
 use App\Models\Periodo;
 use App\Models\Periodo_tutorado;
 use App\Models\Semaforo;
-use App\Models\Tutor;
+use App\Models\Tutor; 
 
 class DocenteController extends Controller
 {
