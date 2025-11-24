@@ -25,7 +25,7 @@
     </table>
     <table>
         <tr>
-            <td><strong>Programa Educativo: </strong> {{ $tutor->carrera->nombre_carrera }}</td>
+            <td><strong>Programa Educativo: {{ $tutor->carrera->nombre_carrera }} </strong></td>
             <td><strong>Semestre y Grupo: </strong> 
                 @if(isset($semestre_actual) && isset($grupo_actual))
                     {{ $semestre_actual }} {{ $grupo_actual }}
