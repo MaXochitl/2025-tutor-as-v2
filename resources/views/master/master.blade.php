@@ -53,16 +53,13 @@
 
     <!--------------------------------------------------------------------INICIO-->
     @include('secciones.menu-bar')
-
-    <div class="content ">
-        <div id="cont" class="mov">
+    <div class="content">
+        <div id="cont" class="mov" style="min-height: 100vh;">
             @include('secciones.navBar')
             @yield('structure-content')
         </div>
 
-
         @include('secciones.footer')
-
     </div>
 
     <!--------------------------------------------------------------------FIN-->
