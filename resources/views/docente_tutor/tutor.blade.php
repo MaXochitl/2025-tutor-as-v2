@@ -51,13 +51,20 @@
                                     </td>
 
                                     <!--DOCENTE 1-->
-                                    <td>
+                                    <td class="p-0 cell-padding cell-justificada" style="padding-top: 6px !important;">
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[0]->semaforos[0]->fondo) && $alumnos->lights[0]->semaforos[0]->fondo !== '#')
-                                            ? $alumnos->lights[0]->semaforos[0]->fondo
-                                            : 'transparent' }};">
+                                                            ? $alumnos->lights[0]->semaforos[0]->fondo
+                                                            : 'transparent' }}">
                                         </i>
-                                        {{ $alumnos->mes_1 }}
+
+                                        @if ($alumnos->entrega_1 != null)
+                                            <small class="text-muted">
+                                                <b>{{ date('d/m/Y', strtotime($alumnos->entrega_1)) }}</b>
+                                            </small>
+                                        @endif
+
+                                        <div>{{ $alumnos->mes_1 ? ucfirst($alumnos->mes_1) : '' }}</div>
                                     </td>
 
                                     {{-- Tutor 1 --}}
@@ -66,26 +73,33 @@
                                             data-bs-toggle="modal"
                                             data-bs-target="#oe1Modal{{ $alumnos->id }}"
                                             data-bs-toggle="tooltip"
-                                            title="Seguimiento">
-                                            {{ $alumnos->oe_1 }}
+                                            title="Seguimiento 1">
+                                            {{ ucfirst($alumnos->oe_1) }}
                                         </td>
                                         @include('modal.orientacion.mes1')
                                     @else
                                         <td class="p-0 text-muted"
                                             data-bs-toggle="tooltip"
-                                            title="Seguimiento bloqueado">
-                                            {{ $alumnos->oe_1 }}
+                                            title="Seguimiento 1 bloqueado">
+                                            {{ ucfirst($alumnos->oe_1) }}
                                         </td>
                                     @endif
 
                                     <!--DOCENTE 2-->
-                                    <td>
+                                    <td class="p-0 cell-padding cell-justificada" style="padding-top: 6px !important;">
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[1]->semaforos[0]->fondo) && $alumnos->lights[1]->semaforos[0]->fondo !== '#')
-                                            ? $alumnos->lights[1]->semaforos[0]->fondo
-                                            : 'transparent' }};">
+                                                            ? $alumnos->lights[1]->semaforos[0]->fondo
+                                                            : 'transparent' }}">
                                         </i>
-                                        {{ $alumnos->mes_2 }}
+
+                                        @if ($alumnos->entrega_2 != null)
+                                            <small class="text-muted">
+                                                <b>{{ date('d/m/Y', strtotime($alumnos->entrega_2)) }}</b>
+                                            </small>
+                                        @endif
+
+                                        <div>{{ $alumnos->mes_2 ? ucfirst($alumnos->mes_2) : '' }}</div>
                                     </td>
 
                                     {{-- Tutor 2 --}}
@@ -94,26 +108,33 @@
                                             data-bs-toggle="modal"
                                             data-bs-target="#oe2Modal{{ $alumnos->id }}"
                                             data-bs-toggle="tooltip"
-                                            title="Seguimiento">
-                                            {{ $alumnos->oe_2 }}
+                                            title="Seguimiento 2">
+                                            {{ ucfirst($alumnos->oe_2) }}
                                         </td>
                                         @include('modal.orientacion.mes2')
                                     @else
                                         <td class="p-0 text-muted"
                                             data-bs-toggle="tooltip"
-                                            title="Seguimiento bloqueado">
-                                            {{ $alumnos->oe_2 }}
+                                            title="Seguimiento 2 bloqueado">
+                                            {{ ucfirst($alumnos->oe_2) }}
                                         </td>
                                     @endif
 
                                     <!--DOCENTE 3-->
-                                    <td>
+                                    <td class="p-0 cell-padding cell-justificada" style="padding-top: 6px !important;">
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[2]->semaforos[0]->fondo) && $alumnos->lights[2]->semaforos[0]->fondo !== '#')
-                                            ? $alumnos->lights[2]->semaforos[0]->fondo
-                                            : 'transparent' }};">
+                                                            ? $alumnos->lights[2]->semaforos[0]->fondo
+                                                            : 'transparent' }}">
                                         </i>
-                                        {{ $alumnos->mes_3 }}
+
+                                        @if ($alumnos->entrega_3 != null)
+                                            <small class="text-muted">
+                                                <b>{{ date('d/m/Y', strtotime($alumnos->entrega_3)) }}</b>
+                                            </small>
+                                        @endif
+
+                                        <div>{{ $alumnos->mes_3 ? ucfirst($alumnos->mes_3) : '' }}</div>
                                     </td>
 
                                     {{-- Tutor 3 --}}
@@ -122,26 +143,32 @@
                                             data-bs-toggle="modal"
                                             data-bs-target="#oe3Modal{{ $alumnos->id }}"
                                             data-bs-toggle="tooltip"
-                                            title="Seguimiento">
-                                            {{ $alumnos->oe_3 }}
+                                            title="Seguimiento 3">
+                                            {{ ucfirst($alumnos->oe_3) }}
                                         </td>
                                         @include('modal.orientacion.mes3')
                                     @else
                                         <td class="p-0 text-muted"
                                             data-bs-toggle="tooltip"
-                                            title="Seguimiento bloqueado">
-                                            {{ $alumnos->oe_3 }}
+                                            title="Seguimiento 3 bloqueado">
+                                            {{ ucfirst($alumnos->oe_3) }}
                                         </td>
                                     @endif
 
                                     <!--DOCENTE 4-->
-                                    <td>
+                                    <td class="p-0 cell-padding cell-justificada" style="padding-top: 6px !important;">
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[3]->semaforos[0]->fondo) && $alumnos->lights[3]->semaforos[0]->fondo !== '#')
-                                            ? $alumnos->lights[3]->semaforos[0]->fondo
-                                            : 'transparent' }};">
+                                                            ? $alumnos->lights[3]->semaforos[0]->fondo
+                                                            : 'transparent' }}">
                                         </i>
-                                        {{ $alumnos->mes_4 }}
+                                        @if ($alumnos->entrega_4 != null)
+                                            <small class="text-muted">
+                                                <b>{{ date('d/m/Y', strtotime($alumnos->entrega_4)) }}</b>
+                                            </small>
+                                        @endif
+
+                                        <div>{{ $alumnos->mes_4 ? ucfirst($alumnos->mes_4) : '' }}</div>
                                     </td>
 
                                     {{-- Tutor 4 --}}
@@ -150,15 +177,15 @@
                                             data-bs-toggle="modal"
                                             data-bs-target="#oe4Modal{{ $alumnos->id }}"
                                             data-bs-toggle="tooltip"
-                                            title="Seguimiento">
-                                            {{ $alumnos->oe_4 }}
+                                            title="Seguimiento 4">
+                                            {{ ucfirst($alumnos->oe_4) }}
                                         </td>
                                         @include('modal.orientacion.mes4')
                                     @else
                                         <td class="p-0 text-muted"
                                             data-bs-toggle="tooltip"
-                                            title="Seguimiento bloqueado">
-                                            {{ $alumnos->oe_4 }}
+                                            title="Seguimiento 4 bloqueado">
+                                            {{ ucfirst($alumnos->oe_4) }}
                                         </td>
                                     @endif
                                     <td>
@@ -175,3 +202,14 @@
         </div>
     </div>
 </div>
+<style>
+    /* Justificar texto de las columnas de docente y respuesta */
+    .col-justify {
+        text-align: justify;
+    }
+
+    /* Espacio interno para que no se vea pegado al borde */
+    .cell-padding {
+        padding: 6px 10px !important;
+    }
+</style>
