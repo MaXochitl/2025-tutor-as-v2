@@ -74,6 +74,13 @@ class ExportReportsControllerXLX extends Controller
     $carrera = Carrera::find($id);
     $tutores = DB::select('CALL ReportesCarrera(?, ?)', [$periodo_id, $id]);
 
+    if (empty($tutores)) {
+        return redirect()->back()->with([
+            'error' => 'no_data',
+            'message' => 'No hay información disponible para generar el reporte en el periodo seleccionado.'
+        ]);
+    }
+
     $data = [];
     $contador = 1;
     foreach ($tutores as $tutor) {
