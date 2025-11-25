@@ -1,16 +1,7 @@
 @extends('master.master')
 @section('structure-content')
 <div class="container">
-    @if (session('alumno') == 'ok')
-    <div class="alert alert-success">
-        El alumno se agrego con exito!
-    </div>
-    @endif
-    @if (session('existe_alumno') == 'no')
-    <div class="alert alert-danger">
-        No se encontro Alumno! Puedes registrarlo en la seccion nuevo alumno
-    </div>
-    @endif
+
     <!-- Ordenar Semestres de tabla periodo_tutorado y Grupos de tabla alumnos -->
     @php
         // Ordenar por semestre y luego por grupo
