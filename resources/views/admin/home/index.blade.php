@@ -25,12 +25,12 @@
     @endphp
 
 
-    <div class="row img-fond-home p-4">
+    <div class="row img-fond-home p-4" >
 
         <div class="row mb-9">
 
-            <div class="row text-center col-md-8 shadow-lg p-3 mb-2"
-                style="margin: auto;border-radius: 17px; background: rgb(0, 26, 130); color: white">
+            <div class="row text-center col-md-8 shadow-lg p-3 mb-2" 
+                style="margin: auto;border-radius: 17px; height: 145px; background: rgb(0, 26, 130); color: white">
                 <h3>PROGRAMA INSTITUCIONAL DE TUTORIAS </h3>
                 <form method="POST" action="{{ route('orientacion.store') }}" enctype="multipart/form-data">
                     @csrf
@@ -81,7 +81,7 @@
             </div>
 
             <div class="row col-md-8 shadow-lg p-3 " style="margin: auto;border-radius: 17px;background: white">
-                <div class="overflow-scroll" style="height: 400px">
+                <div class="overflow-scroll" style="height: 460px">
 
                     <table class="table table-striped text-heigth">
                         <thead>
@@ -109,6 +109,8 @@
                                             <img src="{{ $item->icono }} " alt="" height="50px" width="50px"
                                                 class="img-icon" style="border-radius: 40px; padding: 0px ">
                                         </a>
+
+
                                     </th>
                                     <td>{{ $item->nombre_carrera }}</td>
                                     <td class="text-center">
@@ -163,16 +165,5 @@
                 'success'
             )
         </script>
-    @endif
-    @if (session('error') == 'no_data')
-    <script>
-        Swal.fire({
-            icon: 'warning',
-            title: 'Sin información',
-            text: '{{ session('message') }}',
-            timer: 3500,
-            timerProgressBar: true
-        })
-    </script>
     @endif
 @endsection
