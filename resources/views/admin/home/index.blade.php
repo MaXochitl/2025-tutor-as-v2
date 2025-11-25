@@ -166,4 +166,15 @@
             )
         </script>
     @endif
+    @if (session('error') == 'no_data')
+    <script>
+        Swal.fire({
+            icon: 'warning',
+            title: 'Sin información',
+            text: '{{ session('message') }}',
+            timer: 3500,
+            timerProgressBar: true
+        })
+    </script>
+    @endif
 @endsection
