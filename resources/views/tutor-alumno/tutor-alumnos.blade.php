@@ -628,5 +628,4 @@
     </div>
 </div>
 @endif
-@include('modal.alumno.add-alumno')
 @endsection
