@@ -222,6 +222,5 @@
         });
         */
     </script>
-    @include('modal.alumno.add-alumno')
 
 @endsection
