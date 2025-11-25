@@ -318,14 +318,14 @@
                                             @csrf
                                             @method('DELETE')
                                             <div class="btn-group">
-                                                <button type="submit" class="btn btn-danger btn-sm dropdown-toggle"
+                                                <button type="submit" class="btn btn-secondary btn-sm dropdown-toggle"
                                                     data-bs-toggle="dropdown" aria-expanded="false">
                                                     Opciones
                                                 </button>
                                                 <ul class="dropdown-menu">
                                                     @can('mes.tutor')
                                                         <li>
-                                                            <button type="submit" class="dropdown-item"
+                                                            <button type="submit" class="dropdown-item text-danger"
                                                                 href="#">Eliminar</button>
                                                         </li>
                                                     @endcan

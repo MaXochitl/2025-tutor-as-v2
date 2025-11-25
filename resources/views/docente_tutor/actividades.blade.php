@@ -74,7 +74,7 @@
             <table class="table table-bordered text-start table-striped" style="font-size: 12px">
                 <thead>
                     <tr>
-                        <th scope="col">N° DE SESIONES</th>
+                        <th class="text-center" scope="col">N° DE SESIONES</th>
                         <th scope="col">TEMA</th>
                         <th scope="col">DESCRIPCIÓN DE LA ACTIVIDAD</th>
                         <th scope="col">FECHA</th>
@@ -86,7 +86,7 @@
             <tbody>
                 @foreach ($actividades as $index => $actividad)
                     <tr>
-                        <td>{{ $index + 1 }}</td> 
+                        <th class="text-center">{{ $index + 1 }}</th>
                         <td>{{ ucfirst($actividad->tema) }}</td>
                         <td>{{ ucfirst($actividad->descripcion_actividad) }}</td>
                         <td>{{ $actividad->fecha->format('d/m/Y') }}</td> 
