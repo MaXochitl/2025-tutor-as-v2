@@ -192,20 +192,37 @@ document.addEventListener('DOMContentLoaded', function() {
                 const modal = bootstrap.Modal.getInstance(modalElement);
                 modal.hide();
                 
-                // Mostrar mensaje de éxito
-                alert('Alumno actualizado correctamente');
-                
-                // Recargar la pagina después de 1 segundo
+                // SweetAlert de éxito
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Actualizado',
+                    text: 'Alumno actualizado correctamente',
+                    timer: 1200,
+                    showConfirmButton: false
+                });
+
+                // Recargar después de la animación
                 setTimeout(() => {
                     window.location.reload();
-                }, 1000);
+                }, 1800);
+
             } else {
-                alert(data.message || 'Error al actualizar');
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Atención',
+                    text: data.message || 'No se pudo actualizar el alumno.'
+                });
             }
         })
         .catch(error => {
             console.error('Error completo:', error);
-            alert('Error al actualizar el alumno: ' + error.message);
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'Error al actualizar: ' + error.message
+            });
         });
     });
 });
