@@ -64,12 +64,12 @@
 
             <!--A. comparar arreglo sgActual de semestregrupos asignados al tutor con los que se a asignado el el tutor-->
             @if(!in_array($sgActual, $sgAsignados))
-                <h5 class="mt-3 mb-2 text-danger">Semestre: {{ $semestre }} - Grupo: {{ $grupo }} (No asignado)</h5>
+                <h5 class="mt-3 mb-4 text-danger">Semestre: {{ $semestre }} - Grupo: {{ $grupo }} (No asignado)</h5>
             @else
-                <h5 class="mt-3 mb-2">Semestre: {{ $semestre }} - Grupo: {{ $grupo }}</h5>
+                <h5 class="mt-3 mb-4">Semestre: {{ $semestre }} - Grupo: {{ $grupo }}</h5>
             @endif
 
-        <div class="table-responsive">
+        <div class="table-responsive pb-5">
             <table class="table text-start table-striped" style="font-size: 12px"> <!--texto alineado a la izq-->
                 <thead>
                     <tr>
@@ -215,17 +215,28 @@
                         @endif
                             <td>
                                 <div class="btn-group">
-                                    <button type="button" class="btn btn-danger btn-sm dropdown-toggle" data-bs-toggle="dropdown">
+                                    <button type="button" class="btn btn-sm btn-secondary dropdown-toggle" data-bs-toggle="dropdown">
                                         Opciones
                                     </button>
-
-                                    <ul class="dropdown-menu">
+                                    <ul class="dropdown-menu mini-dropdown">
                                         <li>
                                             <button type="button"
                                                     class="dropdown-item canalizacion-btn"
                                                     data-id="{{ $alumnos->alumno->id }}"
                                                     data-periodo="{{ $alumnos->periodo_id }}">
                                                 Atención Individual
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button type="button"
+                                                    class="dropdown-item text-primary actualizar-alumno-btn"
+                                                    data-id="{{ $alumnos->id }}"
+                                                    data-alumno-id="{{ $alumnos->alumno->id }}"
+                                                    data-semestre="{{ $alumnos->semestre }}"
+                                                    data-grupo="{{ $alumnos->alumno->grupo }}"
+                                                    data-bs-toggle="modal"
+                                                    data-bs-target="#updateAlumnoModal">
+                                                    Actualizar
                                             </button>
                                         </li>
                                         <li>
@@ -240,7 +251,6 @@
                                                 </button>
                                             </form>
                                         </li>
-
                                     </ul>
                                 </div>
                             </td>
@@ -361,6 +371,7 @@
     </div>
 </div>
 @include("modal.alumno.add-alumno")
+@include("modal.alumno.update-alumno")
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -542,3 +553,15 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 });
 </script>
+
+<style>
+    .mini-dropdown {
+        font-size: 12px !important;   /* letras pequeñas */
+        padding: 4px !important;      /* menos espacio */
+        min-width: 120px !important;  /* menú más pequeño */
+    }
+
+    .mini-dropdown .dropdown-item {
+        padding: 4px 8px !important;  /* botones más compactos */
+    }
+</style>

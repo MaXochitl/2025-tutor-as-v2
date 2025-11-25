@@ -408,7 +408,80 @@ class TutoriasController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id) {}
+    public function update(Request $request, $id) {
+        \Log::info('Update request recibido', ['id' => $id, 'data' => $request->all()]);
+
+        $validated = $request->validate([
+            'semestre' => ['required', 'numeric'],
+            'grupo' => ['required', 'string'],
+        ]);
+
+        try {
+            // Obtener el registro periodo_tutorado por ID
+            $periodoTutorado = Periodo_tutorado::find($id);
+
+            if (!$periodoTutorado) {
+                \Log::warning('Periodo tutorado no encontrado', ['id' => $id]);
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Alumno no encontrado'
+                ], 404);
+            }
+
+            // Verificar que sea de tipo 1 (tutorado)
+            if ($periodoTutorado->tipo != 1) {
+                \Log::warning('Tipo de registro incorrecto', ['id' => $id, 'tipo' => $periodoTutorado->tipo]);
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No se puede actualizar este registro'
+                ], 403);
+            }
+
+            // Obtener el ID del tutor actual
+            $id_tutor = Auth::user()->tutor->id;
+
+            // Verificar que el registro pertenezca al tutor autenticado
+            if ($periodoTutorado->tutor_id != $id_tutor) {
+                \Log::warning('Usuario no autorizado', ['tutor_id' => $id_tutor, 'periodo_tutor_id' => $periodoTutorado->tutor_id]);
+                return response()->json([
+                    'success' => false,
+                    'message' => 'No tienes permisos para actualizar este registro'
+                ], 403);
+            }
+
+            // Actualizar el semestre en periodo_tutorado
+            $periodoTutorado->semestre = $validated['semestre'];
+            $periodoTutorado->save();
+
+            // Actualizar el grupo en la tabla alumnos
+            $alumno = Alumno::find($periodoTutorado->alumno_id);
+            if ($alumno) {
+                $alumno->grupo = $validated['grupo'];
+                $alumno->save();
+            }
+
+            \Log::info('Alumno actualizado correctamente', ['periodo_tutorado_id' => $id]);
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Alumno actualizado correctamente'
+            ]);
+
+        } catch (\Illuminate\Validation\ValidationException $e) {
+            \Log::error('Error de validación', ['errors' => $e->errors()]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Error de validación',
+                'errors' => $e->errors()
+            ], 422);
+        } catch (\Exception $e) {
+            \Log::error('Error al actualizar alumno', ['error' => $e->getMessage()]);
+            return response()->json([
+                'success' => false,
+                'message' => 'Error al actualizar: ' . $e->getMessage()
+            ], 500);
+        }
+    }
 
 
     public function seguimiento(Request $request, $id, $mesSelect)
