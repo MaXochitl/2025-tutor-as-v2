@@ -4,6 +4,7 @@ use App\Http\Controllers\admin\AlteraEntregaController;
 use App\Http\Controllers\Admin\AlumnosExamenController;
 use App\Http\Controllers\Admin\AsignacionesController;
 use App\Http\Controllers\Admin\CarreraController;
+use App\Http\Controllers\Admin\DocenteController;
 use App\Http\Controllers\Admin\EvaluacionController;
 use App\Http\Controllers\Admin\HabilidadesMentalesController;
 use App\Http\Controllers\Admin\HistorialController;
@@ -93,6 +94,9 @@ Route::resource('memorandum', MemorandumController::class)->names('memorandum');
 Route::resource('alumnos_examenes', AlumnosExamenController::class)->middleware(['auth', 'can:solo.admin'])->names('alumnos_examenes');
 Route::resource('entrega', AlteraEntregaController::class)->names('entrega')->middleware(['auth', 'can:solo.admin']);
 
+//Rutas para mostrar al admin alumnos canalizados por el docente
+Route::get('alumnos-docente/{id}', [DocenteController::class, 'showDocente'])->middleware(['auth', 'can:solo.admin'])->name('alumnos-docente.show');
+Route::post('searchAlumnoDocente/{id}', [DocenteController::class, 'searchAlumnoDocente'])->middleware(['auth', 'can:solo.admin'])->name('searchAluDocente');
 
 // Ruta de las actividades del tutor°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
 Route::resource('actividades-tutoria', ActividadesTutoriaController::class)->middleware(['auth'])->names('actividades-tutoria');
@@ -150,9 +154,7 @@ Route::get('/reporte-pdf/{id}', [AtencionController::class, 'createPDF'])->name(
 
 /**  ________________________________________----------------------------___________________________________________________------------------------TUTOR Y ADMIN */
 Route::resource('alumnos-tutor', TutoriasController::class)->middleware(['auth'])->names('alumnos-tutor');
-Route::get('alumnos-docente/{id}', [TutoriasController::class, 'showDocente'])->middleware(['auth'])->name('alumnos-docente.show');//vista especial para docentes
 Route::post('searchAluTutor/{id}', [TutoriasController::class, 'searchAlumnoTutorado'])->name('searchAluTutor');
-Route::post('searchAlumnoDocente/{id}', [TutoriasController::class, 'searchAlumnoDocente'])->middleware(['auth'])->name('searchAluDocente');//busqueda especial para docentes
 Route::get('getPeriodoView', [TutoriasController::class, 'getPeriodoView'])->name('getPeriodoView');
 
 Route::put('/addAlumno/{tipo}', [

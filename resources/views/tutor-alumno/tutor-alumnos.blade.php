@@ -162,7 +162,7 @@
             <div class="tab-content" id="nav-tabContent">
                 {{-- ================= TAB ORIENTACIÓN ================= --}}
                 <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                    @include('tutor-alumno.orientacion-visual')
+                    @include('tutor-alumno.orientacion-oe')
                 </div>
 
                 {{-- ================= TAB TUTOR visualizacion ================= --}}
