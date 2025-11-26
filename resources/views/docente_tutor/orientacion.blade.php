@@ -29,18 +29,6 @@
         </div>
         <br>
 
-        @if (session('hay_alumnos') == 'si')
-            <div class="alert alert-danger">
-                Ya esta registrado!
-            </div>
-        @endif
-
-        @if (session('existe_alumno') == 'no')
-            <div class="alert alert-danger">
-                Alumno no encontrado. Verifique el NC o regístrelo en "Alumnos".
-            </div>
-        @endif
-
         <!-- Ordenar Semestres de tabla periodo_tutorado y Grupos de tabla alumnos -->
         @php
             // Ordenamos por semestre y luego por grupo
@@ -112,19 +100,20 @@
                                 data-bs-toggle="modal"
                                 data-bs-target="#month1Modal{{ $alumnos->id }}"
                                 data-bs-toggle="tooltip"
-                                title="Seguimiento 1">
+                                title="Seguimiento 1"
+                                style="min-width: 100px">
                                     <div style="height: 5px; background:{{ $alumnos->lights[0]->semaforos[0]->fondo }};"></div>
                                     <div>{{ ucfirst($alumnos->mes_1) }}</div>
                             </td>
                             @include('modal.meses.mes1')
                         @else
-                            <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 1 bloqueado">
+                            <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 1 bloqueado" style="min-width: 100px">
                                 <div style="height: 5px; background:{{ $alumnos->lights[0]->semaforos[0]->fondo }};"></div>
                                 <div>{{ ucfirst($alumnos->mes_1) }}</div>
                             </td>
                         @endif
 
-                            <td>
+                            <td style="min-width: 100px">
                                 <div>
                                     {{ ucfirst($alumnos->oe_1) }}
                                 </div>
@@ -136,18 +125,18 @@
                                 data-bs-toggle="modal"
                                 data-bs-target="#month2Modal{{ $alumnos->id }}"
                                 data-bs-toggle="tooltip"
-                                title="Seguimiento 2">
+                                title="Seguimiento 2" style="min-width: 100px">
                                 <div style="height: 5px; background:{{ $alumnos->lights[1]->semaforos[0]->fondo }};"></div>
                                 <div>{{ ucfirst($alumnos->mes_2) }}</div>
                             </td>
                             @include('modal.meses.mes2')
                         @else
-                            <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 2 bloqueado">
+                            <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 2 bloqueado" style="min-width: 100px">
                                 <div style="height: 5px; background:{{ $alumnos->lights[1]->semaforos[0]->fondo }};"></div>
                                 <div>{{ ucfirst($alumnos->mes_2) }}</div>
                             </td>
                         @endif
-                            <td>
+                            <td style="min-width: 100px">
                                 <div>
                                     {{ ucfirst($alumnos->oe_2) }}
                                 </div>
@@ -159,19 +148,20 @@
                                 data-bs-toggle="modal"
                                 data-bs-target="#month3Modal{{ $alumnos->id }}"
                                 data-bs-toggle="tooltip"
-                                title="Seguimiento 3">
+                                title="Seguimiento 3"
+                                style="min-width: 100px">
                                 <div style="height: 5px; background:{{ $alumnos->lights[2]->semaforos[0]->fondo }};"></div>
                                 <div>{{ ucfirst($alumnos->mes_3) }}</div>
                             </td>
                             @include('modal.meses.mes3')
                         @else
-                            <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 3 bloqueado">
+                            <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 3 bloqueado" style="min-width: 100px">
                                 <div style="height: 5px; background:{{ $alumnos->lights[2]->semaforos[0]->fondo }};"></div>
                                 <div>{{ ucfirst($alumnos->mes_3) }}</div>
                             </td>
                         @endif
 
-                            <td>
+                            <td style="min-width: 100px">
                                 {{ ucfirst($alumnos->oe_3) }}
                             </td>
 
@@ -181,19 +171,20 @@
                                 data-bs-toggle="modal"
                                 data-bs-target="#month4Modal{{ $alumnos->id }}"
                                 data-bs-toggle="tooltip"
-                                title="Seguimiento 4">
+                                title="Seguimiento 4"
+                                style="min-width: 100px">
                                 <div style="height: 5px; background:{{ $alumnos->lights[3]->semaforos[0]->fondo }};"></div>
                                 <div>{{ ucfirst($alumnos->mes_4) }}</div>
                             </td>
                             @include('modal.meses.mes4')
                         @else
-                            <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 4 bloqueado">
+                            <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 4 bloqueado" style="min-width: 100px">
                                 <div style="height: 5px; background:{{ $alumnos->lights[3]->semaforos[0]->fondo }};"></div>
                                 <div>{{ ucfirst($alumnos->mes_4) }}</div>
                             </td>
                         @endif
 
-                            <td>
+                            <td style="min-width: 100px">
                                 <div>
                                     {{ ucfirst($alumnos->oe_4) }}
                                 </div>
@@ -201,15 +192,16 @@
 
                         <!--RF con casilla-->
                         @if (($fecha_actual >= $mes_4 && $fecha_actual <= $entrega_final) || $altera_entrega->mes_5)
-                            <td class="casilla editable text-center" 
+                            <td class="casilla-materias text-center" 
                                 data-bs-toggle="tooltip" 
                                 title="Reporte Final"
-                                onclick="window.location='{{ route('reporte.show', $alumnos->id) }}'">
+                                onclick="window.location='{{ route('reporte.show', $alumnos->id) }}'"
+                                style="min-width: 100px">
                                 <div style="height: 5px; background:{{ $alumnos->lights[4]->semaforos[0]->fondo }};"></div>
                                 <div>{{ ucfirst($alumnos->reporte_final) }}</div>
                             </td>
                         @else
-                            <td class="text-muted" data-bs-toggle="tooltip" title="Reporte final bloqueado">
+                            <td class="text-muted" data-bs-toggle="tooltip" title="Reporte final bloqueado" style="min-width: 100px">
                                 <div style="height: 5px; background:{{ $alumnos->lights[4]->semaforos[0]->fondo }};"></div>
                                 <div>{{ ucfirst($alumnos->reporte_final) }}</div>
                             </td>
@@ -521,9 +513,33 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 </script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+@if (session('existe_alumno') == 'no')
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Alumno no encontrado',
+        text: 'Verifique el número de control o regístrelo en Alumnos',
+        confirmButtonText: 'Aceptar'
+    });
+</script>
+@endif
+
+@if (session('hay_alumnos') == 'si')
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Alumno ya existe',
+        text: 'Ya esta registrado como tutorado!',
+        confirmButtonText: 'Aceptar'
+    });
+</script>
+@endif
+
 <style>
     .mini-dropdown {
-        font-size: 12px !important;   /* letras pequeñas */
+        font-size: 13px !important;   /* letras pequeñas */
         padding: 4px !important;      /* menos espacio */
         min-width: 120px !important;  /* menú más pequeño */
     }

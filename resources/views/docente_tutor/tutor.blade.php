@@ -1,11 +1,6 @@
 <div class="row row-tutor">
     <div class="col d-flex flex-column flex-shrink-0" style="padding: 20px;">
         Lista de alumnos canalizados por los docentes que le imparten clases
-        @if (session('hay_alumnos') == 'si')
-            <div class="alert alert-danger">
-                Ya esta registrado!
-            </div>
-        @endif
 
         <div class="overflow-scroll">
             <br>
@@ -51,7 +46,7 @@
                                     </td>
 
                                     <!--DOCENTE 1-->
-                                    <td class="p-0 cell-padding cell-justificada" style="padding-top: 6px !important;">
+                                    <td class="p-0 cell-padding cell-justificada" style="padding-top: 6px !important; min-width: 100px">
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[0]->semaforos[0]->fondo) && $alumnos->lights[0]->semaforos[0]->fondo !== '#')
                                                             ? $alumnos->lights[0]->semaforos[0]->fondo
@@ -73,20 +68,22 @@
                                             data-bs-toggle="modal"
                                             data-bs-target="#oe1Modal{{ $alumnos->id }}"
                                             data-bs-toggle="tooltip"
-                                            title="Seguimiento 1">
+                                            title="Seguimiento 1"
+                                            style="min-width: 100px">
                                             {{ ucfirst($alumnos->oe_1) }}
                                         </td>
                                         @include('modal.orientacion.mes1')
                                     @else
                                         <td class="text-muted"
                                             data-bs-toggle="tooltip"
-                                            title="Seguimiento 1 bloqueado">
+                                            title="Seguimiento 1 bloqueado"
+                                            style="min-width: 100px">
                                             {{ ucfirst($alumnos->oe_1) }}
                                         </td>
                                     @endif
 
                                     <!--DOCENTE 2-->
-                                    <td class="p-0 cell-padding cell-justificada" style="padding-top: 6px !important;">
+                                    <td class="p-0 cell-padding cell-justificada" style="padding-top: 6px !important; min-width: 100px">
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[1]->semaforos[0]->fondo) && $alumnos->lights[1]->semaforos[0]->fondo !== '#')
                                                             ? $alumnos->lights[1]->semaforos[0]->fondo
@@ -108,20 +105,22 @@
                                             data-bs-toggle="modal"
                                             data-bs-target="#oe2Modal{{ $alumnos->id }}"
                                             data-bs-toggle="tooltip"
-                                            title="Seguimiento 2">
+                                            title="Seguimiento 2"
+                                            style="min-width: 100px">
                                             {{ ucfirst($alumnos->oe_2) }}
                                         </td>
                                         @include('modal.orientacion.mes2')
                                     @else
                                         <td class="text-muted"
                                             data-bs-toggle="tooltip"
-                                            title="Seguimiento 2 bloqueado">
+                                            title="Seguimiento 2 bloqueado"
+                                            style="min-width: 100px">
                                             {{ ucfirst($alumnos->oe_2) }}
                                         </td>
                                     @endif
 
                                     <!--DOCENTE 3-->
-                                    <td class="p-0 cell-padding cell-justificada" style="padding-top: 6px !important;">
+                                    <td class="p-0 cell-padding cell-justificada" style="padding-top: 6px !important; min-width: 100px">
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[2]->semaforos[0]->fondo) && $alumnos->lights[2]->semaforos[0]->fondo !== '#')
                                                             ? $alumnos->lights[2]->semaforos[0]->fondo
@@ -143,20 +142,22 @@
                                             data-bs-toggle="modal"
                                             data-bs-target="#oe3Modal{{ $alumnos->id }}"
                                             data-bs-toggle="tooltip"
-                                            title="Seguimiento 3">
+                                            title="Seguimiento 3"
+                                            style="min-width: 100px">
                                             {{ ucfirst($alumnos->oe_3) }}
                                         </td>
                                         @include('modal.orientacion.mes3')
                                     @else
                                         <td class="text-muted"
                                             data-bs-toggle="tooltip"
-                                            title="Seguimiento 3 bloqueado">
+                                            title="Seguimiento 3 bloqueado"
+                                            style="min-width: 100px">
                                             {{ ucfirst($alumnos->oe_3) }}
                                         </td>
                                     @endif
 
                                     <!--DOCENTE 4-->
-                                    <td class="p-0 cell-padding cell-justificada" style="padding-top: 6px !important;">
+                                    <td class="p-0 cell-padding cell-justificada" style="padding-top: 6px !important; min-width: 100px">
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[3]->semaforos[0]->fondo) && $alumnos->lights[3]->semaforos[0]->fondo !== '#')
                                                             ? $alumnos->lights[3]->semaforos[0]->fondo
@@ -177,14 +178,16 @@
                                             data-bs-toggle="modal"
                                             data-bs-target="#oe4Modal{{ $alumnos->id }}"
                                             data-bs-toggle="tooltip"
-                                            title="Seguimiento 4">
+                                            title="Seguimiento 4"
+                                            style="min-width: 100px">
                                             {{ ucfirst($alumnos->oe_4) }}
                                         </td>
                                         @include('modal.orientacion.mes4')
                                     @else
                                         <td class="text-muted"
                                             data-bs-toggle="tooltip"
-                                            title="Seguimiento 4 bloqueado">
+                                            title="Seguimiento 4 bloqueado"
+                                            style="min-width: 100px">
                                             {{ ucfirst($alumnos->oe_4) }}
                                         </td>
                                     @endif

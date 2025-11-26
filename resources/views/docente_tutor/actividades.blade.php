@@ -74,7 +74,7 @@
             <table class="table table-bordered text-start table-striped" style="font-size: 12px">
                 <thead>
                     <tr>
-                        <th scope="col">N° DE SESIONES</th>
+                        <th class="text-center" scope="col">N° DE SESIONES</th>
                         <th scope="col">TEMA</th>
                         <th scope="col">DESCRIPCIÓN DE LA ACTIVIDAD</th>
                         <th scope="col">FECHA</th>
@@ -86,7 +86,7 @@
             <tbody>
                 @foreach ($actividades as $index => $actividad)
                     <tr>
-                        <td>{{ $index + 1 }}</td> 
+                        <th class="text-center">{{ $index + 1 }}</th>
                         <td>{{ ucfirst($actividad->tema) }}</td>
                         <td>{{ ucfirst($actividad->descripcion_actividad) }}</td>
                         <td>{{ $actividad->fecha->format('d/m/Y') }}</td> 
@@ -101,16 +101,16 @@
                                 <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                     Opciones
                                 </button>
-                                    <ul class="dropdown-menu">
+                                    <ul class="dropdown-menu mini-dropdown">
                                         <li>
-                                            <a class="dropdown-item" data-bs-toggle="modal" data-bs-target="#edit-actividad-{{ $actividad->id }}">
-                                                    Editar
+                                            <a class="dropdown-item text-primary" data-bs-toggle="modal" data-bs-target="#edit-actividad-{{ $actividad->id }}">
+                                                    Actualizar
                                             </a>
                                         </li>
                                     
                                         <li>
             
-                                            <button type="button" class="dropdown-item" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal-{{ $actividad->id }}">
+                                            <button type="button" class="dropdown-item text-danger" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal-{{ $actividad->id }}">
                                                     Eliminar
                                             </button>
                                         </li>

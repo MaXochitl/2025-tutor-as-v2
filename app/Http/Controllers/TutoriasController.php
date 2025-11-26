@@ -88,9 +88,17 @@ class TutoriasController extends Controller
         $existe = Alumno::whereRaw('BINARY id = ?', [$request->numero_control])->first();//tomar en cuenta mayus o minus
 
         if ($existe == null) {
-            return redirect()->route('reportes_tutor.show', $id_tutor)->with('existe_alumno', 'no');
-        }
 
+            if ($tipo == 1) {
+                return redirect()
+                    ->route('reportes_tutor.show', $id_tutor)
+                    ->with('existe_alumno', 'no');
+            } else {
+                return redirect()
+                    ->route('reportes_tutor.show', $id_tutor)
+                    ->with('existe_alumno_docente', 'no');
+            }
+        }
         
         $alumno = Periodo_tutorado::where('alumno_id', $request->numero_control)
             ->where('periodo_id', $periodo)
@@ -121,7 +129,15 @@ class TutoriasController extends Controller
             return redirect()->route('reportes_tutor.show', $id_tutor);
         }
 
-        return redirect()->route('reportes_tutor.show', $id_tutor)->with('hay_alumnos', 'si');
+        if ($tipo == 1) {
+            return redirect()
+                ->route('reportes_tutor.show', $id_tutor)
+                ->with('hay_alumnos', 'si');
+        } else {
+            return redirect()
+                ->route('reportes_tutor.show', $id_tutor)
+                ->with('hay_alumnos_docente', 'si');
+        }
     }
 
 
