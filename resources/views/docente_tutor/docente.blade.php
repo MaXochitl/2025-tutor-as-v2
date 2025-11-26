@@ -16,17 +16,7 @@
         </div>
 
         <div class="overflow-scroll">
-            @if (session('hay_alumnos') == 'si')
-                <div class="alert alert-danger">
-                    Ya esta registrado!
-                </div>
-            @endif
 
-            @if (session('existe_alumno') == 'no')
-                <div class="alert alert-danger">
-                    Alumno no encontrado. Verifique el NC o regístrelo en "Alumnos".
-                </div>
-            @endif
             <br>
             <table class="table text-start table-striped" style="font-size: 12px">
                 <thead>
@@ -72,7 +62,8 @@
                                         data-bs-toggle="modal"
                                         data-bs-target="#month1Modal{{ $alumnos->id }}"
                                         data-bs-toggle="tooltip"
-                                        title="Seguimiento 1">
+                                        title="Seguimiento 1"
+                                        style="min-width: 100px">
 
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[0]->semaforos[0]->fondo) && $alumnos->lights[0]->semaforos[0]->fondo !== '#')
@@ -99,7 +90,7 @@
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[0]->semaforos[0]->fondo) && $alumnos->lights[0]->semaforos[0]->fondo !== '#')
                                             ? $alumnos->lights[0]->semaforos[0]->fondo
-                                            : 'transparent' }};">
+                                            : 'transparent' }}; min-width: 100px">
                                         </i>
                                         {{ $alumnos->mes_1 ? ucfirst($alumnos->mes_1) : '' }}
 
@@ -114,7 +105,7 @@
                                     </td>
                                 @endif
 
-                                <td>
+                                <td style="min-width: 100px">
                                     <div>
                                         {{ ucfirst($alumnos->oe_1) }}
                                     </div>
@@ -136,7 +127,8 @@
                                         data-bs-toggle="modal"
                                         data-bs-target="#month2Modal{{ $alumnos->id }}"
                                         data-bs-toggle="tooltip"
-                                        title="Seguimiento 2">
+                                        title="Seguimiento 2"
+                                        style="min-width: 100px">
 
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[1]->semaforos[0]->fondo) && $alumnos->lights[1]->semaforos[0]->fondo !== '#')
@@ -160,7 +152,7 @@
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[1]->semaforos[0]->fondo) && $alumnos->lights[1]->semaforos[0]->fondo !== '#')
                                             ? $alumnos->lights[1]->semaforos[0]->fondo
-                                            : 'transparent' }};">
+                                            : 'transparent' }}; min-width: 100px">
                                         </i>
                                         {{ $alumnos->mes_2 ? ucfirst($alumnos->mes_2) : '' }}
 
@@ -174,7 +166,7 @@
                                     </td>
                                 @endif
 
-                                <td>
+                                <td style="min-width: 100px">
                                     <div>
                                         {{ ucfirst($alumnos->oe_2) }}
                                     </div>
@@ -196,7 +188,8 @@
                                         data-bs-toggle="modal"
                                         data-bs-target="#month3Modal{{ $alumnos->id }}"
                                         data-bs-toggle="tooltip"
-                                        title="Seguimiento 3">
+                                        title="Seguimiento 3"
+                                        style="min-width: 100px">
 
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[2]->semaforos[0]->fondo) && $alumnos->lights[2]->semaforos[0]->fondo !== '#')
@@ -216,7 +209,7 @@
 
                                     @include('modal.meses.mes3')
                                 @else
-                                    <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 3 bloqueado">
+                                    <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 3 bloqueado" style="min-width: 100px">
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[2]->semaforos[0]->fondo) && $alumnos->lights[2]->semaforos[0]->fondo !== '#')
                                             ? $alumnos->lights[2]->semaforos[0]->fondo
@@ -233,7 +226,7 @@
                                     </td>
                                 @endif
 
-                                <td>
+                                <td style="min-width: 100px">
                                     <div>
                                         {{ ucfirst($alumnos->oe_3) }}
                                     </div>
@@ -256,7 +249,8 @@
                                         data-bs-toggle="modal"
                                         data-bs-target="#month4Modal{{ $alumnos->id }}"
                                         data-bs-toggle="tooltip"
-                                        title="Seguimiento 4">
+                                        title="Seguimiento 4"
+                                        style="min-width: 100px">
 
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[3]->semaforos[0]->fondo) && $alumnos->lights[3]->semaforos[0]->fondo !== '#')
@@ -276,7 +270,7 @@
 
                                     @include('modal.meses.mes4')
                                 @else
-                                    <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 4 bloqueado">
+                                    <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 4 bloqueado" style="min-width: 100px">
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[3]->semaforos[0]->fondo) && $alumnos->lights[3]->semaforos[0]->fondo !== '#')
                                             ? $alumnos->lights[3]->semaforos[0]->fondo
@@ -294,7 +288,7 @@
                                     </td>
                                 @endif
 
-                                <td>
+                                <td style="min-width: 100px">
                                     <div>
                                         {{ ucfirst($alumnos->oe_4) }}
                                     </div>
@@ -322,7 +316,7 @@
                                                     data-bs-toggle="dropdown" aria-expanded="false">
                                                     Opciones
                                                 </button>
-                                                <ul class="dropdown-menu">
+                                                <ul class="dropdown-menu mini-dropdown">
                                                     @can('mes.tutor')
                                                         <li>
                                                             <button type="submit" class="dropdown-item text-danger"
@@ -343,3 +337,26 @@
 
     </div>
 </div>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if (session('existe_alumno_docente') == 'no')
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Alumno no encontrado',
+        text: 'Verifique el número de control o regístrelo en Alumnos',
+        confirmButtonText: 'Aceptar'
+    });
+</script>
+@endif
+
+@if (session('hay_alumnos_docente') == 'si')
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Alumno ya existe',
+        text: 'Ya esta canalizado!',
+        confirmButtonText: 'Aceptar'
+    });
+</script>
+@endif
