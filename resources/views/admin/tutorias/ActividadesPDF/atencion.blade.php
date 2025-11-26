@@ -85,16 +85,22 @@
     <table style="width: 100%; margin-top: 50px; text-align: center; border: none;">
         <tr>
             <td style="border: none; padding: 40px;">
-                <div style="border-top: 1px solid black; margin-top: 20px;"></div>
+                <div style="border-top: 1px solid black; padding-top: 5px;">
+                    <span>{{ $tutor->nombre }} {{ $tutor->ap_paterno }} {{ $tutor->ap_materno }}</span>
+                </div>
                 <strong>Nombre y firma del Tutor de grupo</strong>
             </td>
             <td style="border: none; padding: 40px;">
-                <div style="border-top: 1px solid black; margin-top: 20px;"></div>
+                <div style="border-top: 1px solid black; padding-top: 5px;">
+                    <span>Lic. Emma Valeria Ramírez Guzmán</span>
+                </div>
                 <strong>Nombre y firma del coordinador Institucional de Tutorias</strong>
             </td>
             <td style="border: none; padding: 40px;">
-                <div style="border-top: 1px solid black; margin-top: 20px;"></div>
-                <strong>Nombre y firma del coordinador de Tutorias del programa educativo correspondiente</strong>
+                <div style="border-top: 1px solid black; padding-top: 5px;">
+                    <span>{{ $jefeDepartamento }}</span>
+                </div>
+                <strong>Nombre y firma del coordinador de Tutorias del programa educativo</strong>
             </td>
         </tr>
     </table>
