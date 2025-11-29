@@ -15,19 +15,6 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
 
 <div class="container">
     <!-- Mostrar alerts -->
-    @if (session('success'))
-        <div class="alert alert-success alert-dismissible fade show" role="alert">
-            {{ session('success') }}
-            <button type="button" class="btn-close" aria-label="Close"></button>
-        </div>
-    @endif
-
-    @if (session('error'))
-        <div class="alert alert-danger alert-dismissible fade show" role="alert">
-            {{ session('error') }}
-            <button type="button" class="btn-close" aria-label="Close"></button>
-        </div>
-    @endif
 
     <div class="row ">
 
@@ -220,7 +207,7 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
 <script>
     $(document).ready(function() {
         $('#table').DataTable({
-            //para cambiar el lenguaje a español
+            // Cambiar el lenguaje a español
             "language": {
                 "lengthMenu": "Mostrar _MENU_ registros",
                 "zeroRecords": "No se encontraron resultados",
@@ -234,11 +221,11 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
                     "sNext": "Siguiente",
                     "sPrevious": "Anterior"
                 },
-                "sProcessing": "Procesando...",
+                "sProcessing": "Procesando..."
             }
         });
 
-        //confirmacion antes de eliminar un grupo
+        // Confirmación antes de eliminar un grupo
         $('.formulario-eliminar-grupo').submit(function(e) {
             e.preventDefault();
 
@@ -257,6 +244,27 @@ $grupos = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N']
                 }
             });
         });
+
+        // Mostrar SweetAlert para 'success'
+        @if (session('success'))
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: '{{ session('success') }}',
+                showConfirmButton: true
+            });
+        @endif
+
+        // Mostrar SweetAlert para 'error'
+        @if (session('error'))
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '{{ session('error') }}',
+                showConfirmButton: true
+            });
+        @endif
     });
 </script>
+
 @endsection
