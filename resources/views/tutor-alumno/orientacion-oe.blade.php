@@ -148,6 +148,36 @@
                             </div>
                         </td>
                         @include('modal.materia.resultado-materia')
+                        <!-- OPCIONES (baja temporal o definitiva) -->
+                        <td class="text-center">
+                            @can('solo.admin')
+                            <div>
+                                <form action="{{ route('alumnos-tutor.destroy', $alumnos->id) }} "
+                                    class="formulario-eliminar" method="POST">
+                                    @csrf
+                                    @method('DELETE')
+                                    <div class="btn-group">
+                                        <button type="submit" class="btn btn-danger btn-sm dropdown-toggle"
+                                            data-bs-toggle="dropdown" aria-expanded="false">
+                                        Opciones
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('baja', [$alumnos->id, 2, 5]) }}">Baja
+                                                Temporal</a>
+                                            </li>
+                                            <li>
+                                                <a class="dropdown-item"
+                                                    href="{{ route('baja', [$alumnos->id, 3, 6]) }} ">Baja
+                                                Definitiva</a>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </form>
+                            </div>
+                            @endcan
+                        </td>
                     </tr>
                 @endforeach
             </tbody>
