@@ -154,7 +154,7 @@
 
         $(document).on("change", "input[name='materiax[]']", function () {
             if ($(this).data("restaurado") === true) return;
-            if ($(this).prop('disabled')) return; // Ignorar los disabled
+            if ($(this).prop('disabled')) return;
 
             let id = $(this).val().trim();
 
