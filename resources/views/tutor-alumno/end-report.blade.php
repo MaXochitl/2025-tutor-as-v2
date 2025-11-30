@@ -140,66 +140,156 @@
     </div>
     <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
     <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
-    <script>
-        $(document).ready(function() {
-            $('#table').DataTable({
-                //para cambiar el lenguaje a español
-                "language": {
-                    "lengthMenu": "Mostrar _MENU_ registros",
-                    "zeroRecords": "No se encontraron resultados",
-                    //"info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "info": "Selecciona Materias",
-                    "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sSearch": "Buscar:",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": ">",
-                        "sPrevious": "<"
-                    },
-                    "sProcessing": "Procesando...",
-                }
-            });
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        
+        let materiasSeleccionadas = new Set();
+        let materiasYaGuardadas = new Set();
+
+        $("input[name='materiax[]']:disabled").each(function() {
+            let id = $(this).val().trim();
+            materiasYaGuardadas.add(id);
+            $(this).closest('tr').addClass('materia-seleccionada-disabled');
         });
 
-        $(document).ready(function() {
-            $('#table_2').DataTable({
-                //para cambiar el lenguaje a español
-                "language": {
-                    "lengthMenu": "Mostrar _MENU_ registros",
-                    "zeroRecords": "No se encontraron resultados",
-                    //"info": "Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros",
-                    "info": "Selecciona Materias",
-                    "infoEmpty": "Mostrando registros del 0 al 0 de un total de 0 registros",
-                    "infoFiltered": "(filtrado de un total de _MAX_ registros)",
-                    "sSearch": "Buscar:",
-                    "oPaginate": {
-                        "sFirst": "Primero",
-                        "sLast": "Último",
-                        "sNext": ">",
-                        "sPrevious": "<"
-                    },
-                    "sProcessing": "Procesando...",
-                }
-            });
+        $(document).on("change", "input[name='materiax[]']", function () {
+            if ($(this).data("restaurado") === true) return;
+            if ($(this).prop('disabled')) return; // Ignorar los disabled
+
+            let id = $(this).val().trim();
+
+            if (this.checked) {
+                materiasSeleccionadas.add(id);
+                $(this).closest('tr').addClass('materia-seleccionada');
+            } else {
+                materiasSeleccionadas.delete(id);
+                $(this).closest('tr').removeClass('materia-seleccionada');
+            }
         });
 
-    document.addEventListener("DOMContentLoaded", function() {
-        const textarea = document.getElementById("seguimiento");
+        function restaurarSeleccion() {
+            setTimeout(function() {
+                $("input[name='materiax[]']").each(function () {
+                    let id = $(this).val().trim();
 
-        if (localStorage.getItem("seguimientoTemp")) {
-            textarea.value = localStorage.getItem("seguimientoTemp");
+                    if ($(this).prop('disabled')) {
+                        $(this).closest('tr').addClass('materia-seleccionada-disabled');
+                        return;
+                    }
+                    
+                    $(this).data("restaurado", true);
+                    
+                    if (materiasSeleccionadas.has(id)) {
+                        $(this).prop("checked", true);
+                        $(this).closest('tr').addClass('materia-seleccionada');
+                    } else {
+                        $(this).prop("checked", false);
+                        $(this).closest('tr').removeClass('materia-seleccionada');
+                    }
+                    
+                    $(this).data("restaurado", false);
+                });
+            }, 100);
         }
 
-        textarea.addEventListener("input", function() {
-            localStorage.setItem("seguimientoTemp", textarea.value);
+        let tabla1 = $('#table').DataTable({
+            language: {
+                lengthMenu: "Mostrar _MENU_ registros",
+                zeroRecords: "No se encontraron resultados",
+                info: "Selecciona Materias",
+                infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                infoFiltered: "(filtrado de un total de _MAX_ registros)",
+                sSearch: "Buscar:",
+                oPaginate: {
+                    sFirst: "Primero",
+                    sLast: "Último",
+                    sNext: ">",
+                    sPrevious: "<"
+                },
+                sProcessing: "Procesando..."
+            },
+            drawCallback: function() {
+                restaurarSeleccion();
+            }
         });
 
-        document.querySelector("form[action*='seguimiento-alumno']").addEventListener("submit", function() {
-            localStorage.removeItem("seguimientoTemp");
+        let tabla2 = $('#table_2').DataTable({
+            language: {
+                lengthMenu: "Mostrar _MENU_ registros",
+                zeroRecords: "No se encontraron resultados",
+                info: "Selecciona Materias",
+                infoEmpty: "Mostrando registros del 0 al 0 de un total de 0 registros",
+                infoFiltered: "(filtrado de un total de _MAX_ registros)",
+                sSearch: "Buscar:",
+                oPaginate: {
+                    sFirst: "Primero",
+                    sLast: "Último",
+                    sNext: ">",
+                    sPrevious: "<"
+                },
+                sProcessing: "Procesando..."
+            },
+            drawCallback: function() {
+                restaurarSeleccion();
+            }
         });
+
+        restaurarSeleccion();
+
+        $("form").on("submit", function (e) {
+            const $form = $(this);
+
+            const esFormularioMaterias = $form.find("input[name='materiax[]']").length > 0;
+            
+            if (esFormularioMaterias) {
+                if (materiasSeleccionadas.size === 0) {
+                    e.preventDefault();
+                    
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'No hay materias seleccionadas',
+                        text: 'Debes seleccionar al menos una materia antes de guardar.',
+                        timer: 3000,
+                        timerProgressBar: true,
+                        confirmButtonText: 'Entendido',
+                        confirmButtonColor: '#3085d6'
+                    });
+                    
+                    return false;
+                }
+                
+                $form.find(".hidden-materia").remove();
+
+                $form.find("input[name='materiax[]']:not(:disabled)").each(function() {
+                    $(this).removeAttr("name");
+                });
+
+                materiasSeleccionadas.forEach(id => {
+                    $form.append(
+                        `<input type="hidden" class="hidden-materia" name="materiax[]" value="${id}">`
+                    );
+                });
+            }
+        });
+            
+        const textarea = document.getElementById("seguimiento");
+
+        if (textarea) {
+            if (localStorage.getItem("seguimientoTemp")) {
+                textarea.value = localStorage.getItem("seguimientoTemp");
+            }
+
+            textarea.addEventListener("input", function () {
+                localStorage.setItem("seguimientoTemp", textarea.value);
+            });
+
+            const formSeg = document.querySelector("form[action*='seguimiento-alumno']");
+            if (formSeg) {
+                formSeg.addEventListener("submit", function () {
+                    localStorage.removeItem("seguimientoTemp");
+                });
+            }
+        }
     });
-    </script>
-    
+</script>
 @endsection
