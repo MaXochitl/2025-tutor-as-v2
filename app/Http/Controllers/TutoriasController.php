@@ -160,7 +160,7 @@ class TutoriasController extends Controller
             ->where('periodo_id', $periodo->id)
             ->where('tipo', 1)
             ->orderby('semaforo_id', 'desc')
-            ->paginate(15);
+            ->get();
 
         // Alumnos del tipo DOCENTE
         $docente_alumno = Periodo_tutorado::where('periodo_id', $periodo->id)
