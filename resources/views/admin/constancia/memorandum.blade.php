@@ -123,9 +123,9 @@
                         <img src="./tutores/logo.png" height="100px" width="100px" alt="">
                     </td>
                     <td>
-                        Desv. Lindero – Tametate S/N, Col. La Morita <br>
-                        CP 92100, Tantoyuca, Veracruz <br>
-                        Tel. (01 789) 8931680, 8931552 <br>
+                        Desv. Lindero – Tametate S/N, Col. "La Morita" <br>
+                        CP 92100, Tantoyuca, Ver. <br>
+                        Tel. 789 893 1680, 789 893 1675 <br>
                         https://itsta.edu.mx
                     </td>
                     <td style="text-align: right">
