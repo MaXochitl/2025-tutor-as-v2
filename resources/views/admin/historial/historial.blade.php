@@ -10,7 +10,7 @@
     @endphp
 
 
-    <div class="container">
+    <div class="container p-4">
         <div class="row text-center col-md-8 shadow-lg p-3 mb-5"
             style="margin: auto;margin-top: 5PX;border-radius: 10px; background: rgb(0, 130, 63); color: white">
             <h3>SEGUIMIENTOS ARCHIVADOS</h3>

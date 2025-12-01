@@ -12,7 +12,7 @@
             </div>
 
             <div class="row col-md-8 shadow-lg p-3 " style="margin: auto;border-radius: 17px;background: white">
-                <div class="overflow-scroll" style="height: 400px">
+                <div class="overflow-scroll" style="height: 741px">
 
                     <table class="table table-striped text-heigth">
                         <thead>

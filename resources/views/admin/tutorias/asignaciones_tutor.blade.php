@@ -4,7 +4,7 @@
 
 <div class="container">
     <div class="row">
-        <div class="col d-flex flex-column flex-shrink-0" style="padding: 20px;">
+        <div class="col d-flex flex-column flex-shrink-0" style="margin-top: 40px">
             <div style="text-align: center">
                 <h1>Asignación de Tutores</h1>
             </div>

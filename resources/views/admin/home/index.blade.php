@@ -59,11 +59,11 @@
                         </div>
 
 
-                        <div class="col-1">
+                        <div class="col-auto">
                             <button type="submit" class="btn btn-success">Establecer</button>
                         </div>
 
-                        <div class="col-3">
+                        <div class="col-auto">
                             <a href="{{ route('exportInfSC') }}" 
                             class="btn"
                             style="background-color: #218838; border: none; color: white;">
@@ -81,7 +81,7 @@
             </div>
 
             <div class="row col-md-8 shadow-lg p-3 " style="margin: auto;border-radius: 17px;background: white">
-                <div class="overflow-scroll" style="height: 460px">
+                <div class="overflow-scroll" style="height: 671px">
 
                     <table class="table table-striped text-heigth">
                         <thead>
