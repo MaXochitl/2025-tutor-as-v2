@@ -18,13 +18,15 @@ class CreateActividadesTutoriasTable extends Migration
             $table->text('descripcion_actividad');
             $table->date('fecha');
             $table->time('tiempo');
-            $table->string('recursos');
-            $table->string('tutor_id'); 
+            $table->text('recursos'); 
+            $table->string('tutor_id');
 
             $table->timestamps();
 
-            // CLAVE FORANEA
-            $table->foreign('tutor_id')->references('id')->on('tutores')->onDelete('cascade'); 
+            $table->foreign('tutor_id')
+                  ->references('id')
+                  ->on('tutores')
+                  ->onDelete('cascade');
         });
     }
 
