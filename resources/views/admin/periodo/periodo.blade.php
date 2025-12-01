@@ -24,25 +24,16 @@
     @endphp
 
     <div class="container">
-        <div style="text-align: right; margin: 20px">
-            <a href="{{ route('evaluacion.index') }} ">
-                <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40   " fill="currentColor"
-                    class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
-                    <path
-                        d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5H11.5z" />
-                </svg>
-            </a>
-        </div>
 
         <div class="row ">
 
-            <div class="col d-flex flex-column flex-shrink-0" style="padding: 20px; text-align: center">
+            <div class="col d-flex flex-column flex-shrink-0" style="margin-top: 40px; text-align: center">
                 @if (session('eliminar') == 'no')
                     <div class="alert alert-danger">
                         No se pueden eliminar periodos que contienen datos!
                     </div>
                 @endif
-                <div>
+                <div class="mb-4">
                     <h1>
                         Periodo Tutorado
                     </h1>
@@ -60,22 +51,36 @@
                     </a>
 
                     @if (!$registro->status)
-                        <a href="{{ route('periodo-tutorado.edit', 1) }} " type="button" class="btn btn-danger">
+                        <a href="{{ route('periodo-tutorado.edit', 1) }}" 
+                            type="button" 
+                            class="btn btn-danger"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            title="Pulse para activar el registro a nuevos tutores">
+                            
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                                 class="bi bi-person-x-fill" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
                                     d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm6.146-2.854a.5.5 0 0 1 .708 0L14 6.293l1.146-1.147a.5.5 0 0 1 .708.708L14.707 7l1.147 1.146a.5.5 0 0 1-.708.708L14 7.707l-1.146 1.147a.5.5 0 0 1-.708-.708L13.293 7l-1.147-1.146a.5.5 0 0 1 0-.708z" />
                             </svg>
+                            Desactivado
                         </a>
                     @else
-                        <a href="{{ route('periodo-tutorado.edit', 0) }} " type="button" class="btn btn-success">
+                        <a href="{{ route('periodo-tutorado.edit', 0) }}" 
+                            type="button" 
+                            class="btn btn-success"
+                            data-bs-toggle="tooltip"
+                            data-bs-placement="top"
+                            title="Pulse para desactivar el registro a nuevos tutores">
 
                             <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor"
                                 class="bi bi-person-check-fill" viewBox="0 0 16 16">
                                 <path fill-rule="evenodd"
                                     d="M15.854 5.146a.5.5 0 0 1 0 .708l-3 3a.5.5 0 0 1-.708 0l-1.5-1.5a.5.5 0 0 1 .708-.708L12.5 7.793l2.646-2.647a.5.5 0 0 1 .708 0z" />
-                                <path d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
+                                <path
+                                    d="M1 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z" />
                             </svg>
+                            Activado
                         </a>
                     @endif
 
@@ -86,6 +91,7 @@
                             <path
                                 d="M3.5 0a.5.5 0 0 1 .5.5V1h8V.5a.5.5 0 0 1 1 0V1h1a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h1V.5a.5.5 0 0 1 .5-.5zm9.954 3H2.545c-.3 0-.545.224-.545.5v1c0 .276.244.5.545.5h10.91c.3 0 .545-.224.545-.5v-1c0-.276-.244-.5-.546-.5zM8.5 7a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zm3 0a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1zM3 10.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5zm3.5-.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5h-1z" />
                         </svg>
+                        Activar Fechas
                     </a>
 
                 </div>

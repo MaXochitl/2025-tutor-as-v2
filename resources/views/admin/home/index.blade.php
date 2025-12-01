@@ -59,11 +59,11 @@
                         </div>
 
 
-                        <div class="col-1">
+                        <div class="col-auto">
                             <button type="submit" class="btn btn-success">Establecer</button>
                         </div>
 
-                        <div class="col-3">
+                        <div class="col-auto">
                             <a href="{{ route('exportInfSC') }}" 
                             class="btn"
                             style="background-color: #218838; border: none; color: white;">

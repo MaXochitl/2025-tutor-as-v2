@@ -6,7 +6,7 @@
 
     <div class="container">
         <div class="row ">
-            <div class="col d-flex flex-column flex-shrink-0" style="padding: 20px; text-align: center">
+            <div class="col d-flex flex-column flex-shrink-0" style="margin-top: 40px; text-align: center" >
                 <div>
                     <h1>
                         {{ $titulo }}
@@ -23,7 +23,7 @@
 
                     </a>
                 </div>
-                <div class="d-md-flex justify-content-md-end">
+                <div class="d-md-flex justify-content-md-end mb-2">
                     <form method="GET" action="{{ route('searchMateria') }} ">
                         @csrf
                         <div class="btn-group">

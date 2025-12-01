@@ -17,7 +17,7 @@
         @endif
         <div class="row ">
 
-            <div class="col d-flex flex-column">
+            <div class="col d-flex flex-column" style="margin-top: 40px;">
                 <div class="text-center">
                     <h1>
                         Lista de alumnos
