@@ -74,7 +74,7 @@
                                         </td>
                                         @include('modal.orientacion.mes1')
                                     @else
-                                        <td class="text-muted"
+                                        <td class="text-muted casilla bloqueada"
                                             data-bs-toggle="tooltip"
                                             title="Seguimiento 1 bloqueado"
                                             style="min-width: 100px">
@@ -111,7 +111,7 @@
                                         </td>
                                         @include('modal.orientacion.mes2')
                                     @else
-                                        <td class="text-muted"
+                                        <td class="text-muted casilla bloqueada"
                                             data-bs-toggle="tooltip"
                                             title="Seguimiento 2 bloqueado"
                                             style="min-width: 100px">
@@ -148,7 +148,7 @@
                                         </td>
                                         @include('modal.orientacion.mes3')
                                     @else
-                                        <td class="text-muted"
+                                        <td class="text-muted casilla bloqueada"
                                             data-bs-toggle="tooltip"
                                             title="Seguimiento 3 bloqueado"
                                             style="min-width: 100px">
@@ -184,7 +184,7 @@
                                         </td>
                                         @include('modal.orientacion.mes4')
                                     @else
-                                        <td class="text-muted"
+                                        <td class="text-muted casilla bloqueada"
                                             data-bs-toggle="tooltip"
                                             title="Seguimiento 4 bloqueado"
                                             style="min-width: 100px">
