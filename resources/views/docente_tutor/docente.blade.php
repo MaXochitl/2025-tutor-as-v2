@@ -84,7 +84,7 @@
 
                                     @include('modal.meses.mes1')
                                 @else
-                                    <td class="text-muted"
+                                    <td class="text-muted casilla bloqueada"
                                         data-bs-toggle="tooltip"
                                         title="Seguimiento 1 bloqueado">
                                         <i class="bi bi-circle-fill"
@@ -148,7 +148,7 @@
 
                                     @include('modal.meses.mes2')
                                 @else
-                                    <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 2 bloqueado">
+                                    <td class="text-muted casilla bloqueada" data-bs-toggle="tooltip" title="Seguimiento 2 bloqueado">
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[1]->semaforos[0]->fondo) && $alumnos->lights[1]->semaforos[0]->fondo !== '#')
                                             ? $alumnos->lights[1]->semaforos[0]->fondo
@@ -209,7 +209,7 @@
 
                                     @include('modal.meses.mes3')
                                 @else
-                                    <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 3 bloqueado" style="min-width: 100px">
+                                    <td class="text-muted casilla bloqueada" data-bs-toggle="tooltip" title="Seguimiento 3 bloqueado" style="min-width: 100px">
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[2]->semaforos[0]->fondo) && $alumnos->lights[2]->semaforos[0]->fondo !== '#')
                                             ? $alumnos->lights[2]->semaforos[0]->fondo
@@ -270,7 +270,7 @@
 
                                     @include('modal.meses.mes4')
                                 @else
-                                    <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 4 bloqueado" style="min-width: 100px">
+                                    <td class="text-muted casilla bloqueada" data-bs-toggle="tooltip" title="Seguimiento 4 bloqueado" style="min-width: 100px">
                                         <i class="bi bi-circle-fill"
                                         style="color: {{ (!empty($alumnos->lights[3]->semaforos[0]->fondo) && $alumnos->lights[3]->semaforos[0]->fondo !== '#')
                                             ? $alumnos->lights[3]->semaforos[0]->fondo

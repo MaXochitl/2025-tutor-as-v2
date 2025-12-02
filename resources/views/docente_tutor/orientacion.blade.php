@@ -57,7 +57,7 @@
             @endif
 
         <div class="table-responsive pb-5">
-            <table class="table text-start table-striped" style="font-size: 12px"> <!--texto alineado a la izq-->
+            <table class="table text-start table-striped borde-externo" style="font-size: 12px"> <!--texto alineado a la izq-->
                 <thead>
                     <tr>
                         <!--th scope="col">SG</th> //test-->
@@ -105,7 +105,7 @@
                             </td>
                             @include('modal.meses.mes1')
                         @else
-                            <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 1 bloqueado" style="min-width: 100px">
+                            <td class="text-muted casilla bloqueada" data-bs-toggle="tooltip" title="Seguimiento 1 bloqueado" style="min-width: 100px">
                                 <div style="height: 5px; background:{{ $alumnos->lights[0]->semaforos[0]->fondo }};"></div>
                                 <div>{{ ucfirst($alumnos->mes_1) }}</div>
                             </td>
@@ -129,7 +129,7 @@
                             </td>
                             @include('modal.meses.mes2')
                         @else
-                            <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 2 bloqueado" style="min-width: 100px">
+                            <td class="text-muted casilla bloqueada" data-bs-toggle="tooltip" title="Seguimiento 2 bloqueado" style="min-width: 100px">
                                 <div style="height: 5px; background:{{ $alumnos->lights[1]->semaforos[0]->fondo }};"></div>
                                 <div>{{ ucfirst($alumnos->mes_2) }}</div>
                             </td>
@@ -153,7 +153,7 @@
                             </td>
                             @include('modal.meses.mes3')
                         @else
-                            <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 3 bloqueado" style="min-width: 100px">
+                            <td class="text-muted casilla bloqueada" data-bs-toggle="tooltip" title="Seguimiento 3 bloqueado" style="min-width: 100px">
                                 <div style="height: 5px; background:{{ $alumnos->lights[2]->semaforos[0]->fondo }};"></div>
                                 <div>{{ ucfirst($alumnos->mes_3) }}</div>
                             </td>
@@ -176,7 +176,7 @@
                             </td>
                             @include('modal.meses.mes4')
                         @else
-                            <td class="text-muted" data-bs-toggle="tooltip" title="Seguimiento 4 bloqueado" style="min-width: 100px">
+                            <td class="text-muted casilla bloqueada" data-bs-toggle="tooltip" title="Seguimiento 4 bloqueado" style="min-width: 100px">
                                 <div style="height: 5px; background:{{ $alumnos->lights[3]->semaforos[0]->fondo }};"></div>
                                 <div>{{ ucfirst($alumnos->mes_4) }}</div>
                             </td>
@@ -199,7 +199,7 @@
                                 <div>{{ ucfirst($alumnos->reporte_final) }}</div>
                             </td>
                         @else
-                            <td class="text-muted" data-bs-toggle="tooltip" title="Reporte final bloqueado" style="min-width: 100px">
+                            <td class="text-muted casilla bloqueada" data-bs-toggle="tooltip" title="Reporte final bloqueado" style="min-width: 100px">
                                 <div style="height: 5px; background:{{ $alumnos->lights[4]->semaforos[0]->fondo }};"></div>
                                 <div>{{ ucfirst($alumnos->reporte_final) }}</div>
                             </td>

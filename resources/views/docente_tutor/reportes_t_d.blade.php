@@ -42,17 +42,17 @@
             </div>
 
             <div class="row img-font-all"
-                style="border-radius: 10px;  background-image: url({{ $tutor->carrera->fondo }});">
+                style="border-radius: 10px; background-image: url({{ $tutor->carrera->fondo }});">
 
-                <div class="col-5" style="border-radius: 10px; background: white; margin: 5px">
-                    <p class="head-alumnos-tutor"><b>Nombre: </b>
+                <div class="col-5 py-2 px-3" style="border-radius: 10px; background: white; margin: 5px">
+                    <p class="head-alumnos-tutor mb-1"><b>Nombre: </b>
                         {{ $tutor->nombre . ' ' . $tutor->ap_paterno . ' ' . $tutor->ap_materno }}
                     </p>
-                    <p class="head-alumnos-tutor"><b>Carrera: </b> {{ $tutor->carrera->nombre_carrera }}
+                    <p class="head-alumnos-tutor mb-1"><b>Carrera: </b> {{ $tutor->carrera->nombre_carrera }}
                     </p>
 
                     @if ($asigno != 0 && !($asignado[0]->semestre == 0 || $asignado[0]->grupo == 'sin asignar'))
-                        <p class="head-alumnos-tutor">
+                        <p class="head-alumnos-tutor mb-1">
                             <b>Semestres y grupos:</b>
                                 @foreach ($asignado->sortBy(function($asig) {
                                     return $asig->semestre . str_pad($asig->grupo, 2, '0', STR_PAD_LEFT);
@@ -61,8 +61,11 @@
                                 @endforeach
                         </p>
                     @else
-                        <div class="alert alert-danger">
-                            No se ha asignado grupo
+                        <div class="mt-1 mb-1">
+                            <div class="alert alert-warning mb-0 d-flex justify-content-center"
+                                role="alert" style="padding: 4px 12px; ">
+                                No se ha asignado grupo.
+                            </div>
                         </div>
                     @endif
                     
@@ -71,40 +74,31 @@
                             return $a->semestre . '-' . $a->grupo;
                         })->toArray();
                     @endphp
-                    <p class="head-alumnos-tutor"><b>Telefono:</b> {{ $tutor->telefono }} </p>
-                    <p> <b>Periodo: </b>{{ $inicio_p . ' - ' . $fin_p }}</p>
+                    <p class="head-alumnos-tutor mb-1"><b>Telefono:</b> {{ $tutor->telefono }} </p>
+                    <p class="mb-1"> <b>Periodo: </b>{{ $inicio_p . ' - ' . $fin_p }}</p>
                 </div>
                 
-                <div class="col-2" style="border-radius: 10px; background: white; margin: 5px">
-                    <table>
-                        <tbody>
-                            <tr>
-                                <th scope="col">{{ 'Baja Temporal:' }}</th>
-                                <td>{{ $temporal }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="col">{{ 'Baja:' }}</th>
-                                <td>{{ $baja }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="col">{{ 'Verde:' }}</th>
-                                <td>{{ $verde }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="col">{{ 'Amarillo:' }}</th>
-                                <td>{{ $naranja }}</td>
-                            </tr>
-                            <tr>
-                                <th scope="col">{{ 'Rojo:' }}</th>
-                                <td>{{ $rojo }}</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                <div class="col-2 py-2 px-3 d-flex flex-column justify-content-center" style="border-radius: 10px; background: white; margin: 5px;">
+                    <div class="d-flex justify-content-between mb-1">
+                        <strong>Baja Temporal:</strong> <span>{{ $temporal }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-1">
+                        <strong>Baja:</strong> <span>{{ $baja }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-1">
+                        <strong>Verde:</strong> <span>{{ $verde }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-1">
+                        <strong>Amarillo:</strong> <span>{{ $naranja }}</span>
+                    </div>
+                    <div class="d-flex justify-content-between mb-0">
+                        <strong>Rojo:</strong> <span>{{ $rojo }}</span>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <div class="row row-tutor flex-grow-1">
+        <div class="row row-tutor flex-grow-1 mt-3">
             <div class="bd-example d-flex flex-column">
                 @php
                     $tieneAsignacion = $asigno != 0 && !($asignado[0]->semestre == 0 || $asignado[0]->grupo == 'sin asignar');
