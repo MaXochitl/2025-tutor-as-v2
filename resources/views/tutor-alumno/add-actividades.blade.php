@@ -16,7 +16,7 @@
                     @csrf
                     <div class="form-group">
                         <label for="tema">Tema</label>
-                        <input name="tema" type="text" class="form-control" id="tema" required>
+                        <input name="tema" type="text" class="form-control" id="tema" required maxlength="255">
                     </div>
 
                     <div class="form-group mt-3">

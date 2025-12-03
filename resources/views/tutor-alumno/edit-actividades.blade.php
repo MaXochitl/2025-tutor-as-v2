@@ -15,7 +15,7 @@
 
                     <div class="form-group">
                         <label for="tema">Tema</label>
-                        <input name="tema" type="text" class="form-control" id="tema" value="{{ $actividad->tema }}" required>
+                        <input name="tema" type="text" class="form-control" id="tema" value="{{ $actividad->tema }}" required maxlength="255">
                     </div>
 
                     <div class="form-group mt-3">
