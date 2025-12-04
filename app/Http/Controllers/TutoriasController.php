@@ -602,15 +602,6 @@ class TutoriasController extends Controller
             ->with('error', 'Registro no encontrado');
     }
     
-    // Verificar si existe una atención y eliminarla
-    $atencion = Atencion::where('alumno_id', $periodo_tutorado->alumno_id)
-        ->where('periodo_id', $periodo_tutorado->periodo_id)
-        ->first();
-    
-    if ($atencion) {
-        $atencion->delete();
-    }
-    
     // Eliminar el registro de periodo_tutorado
     $periodo_tutorado->delete();
     

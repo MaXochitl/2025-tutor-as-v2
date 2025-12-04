@@ -4,7 +4,6 @@ use App\Http\Controllers\admin\AlteraEntregaController;
 use App\Http\Controllers\Admin\AlumnosExamenController;
 use App\Http\Controllers\Admin\AsignacionesController;
 use App\Http\Controllers\Admin\CarreraController;
-use App\Http\Controllers\Admin\DocenteController;
 use App\Http\Controllers\Admin\EvaluacionController;
 use App\Http\Controllers\Admin\HabilidadesMentalesController;
 use App\Http\Controllers\Admin\HistorialController;
@@ -30,7 +29,8 @@ use App\Http\Controllers\Examenes\RegistroController;
 use App\Http\Controllers\Examenes\TestEconomicoController;
 use App\Http\Controllers\PruebasController;
 use App\Http\Controllers\ReportesController;
-use App\Http\Controllers\TutoriasController;
+use App\Http\Controllers\TutoriasController;//proteger solo admin y auditor no tutor
+use App\Http\Controllers\DocenteController;//proteger solo admin y auditor no tutor
 use App\Http\Controllers\ActividadesTutoriaController;
 
 use App\Http\Controllers\ExportReportsControllerXLX;
@@ -94,10 +94,6 @@ Route::resource('memorandum', MemorandumController::class)->names('memorandum');
 Route::resource('alumnos_examenes', AlumnosExamenController::class)->middleware(['auth', 'can:solo.admin'])->names('alumnos_examenes');
 Route::resource('entrega', AlteraEntregaController::class)->names('entrega')->middleware(['auth', 'can:solo.admin']);
 
-//Rutas para mostrar al admin alumnos canalizados por el docente
-Route::get('alumnos-docente/{id}', [DocenteController::class, 'showDocente'])->middleware(['auth', 'can:solo.admin'])->name('alumnos-docente.show');
-Route::post('searchAlumnoDocente/{id}', [DocenteController::class, 'searchAlumnoDocente'])->middleware(['auth', 'can:solo.admin'])->name('searchAluDocente');
-
 // Ruta de las actividades del tutor°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°°
 Route::resource('actividades-tutoria', ActividadesTutoriaController::class)->middleware(['auth'])->names('actividades-tutoria');
 // Ruta para mostrar el reporte (GET)
@@ -144,15 +140,12 @@ Route::resource('reporte', ControlMateriasController::class)->middleware(['auth'
 
 /** °°°°°°°°°°tutorias**/
 
-Route::post('atenciones/store', [AtencionController::class, 'store'])->name('atenciones.store');
-
-Route::get('/atenciones/{id}', [AtencionController::class, 'show']);
-
 Route::get('/reporte-pdf/{id}', [AtencionController::class, 'createPDF'])->name('reporte.pdf');
 
 
 
 /**  ________________________________________----------------------------___________________________________________________------------------------TUTOR Y ADMIN */
+//Rutas para mostrar al admin y auditor alumnos del tutor
 Route::resource('alumnos-tutor', TutoriasController::class)->middleware(['auth'])->names('alumnos-tutor');
 Route::post('searchAluTutor/{id}', [TutoriasController::class, 'searchAlumnoTutorado'])->name('searchAluTutor');
 Route::get('getPeriodoView', [TutoriasController::class, 'getPeriodoView'])->name('getPeriodoView');
@@ -163,6 +156,10 @@ Route::put('/addAlumno/{tipo}', [
 ])->middleware(['auth'])->name('addAlumno');
 
 Route::get('bajaAlumno/{id}/{status}/{color}', [TutoriasController::class, 'baja'])->middleware(['auth'])->name('baja');
+
+//Rutas para mostrar al admin y auditor alumnos canalizados por el docente
+Route::get('alumnos-docente/{id}', [DocenteController::class, 'showDocente'])->middleware(['auth'])->name('alumnos-docente.show');
+Route::post('searchAlumnoDocente/{id}', [DocenteController::class, 'searchAlumnoDocente'])->middleware(['auth'])->name('searchAluDocente');
 
 Route::resource('alumnos', AlumnosController::class)->middleware(['auth'])->names('alumnos');
 Route::get('searchAlumno', [AlumnosController::class, 'searchAlumno'])->middleware(['auth'])->name('searchAlumno');
@@ -200,5 +197,3 @@ Route::get('probar', function () {
 */
 Route::resource('reportes_tutor', ReportesController::class)->names('reportes_tutor')->middleware(['auth']);
 //Auth::routes(['register' => false]);
-
-Route::delete('/atenciones/{id}', [AtencionController::class, 'destroy'])->name('atenciones.destroy');
