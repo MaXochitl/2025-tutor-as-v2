@@ -130,7 +130,9 @@ class ControlMateriasController extends Controller
         $fecha = $now->format('Y-m-d H:i:s'); //obtiene fecha actual
         $periodo_tutorado->entrega_final = $fecha;
 
-        return view('tutor-alumno.end-report', compact('periodo_tutorado', 'materias', 'materia_aprobadas', 'materia_reprobadas','materias_seleccionadas', 'semaforo'));
+        $cantidad_reprobadas = $materia_reprobadas->count();
+
+        return view('tutor-alumno.end-report', compact('periodo_tutorado', 'materias', 'materia_aprobadas', 'materia_reprobadas','materias_seleccionadas', 'semaforo', 'cantidad_reprobadas'));
     }
 
     /**
