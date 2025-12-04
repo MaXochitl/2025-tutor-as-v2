@@ -121,13 +121,7 @@
                             @foreach ($semaforo as $item)
                                 @php
                                     $selected = '';
-                                    if ($cantidad_reprobadas == 0 && strtolower($item->nombre) == 'verde') {
-                                        $selected = 'selected';
-                                    }
-                                    if ($cantidad_reprobadas == 1 && strtolower($item->nombre) == 'amarillo') {
-                                        $selected = 'selected';
-                                    }
-                                    if ($cantidad_reprobadas >= 2 && strtolower($item->nombre) == 'rojo') {
+                                    if ($cantidad_reprobadas >= 1 && strtolower($item->nombre) == 'Rojo') {
                                         $selected = 'selected';
                                     }
                                 @endphp
