@@ -15,26 +15,17 @@ use PhpOffice\PhpSpreadsheet\Worksheet\Worksheet;
 class ReporteSemCarrerasExport implements FromArray, WithDrawings, WithStyles, WithEvents
 {
     private $data;
-    protected $totalMatricula;
     protected $totalTutores;
     protected $totalTutoriaGrupal;
-    protected $totalTutoriaIndividual;
-    protected $totalEstudiantesCanalizados;
 
     public function __construct(
         array $data, 
-        $totalMatricula, 
         $totalTutores, 
         $totalTutoriaGrupal,
-        $totalTutoriaIndividual,
-        $totalEstudiantesCanalizados
     ) {
         $this->data = $data;
-        $this->totalMatricula = $totalMatricula;
         $this->totalTutores = $totalTutores;
         $this->totalTutoriaGrupal = $totalTutoriaGrupal;
-        $this->totalTutoriaIndividual = $totalTutoriaIndividual;
-        $this->totalEstudiantesCanalizados = $totalEstudiantesCanalizados;
     }
 
     public function array(): array
@@ -102,7 +93,7 @@ class ReporteSemCarrerasExport implements FromArray, WithDrawings, WithStyles, W
         $sheet->mergeCells('J8:J10');
 
         $sheet->mergeCells('A7:G7');
-        $sheet->setCellValue('A7', "Matrícula del Instituto Tecnológico actual: " . $this->totalMatricula);
+        $sheet->setCellValue('A7', "Matrícula del Instituto Tecnológico actual: " . $this->totalTutoriaGrupal);
 
         $sheet->getColumnDimension('A')->setWidth(4);
         $sheet->getColumnDimension('B')->setWidth(42);
@@ -132,10 +123,10 @@ class ReporteSemCarrerasExport implements FromArray, WithDrawings, WithStyles, W
         $sheet->setCellValue("A$nextRow", "Resultados");
         $sheet->setCellValue("C$nextRow", '' . $this->totalTutores);
         $sheet->setCellValue("D$nextRow", '' . $this->totalTutoriaGrupal);
-        $sheet->setCellValue("E$nextRow", '' . $this->totalTutoriaIndividual);
         $sheet->mergeCells("F$nextRow:G$nextRow");
-        $sheet->setCellValue("F$nextRow", '' . $this->totalEstudiantesCanalizados);
-        $sheet->setCellValue("J$nextRow", '' . $this->totalMatricula);
+        $sheet->mergeCells("F$nextRow:G$nextRow");
+        $sheet->mergeCells("F$nextRow:G$nextRow");
+        $sheet->setCellValue("J$nextRow", '' . $this->totalTutoriaGrupal);
 
         $sheet->getStyle("A$nextRow:J$nextRow")->getFont()->setBold(true);
         $sheet->getStyle("A$nextRow:J$nextRow")->getAlignment()->setHorizontal('center');
