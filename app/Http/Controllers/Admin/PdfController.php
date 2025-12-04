@@ -39,58 +39,23 @@ class PdfController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
     public function create()
     {
+        $data = 'hola';
         $tutores = Tutor::all()->where('carrera_id', '>', 0);
         $tutorias = Periodo::max('id');
 
         $periodo = Periodo::find($tutorias);
 
         $pdf = \App::make('dompdf.wrapper');
+        $alumnos_tutorados = Periodo_tutorado::all();
         $datos = File_format::all();
 
-        // Crear array con todas las asignaciones individuales
-        $asignacionesIndividuales = [];
 
-        foreach ($tutores as $tutor) {
-            // Obtener todas las asignaciones del tutor en este período
-            $asignaciones = $tutor->asignaciones->where('periodo_id', $periodo->id);
-
-            foreach ($asignaciones as $asignacion) {
-                // CONSIDERACIÓN: Saltar si es semestre 0 y grupo 'sin asignar'
-                if ($asignacion->semestre == 0 && $asignacion->grupo == 'sin asignar') {
-                    continue;
-                }
-
-                // Contar alumnos que cumplen: tutor_id, periodo_id, tipo=1, semestre, grupo
-                $alumnosCount = Periodo_tutorado::where('tutor_id', $tutor->id)
-                    ->where('periodo_id', $periodo->id)
-                    ->where('tipo', 1)
-                    ->where('semestre', $asignacion->semestre)
-                    ->whereHas('alumno', function ($query) use ($asignacion) {
-                        $query->where('grupo', $asignacion->grupo);
-                    })
-                    ->count();
-
-                // Crear un registro por cada grupo-semestre
-                $asignacionesIndividuales[] = [
-                    'tutor' => $tutor,
-                    'asignacion' => $asignacion,
-                    'alumnosCount' => $alumnosCount
-                ];
-            }
-        }
-
-        // Generar PDF con una página por cada grupo-semestre
-        $pdf = PDF::loadView('admin.constancia.constancia', compact(
-            'asignacionesIndividuales',
-            'periodo',
-            'datos'
-        ));
-
+        $pdf = PDF::loadView('admin.constancia.constancia', compact('tutores', 'periodo', 'alumnos_tutorados', 'datos'));
         return $pdf->stream();
     }
+
     /**
      * Store a newly created resource in storage.
      *
