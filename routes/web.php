@@ -140,10 +140,6 @@ Route::resource('reporte', ControlMateriasController::class)->middleware(['auth'
 
 /** °°°°°°°°°°tutorias**/
 
-Route::post('atenciones/store', [AtencionController::class, 'store'])->name('atenciones.store');
-
-Route::get('/atenciones/{id}', [AtencionController::class, 'show']);
-
 Route::get('/reporte-pdf/{id}', [AtencionController::class, 'createPDF'])->name('reporte.pdf');
 
 
@@ -201,5 +197,3 @@ Route::get('probar', function () {
 */
 Route::resource('reportes_tutor', ReportesController::class)->names('reportes_tutor')->middleware(['auth']);
 //Auth::routes(['register' => false]);
-
-Route::delete('/atenciones/{id}', [AtencionController::class, 'destroy'])->name('atenciones.destroy');

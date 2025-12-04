@@ -64,16 +64,9 @@
                 <td>{{ $alumno->alumno ? $alumno->alumno->ap_paterno . ' ' . $alumno->alumno->ap_materno . ' ' . $alumno->alumno->nombre : 'Sin alumno' }}</td>
                 <td></td>
                 <td>X</td>
-                <td>@if($alumno->alumno->atencion && in_array($alumno->alumno->atencion->atencion, ['Individual', 'Grupal/Individual'])) X @endif</td>
-               <td>
-                    {{
-                        empty($alumno->alumno->atencion->canalizado)
-                        || strtolower($alumno->alumno->atencion->canalizado) === 'no'
-                            ? 'Sin canalización'
-                            : $alumno->alumno->atencion->canalizado
-                    }}
-                </td>
-                <td>{{ $alumno->alumno->atencion->area_canalizada ?? 'Sin área' }}</td>
+                <td> </td>
+               <td></td>
+                <td></td>
             </tr>
     @if(($index + 1) % 15 == 0 || $index + 1 == count($alumnos_tutor))
             </tbody>
