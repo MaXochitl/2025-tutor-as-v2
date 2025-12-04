@@ -26,7 +26,7 @@
     @foreach ($tutores as $item)
         <div style="text-align: center; padding-top: 30px; height: 800px; font-size: 16px;">
             <div style="text-align: left;">
-                <img style=" padding-left: 40px" src="./tutores/encabezado.jpg" height="60px" width="600px" alt="">
+                <div style="text-align: left; height:60px"><!--Espacio reservado para el membrete superior el cual se colocara de forma manual por la institucion--></div>
                 <div style="width: 550px; margin-left: 70px">
 
                     <div style="text-align: right; margin-top: 20px">
@@ -109,7 +109,7 @@
                         @php
                             
                             echo $item->carrera->nombre_carrera;
-                        @endphp para el periodo {{ $inicio }} - {{ $fin }} . En seguimiento a
+                        @endphp para el periodo {{ $inicio }} - {{ $fin }}. En seguimiento a
                         su solicitud recibida en el área de orientación educativa para participar en el programa
                         institucional de tutorías, Comprometiéndose a cumplir con los requisitos que refiere la
                         convocatoria en la que estipula tener el compromiso en el seguimiento de los alumnos de forma
@@ -159,28 +159,10 @@
             </div>
 
         </div>
-        <div style="margin-top: 10px; font-size: 15px;background: rgb(211, 211, 211)">
-            <table style="margin: auto; text-align: center">
-                <tr style="height: 100px;">
-                    <td style="text-align: left">
-
-                        <img src="./tutores/logo.png" height="100px" width="100px" width="400px" alt="">
-
-                    </td>
-                    <td>
-                        Desv. Lindero – Tametate S/N, Col. "La Morita" <br>
-                        CP 92100, Tantoyuca, Ver. <br>
-                        Tel. 789 893 1680, 789 893 1675 <br>
-                        https://itsta.edu.mx
-
-                    </td>
-                    <td style="text-align: right">
-                        <img src="./tutores/logo2.png" height="100px" width="100px" width="600px" alt="">
-
-                    </td>
-                </tr>
-            </table>
+        <div style="margin-top: 10px; font-size: 15px; height: 100px;">
+            <!-- Espacio reservado para el footer el cual se colocara de forma manual por la institucion -->
         </div>
+
     @endforeach
 
 </body>

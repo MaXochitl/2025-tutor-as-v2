@@ -44,8 +44,25 @@ class MemorandumController extends Controller
         $tutores = Tutor::where('carrera_id', '>', 0)->get();
         $datos = File_format::all();
 
+        // Filtrar tutores: solo incluir los que tengan asignaciones válidas
+        $tutores = $tutores->filter(function ($tutor) use ($periodo) {
 
-        $pdf = PDF::loadView('admin.constancia.memorandum', compact('tutores', 'periodo', 'datos'));
+            $asignaciones = $tutor->asignaciones->where('periodo_id', $periodo->id);
+
+            $asignacionesValidas = $asignaciones->filter(function ($asignacion) {
+                return !($asignacion->semestre == 0 && $asignacion->grupo == 'sin asignar');
+            });
+
+            return $asignacionesValidas->count() > 0;
+        }); //Fin del filtrado 
+
+        // Generar PDF con los tutores filtrados
+        $pdf = PDF::loadView('admin.constancia.memorandum', compact(
+            'tutores',
+            'periodo',
+            'datos'
+        ));
+
         return $pdf->stream();
     }
 

@@ -41,18 +41,38 @@ class PdfController extends Controller
      */
     public function create()
     {
-        $data = 'hola';
-        $tutores = Tutor::all()->where('carrera_id', '>', 0);
+
+        $tutores = Tutor::where('carrera_id', '>', 0)->get();
         $tutorias = Periodo::max('id');
 
         $periodo = Periodo::find($tutorias);
 
         $pdf = \App::make('dompdf.wrapper');
+
         $alumnos_tutorados = Periodo_tutorado::all();
         $datos = File_format::all();
 
+        //  Filtrar tutores: solo tutores con al menos UNA asignación válida
+        $tutores = $tutores->filter(function ($tutor) use ($periodo) {
 
-        $pdf = PDF::loadView('admin.constancia.constancia', compact('tutores', 'periodo', 'alumnos_tutorados', 'datos'));
+            $asignaciones = $tutor->asignaciones->where('periodo_id', $periodo->id);
+
+            $asignacionesValidas = $asignaciones->filter(function ($asignacion) {
+                return !(
+                    $asignacion->semestre == 0 &&
+                    $asignacion->grupo == 'sin asignar'
+                );
+            });
+
+            return $asignacionesValidas->count() > 0;
+        }); //Fin del filtro
+
+        // PDF usando los tutores filtrados
+        $pdf = PDF::loadView(
+            'admin.constancia.constancia',
+            compact('tutores', 'periodo', 'alumnos_tutorados', 'datos')
+        );
+
         return $pdf->stream();
     }
 

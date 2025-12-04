@@ -25,7 +25,7 @@
     @foreach ($tutores as $item)
         <div style="text-align: center; padding-left: 60px; padding-top: 30px; height: 1000px; font-size: 15px">
             <div style="text-align: left">
-                <img style="" src="./tutores/encabezado.jpg" height="60px" width="600px" alt="">
+                <div style="text-align: left; height:60px"><!--Espacio reservado para el membrete superior el cual se colocara de forma manual por la institucion--></div>
             </div>
             <div style="width: 600px; font-family: Arial, Helvetica, sans-serif; font-size: 16px">
                 <div style="text-align: left; margin-top: 30px">
@@ -52,22 +52,17 @@
     $count = $asignacionesPeriodo->count();
 
     if ($count > 1) {
-        // Si hay más de un grupo, agregar “y” antes del último
+        // Si hay mas de un grupo, agregar Y antes del ultimo
         $listaSemGrup = $asignacionesPeriodo
             ->slice(0, $count - 1)
             ->map(fn($a) => $a->semestre . '°' . strtoupper($a->grupo))
             ->implode(', ')
-            . ' y ' .
-            $asignacionesPeriodo->last()->semestre . '°' .
-            strtoupper($asignacionesPeriodo->last()->grupo);
+            . ' y ' . 
+            $asignacionesPeriodo->last()->semestre . '°' . strtoupper($asignacionesPeriodo->last()->grupo);
     } else {
-        // Solo un grupo
+        // Solo un grupo valido (porque el controlador ya filtro los invalidos)
         $single = $asignacionesPeriodo->first();
-        if ($single && $single->semestre != 0 && $single->grupo != 'sin asignar') {
-            $listaSemGrup = $single->semestre . '°' . strtoupper($single->grupo);
-        } else {
-            $listaSemGrup = 'NO ASIGNADO'; // = 'No asignado'; para mostrar algo
-        }
+        $listaSemGrup = $single->semestre . '°' . strtoupper($single->grupo);
     }
 
     $esPlural = $count > 1;
@@ -107,12 +102,7 @@
 @else
     del semestre y grupo
 @endif
-@if ($listaSemGrup == 'NO ASIGNADO')
-    <b>{{ $listaSemGrup }}</b><!-- resaltar en negritas el error al personal de OE-->
-@else
-    {{ $listaSemGrup }}<!-- mostrar normal sin resaltar-->
-@endif
-                    , cumpliendo el 100% de las actividades del
+                    {{ $listaSemGrup }}, cumpliendo el 100% de las actividades del
                     programa, con un
                     índice de
                     deserción del 0%.
@@ -162,28 +152,8 @@
                 </div>
             </div>
 
-            <div style="width: 95%; margin-top: 150px; font-size: 15px;background: rgb(211, 211, 211)">
-                <table style="margin: auto; text-align: center">
-                    <tr style="height: 100px;">
-                        <td style="text-align: left">
-    
-                            <img src="./tutores/logo.png" height="100px" width="100px" width="400px" alt="">
-    
-                        </td>
-                        <td>
-                            Desv. Lindero – Tametate S/N, Col. La Morita <br>
-                            CP 92100, Tantoyuca, Veracruz <br>
-                            Tel. (01 789) 8931680, 8931552 <br>
-                            https://itsta.edu.mx
-    
-                        </td>
-                        <td style="text-align: right">
-                            <img src="./tutores/logo2.png" height="100px" width="100px" width="600px" alt="">
-    
-                        </td>
-                    </tr>
-                </table>
-            </div>
+            <div style="width: 95%; margin-top: 150px; height: 100px;"></div>
+
         </div>
 
         
