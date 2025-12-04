@@ -158,8 +158,6 @@ class ReportExport implements FromArray, WithHeadings, WithStyles
         ]);
         
         $sheet->setCellValue("D{$resultadosRow}", "=SUM(D{$dataStartRow}:D{$dataEndRow})");
-        $sheet->setCellValue("E{$resultadosRow}", "=SUM(E{$dataStartRow}:E{$dataEndRow})");
-        $sheet->setCellValue("F{$resultadosRow}", "=SUM(F{$dataStartRow}:H{$dataEndRow})");
 
         $signatureStart = $resultadosRow + 4;
 

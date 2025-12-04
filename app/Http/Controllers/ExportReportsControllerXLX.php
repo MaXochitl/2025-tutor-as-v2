@@ -90,11 +90,11 @@ class ExportReportsControllerXLX extends Controller
             $tutor['tutor_nombre'] ?? '',                                                  
             $tutor['grupo'] ?? '',                    
             $tutor['tutorias_grupales'] ?? 0,       
-            $tutor['tutorias_individuales'] ?? 0,                                       
-            $tutor['estudiantes_canalizados'] ?? 0,
+            '',                                       
             '',
             '',
-            $tutor['areas_canalizadas'] ?? '',                                                                   
+            '',
+            '',                                                                   
         ];
         $contador++;
     }
