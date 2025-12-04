@@ -37,43 +37,15 @@ class MemorandumController extends Controller
      */
     public function create()
     {
+
         $tutorias = Periodo::max('id');
         $periodo = Periodo::find($tutorias);
 
         $tutores = Tutor::where('carrera_id', '>', 0)->get();
         $datos = File_format::all();
 
-        // Crear array con todas las asignaciones individuales
-        $asignacionesIndividuales = [];
-        $contador = 1;
 
-        foreach ($tutores as $tutor) {
-            // Obtener todas las asignaciones del tutor en este período
-            $asignaciones = $tutor->asignaciones->where('periodo_id', $periodo->id);
-
-            foreach ($asignaciones as $asignacion) {
-                // CONSIDERACIÓN: Saltar si es semestre 0 y grupo 'sin asignar'
-                if ($asignacion->semestre == 0 && $asignacion->grupo == 'sin asignar') {
-                    continue;
-                }
-
-                // Crear un registro por cada grupo-semestre
-                $asignacionesIndividuales[] = [
-                    'tutor' => $tutor,
-                    'asignacion' => $asignacion,
-                    'numero' => $contador
-                ];
-                $contador++;
-            }
-        }
-
-        // Generar PDF con una página por cada grupo-semestre
-        $pdf = PDF::loadView('admin.constancia.memorandum', compact(
-            'asignacionesIndividuales',
-            'periodo',
-            'datos'
-        ));
-
+        $pdf = PDF::loadView('admin.constancia.memorandum', compact('tutores', 'periodo', 'datos'));
         return $pdf->stream();
     }
 
