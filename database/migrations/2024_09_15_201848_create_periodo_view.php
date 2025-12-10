@@ -16,7 +16,7 @@ class CreatePeriodoView extends Migration
         Schema::create('Periodo_view', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('periodo_id')->unsigned();
-            $table->foreign('periodo_id')->references('id')->on('Periodos')->onDelete('cascade');
+            $table->foreign('periodo_id')->references('id')->on('periodos')->onDelete('cascade');
 
         });
     }
