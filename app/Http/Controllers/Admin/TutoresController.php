@@ -65,7 +65,7 @@ class TutoresController extends Controller
         $palabra = '';
 
         // Obtener todos los tutores de la carrera
-        $tutores = Tutor::where('carrera_id', $id)->paginate(15);
+        $tutores = Tutor::where('carrera_id', $id)->get();
 
         // Obtener el ultimo periodo
         $periodoView = Periodo_view::find(1);
@@ -219,7 +219,7 @@ class TutoresController extends Controller
                 ->orWhere('ap_paterno', 'LIKE', "%$palabra%")
                 ->orWhere('ap_materno', 'LIKE', "%$palabra%");
             })
-            ->paginate(15);
+            ->get();
 
         // Obtener periodo actual
         $periodoView = Periodo_view::find(1);

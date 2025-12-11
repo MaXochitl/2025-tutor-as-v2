@@ -287,7 +287,7 @@ class TutoriasController extends Controller
                     ->orWhere('ap_materno', 'like', '%' . $palabra . '%');
             })
             ->orderby('semaforo_id', 'desc')
-            ->paginate(15);
+            ->get();
 
         // Si no hay resultados en la búsqueda, devolver la vista normal sin filtro
         if (count($alumnos_tutor) == 0) {
