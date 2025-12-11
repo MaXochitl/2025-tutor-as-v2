@@ -22,17 +22,7 @@ class PdfController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
-        $tutores = Tutor::all()->where('carrera_id', '>', 0);
-        $tutorias = Periodo::max('id');
-        $periodo = Periodo::find($tutorias);
-        $alumnos_tutorados = Periodo_tutorado::all();
-        $datos = File_format::all();
-
-        return view('admin.constancia.constancia', compact('tutores', 'periodo', 'alumnos_tutorados', 'datos'));
-    }
+    public function index(){}
 
     /**
      * Show the form for creating a new resource.
@@ -41,20 +31,14 @@ class PdfController extends Controller
      */
     public function create()
     {
-
         $tutores = Tutor::where('carrera_id', '>', 0)->get();
         $tutorias = Periodo::max('id');
-
         $periodo = Periodo::find($tutorias);
-
-        $pdf = \App::make('dompdf.wrapper');
-
         $alumnos_tutorados = Periodo_tutorado::all();
         $datos = File_format::all();
 
-        //  Filtrar tutores: solo tutores con al menos UNA asignación válida
+        // Filtrar tutores: solo tutores con al menos UNA asignación válida
         $tutores = $tutores->filter(function ($tutor) use ($periodo) {
-
             $asignaciones = $tutor->asignaciones->where('periodo_id', $periodo->id);
 
             $asignacionesValidas = $asignaciones->filter(function ($asignacion) {
@@ -65,15 +49,205 @@ class PdfController extends Controller
             });
 
             return $asignacionesValidas->count() > 0;
-        }); //Fin del filtro
+        });
 
-        // PDF usando los tutores filtrados
-        $pdf = PDF::loadView(
-            'admin.constancia.constancia',
-            compact('tutores', 'periodo', 'alumnos_tutorados', 'datos')
-        );
+        // Configurar fechas
+        date_default_timezone_set('America/Mexico_City');
+        setlocale(LC_ALL, 'es_ES');
+        $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+        
+        $hoy = date('d') . ' días del mes de ' . $meses[date('n') - 1] . ' del año ' . date('Y');
+        $inicio = $meses[date('n', strtotime($periodo->inicio)) - 1] . '  ' . date('Y', strtotime($periodo->inicio));
+        $fin = $meses[date('n', strtotime($periodo->fin)) - 1] . '  ' . date('Y', strtotime($periodo->fin));
 
-        return $pdf->stream();
+        // Crear documento Word
+        $phpWord = new \PhpOffice\PhpWord\PhpWord();
+        $phpWord->getSettings()->setThemeFontLang(new \PhpOffice\PhpWord\Style\Language(\PhpOffice\PhpWord\Style\Language::ES_ES));
+
+        foreach ($tutores as $item) {
+            $section = $phpWord->addSection([
+                'marginTop' => 1440,
+                'marginBottom' => 1440,
+                'marginLeft' => 1440,
+                'marginRight' => 1440
+            ]);
+
+            // Espacio para membrete (60px)
+            $section->addTextBreak(2);
+
+            // Encabezado
+            $section->addText(
+                'A QUIEN CORRESPONDA',
+                ['size' => 11, 'name' => 'Arial', 'bold' => true],
+                ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START, 'spaceAfter' => 0]
+            );
+            
+            $section->addText(
+                $datos[0]->destinatario,
+                ['size' => 11, 'name' => 'Arial'],
+                ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START, 'spaceAfter' => 240]
+            );
+
+            // Primer parrafo
+            $section->addText(
+                '        El suscrito, Coordinador del programa institucional de tutorías del Instituto Tecnológico Superior de Tantoyuca, Veracruz.',
+                ['size' => 11, 'name' => 'Arial'],
+                ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH, 'spaceAfter' => 240]
+            );
+
+            // Título "HACE CONSTAR"
+            $section->addTextBreak(1); // espacio abajo
+            $section->addText(
+                'H A C E     C O N S T A R',
+                ['size' => 14, 'name' => 'Arial', 'bold' => true],
+                ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER, 'spaceAfter' => 240]
+            );
+            $section->addTextBreak(1); // espacio abajo
+
+            // Procesar asignaciones
+            $asignacionesPeriodo = $item->asignaciones
+                ->where('periodo_id', $periodo->id)
+                ->sortBy(function ($a) {
+                    return sprintf('%02d%s', $a->semestre, strtoupper($a->grupo));
+                })
+                ->values();
+
+            $count = $asignacionesPeriodo->count();
+
+            if ($count > 1) {
+                $listaSemGrup = $asignacionesPeriodo
+                    ->slice(0, $count - 1)
+                    ->map(fn($a) => $a->semestre . '°' . strtoupper($a->grupo))
+                    ->implode(', ')
+                    . ' y ' . 
+                    $asignacionesPeriodo->last()->semestre . '°' . strtoupper($asignacionesPeriodo->last()->grupo);
+                $esPlural = true;
+            } else {
+                $single = $asignacionesPeriodo->first();
+                $listaSemGrup = $single->semestre . '°' . strtoupper($single->grupo);
+                $esPlural = false;
+            }
+
+            // Nombre del tutor
+            $name = $item->nombre . ' ' . $item->ap_paterno . ' ' . $item->ap_materno;
+            $nombreMayus = mb_strtoupper($name, 'UTF-8');
+            
+            // Nombre de la carrera
+            $carrera = $item->carrera != null ? $item->carrera->nombre_carrera : '';
+            
+            // Contar alumnos tutorados
+            $totalAlumnos = $alumnos_tutorados
+                ->where('tutor_id', $item->id)
+                ->where('periodo_id', $periodo->id)
+                ->where('tipo', 1)
+                ->count();
+
+            $textoSemestre = $esPlural ? 'de los semestres y grupos' : 'del semestre y grupo';
+
+            // Parrafo principal
+            $textRun = $section->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH]);
+            $textRun->addText(
+                "Que el (la) {$nombreMayus} del programa académico de {$carrera} llevó a cabo el PROGRAMA INSTITUCIONAL DE TUTORÍA de forma grupal, durante el periodo {$inicio} – {$fin} con un total de 16 Hrs en el Instituto Tecnológico Superior de Tantoyuca, atendiendo a {$totalAlumnos} alumnos, {$textoSemestre} {$listaSemGrup}, cumpliendo el 100% de las actividades del programa, con un índice de deserción del 0%.",
+                ['size' => 11, 'name' => 'Arial']
+            );
+
+            $section->addTextBreak(1);
+
+            // Parrafo de cierre
+            $section->addText(
+                "Se extiende la presente, para los fines legales que al interesado convengan, en la ciudad de Tantoyuca, Veracruz, a los {$hoy}.",
+                ['size' => 11, 'name' => 'Arial'],
+                ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH, 'spaceAfter' => 100]
+            );
+
+            $section->addTextBreak(2);
+
+            $phpWord->addParagraphStyle('firmaLinea', [
+                'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER,
+                'spaceAfter' => 0, 
+            ]);
+
+            $textRun = $section->addTextRun('firmaLinea');
+
+            $textRun->addText('Atentamente', [
+                'size' => 11,
+                'name' => 'Arial',
+                'bold' => true
+            ]);
+
+            $textRun->addText(str_repeat(' ', 60));
+
+            $textRun->addText('Vo. Bo.', [
+                'size' => 11,
+                'name' => 'Arial',
+                'bold' => true
+            ]);
+
+            $section->addTextBreak(3); 
+
+            // Tabla de firmas
+            $tableStyle = [
+                'alignment' => \PhpOffice\PhpWord\SimpleType\JcTable::CENTER,
+                'width' => 100 * 50,
+                'borderSize' => 0,
+                'borderColor' => 'FFFFFF'
+            ];
+            
+            $cellStyle = [
+                'alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER,
+                'valign' => 'top'
+            ];
+
+            $table = $section->addTable($tableStyle);
+
+            // Segunda fila: nombres
+            $table->addRow();
+            $table->addCell(3000, $cellStyle)->addText(
+                $datos[0]->atentamente_1,
+                ['size' => 10, 'name' => 'Arial'],
+                ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]
+            );
+            $table->addCell(3000, $cellStyle)->addText(
+                $datos[0]->atentamente_2,
+                ['size' => 10, 'name' => 'Arial'],
+                ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]
+            );
+            $table->addCell(3000, $cellStyle)->addText(
+                $datos[0]->atentamente_3,
+                ['size' => 10, 'name' => 'Arial'],
+                ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]
+            );
+
+            // Tercera fila: cargos
+            $table->addRow();
+            $table->addCell(3000, $cellStyle)->addText(
+                $datos[0]->cargo,
+                ['size' => 10, 'name' => 'Arial'],
+                ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]
+            );
+            $table->addCell(3000, $cellStyle)->addText(
+                $datos[0]->cargo_2,
+                ['size' => 10, 'name' => 'Arial'],
+                ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]
+            );
+            $table->addCell(3000, $cellStyle)->addText(
+                $datos[0]->cargo_3,
+                ['size' => 10, 'name' => 'Arial'],
+                ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]
+            );
+
+            // Espacio para footer
+            $section->addTextBreak(4);
+        }
+
+        // Generar y descargar el archivo Word
+        $filename = 'constancias_' . date('Y-m-d') . '.docx';
+        
+        $writer = \PhpOffice\PhpWord\IOFactory::createWriter($phpWord, 'Word2007');
+        $temp_file = tempnam(sys_get_temp_dir(), 'PHPWord');
+        $writer->save($temp_file);
+        
+        return response()->download($temp_file, $filename)->deleteFileAfterSend(true);
     }
 
     /**
