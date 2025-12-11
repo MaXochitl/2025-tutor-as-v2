@@ -159,7 +159,7 @@ Route::get('bajaAlumno/{id}/{status}/{color}', [TutoriasController::class, 'baja
 
 //Rutas para mostrar al admin y auditor alumnos canalizados por el docente
 Route::get('alumnos-docente/{id}', [DocenteController::class, 'showDocente'])->middleware(['auth'])->name('alumnos-docente.show');
-Route::post('searchAlumnoDocente/{id}', [DocenteController::class, 'searchAlumnoDocente'])->middleware(['auth'])->name('searchAluDocente');
+Route::get('searchAlumnoDocente/{id}', [DocenteController::class, 'searchAlumnoDocente'])->middleware(['auth'])->name('searchAluDocente');
 
 Route::resource('alumnos', AlumnosController::class)->middleware(['auth'])->names('alumnos');
 Route::get('searchAlumno', [AlumnosController::class, 'searchAlumno'])->middleware(['auth'])->name('searchAlumno');

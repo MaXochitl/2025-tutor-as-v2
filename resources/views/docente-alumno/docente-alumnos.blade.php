@@ -78,7 +78,7 @@
             <div class="container mb-4">
                 <div class="row justify-content-end">
                     <div class="col-md-6 offset-md-3">
-                        <form class="input-group" method="POST"
+                        <form class="input-group" method="GET"
                             action="{{ route('searchAluDocente', $alumnos_tutor[0]->tutor->id) }}">
                             @csrf
 
