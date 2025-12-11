@@ -140,10 +140,6 @@ Route::resource('reporte', ControlMateriasController::class)->middleware(['auth'
 
 /** °°°°°°°°°°tutorias**/
 
-Route::post('atenciones/store', [AtencionController::class, 'store'])->name('atenciones.store');
-
-Route::get('/atenciones/{id}', [AtencionController::class, 'show']);
-
 Route::get('/reporte-pdf/{id}', [AtencionController::class, 'createPDF'])->name('reporte.pdf');
 
 
@@ -163,7 +159,7 @@ Route::get('bajaAlumno/{id}/{status}/{color}', [TutoriasController::class, 'baja
 
 //Rutas para mostrar al admin y auditor alumnos canalizados por el docente
 Route::get('alumnos-docente/{id}', [DocenteController::class, 'showDocente'])->middleware(['auth'])->name('alumnos-docente.show');
-Route::post('searchAlumnoDocente/{id}', [DocenteController::class, 'searchAlumnoDocente'])->middleware(['auth'])->name('searchAluDocente');
+Route::get('searchAlumnoDocente/{id}', [DocenteController::class, 'searchAlumnoDocente'])->middleware(['auth'])->name('searchAluDocente');
 
 Route::resource('alumnos', AlumnosController::class)->middleware(['auth'])->names('alumnos');
 Route::get('searchAlumno', [AlumnosController::class, 'searchAlumno'])->middleware(['auth'])->name('searchAlumno');
@@ -201,5 +197,3 @@ Route::get('probar', function () {
 */
 Route::resource('reportes_tutor', ReportesController::class)->names('reportes_tutor')->middleware(['auth']);
 //Auth::routes(['register' => false]);
-
-Route::delete('/atenciones/{id}', [AtencionController::class, 'destroy'])->name('atenciones.destroy');

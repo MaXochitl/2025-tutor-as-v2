@@ -119,7 +119,15 @@
                         <label for="color" class="col-form-label">Color</label>
                         <select name="color" class="form-select" aria-label="Default select example">
                             @foreach ($semaforo as $item)
-                                <option value="{{ $item->id }}">{{ $item->nombre }} </option>
+                                @php
+                                    $selected = '';
+                                    if ($cantidad_reprobadas >= 1 && strtolower($item->nombre) == 'rojo') {
+                                        $selected = 'selected';
+                                    }
+                                @endphp
+                                <option value="{{ $item->id }}" {{ $selected }}>
+                                    {{ $item->nombre }}
+                                </option>
                             @endforeach
                         </select>
                     </div>

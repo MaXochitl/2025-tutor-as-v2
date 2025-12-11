@@ -49,7 +49,7 @@ class DocenteController extends Controller
      */
     public function searchAlumnoDocente(Request $request, $id)
     {
-        $palabra = $request->search_tutor;
+        $palabra = $request->query('search_tutor');
         
         $periodo_view = Periodo_view::find(1);
         $periodo = Periodo::find($periodo_view->periodo_id);

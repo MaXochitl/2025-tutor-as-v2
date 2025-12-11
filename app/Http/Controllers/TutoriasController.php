@@ -287,7 +287,7 @@ class TutoriasController extends Controller
                     ->orWhere('ap_materno', 'like', '%' . $palabra . '%');
             })
             ->orderby('semaforo_id', 'desc')
-            ->paginate(15);
+            ->get();
 
         // Si no hay resultados en la búsqueda, devolver la vista normal sin filtro
         if (count($alumnos_tutor) == 0) {
@@ -600,15 +600,6 @@ class TutoriasController extends Controller
     if (!$periodo_tutorado) {
         return redirect()->route('reportes_tutor.show', $id_tutor)
             ->with('error', 'Registro no encontrado');
-    }
-    
-    // Verificar si existe una atención y eliminarla
-    $atencion = Atencion::where('alumno_id', $periodo_tutorado->alumno_id)
-        ->where('periodo_id', $periodo_tutorado->periodo_id)
-        ->first();
-    
-    if ($atencion) {
-        $atencion->delete();
     }
     
     // Eliminar el registro de periodo_tutorado
