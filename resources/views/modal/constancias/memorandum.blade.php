@@ -14,7 +14,7 @@
                     @include('secciones.errores')
                 @endif
 
-                <form method="POST" action="{{ route('datospdf.update', $item->id) }}" enctype="multipart/form-data">
+                <form method="POST" action="{{ route('datospdf.updateMemorandum', $item->id) }}" enctype="multipart/form-data">
                     @method('PUT')
                     @csrf
                     <div class="form-group">
@@ -43,17 +43,6 @@
                         <label for="cargo_2" class="form-label">Cargo</label>
                         <input name="cargo_2" type="text" class="form-control" id="cargo_2"
                             value="{{ $item->cargo_2 }}">
-                    </div>
-                    <div class="text-center">
-                        <label class="form-label">Firma 3</label>
-                    </div>
-                    <div class="form-group">
-                        <label for="nombre_3" class="form-label">Nombre</label>
-                        <input name="nombre_3" type="text" class="form-control" id="nombre_3"
-                            value="{{ $item->atentamente_3 }}">
-                        <label for="cargo_3" class="form-label">Cargo</label>
-                        <input name="cargo_3" type="text" class="form-control" id="cargo_3"
-                            value="{{ $item->cargo_3 }}">
                     </div>
                     <div class="text-center p-2">
                         <button href="" type="submit" class="btn btn-primary">Guardar</button>

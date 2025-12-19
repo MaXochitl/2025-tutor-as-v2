@@ -87,6 +87,8 @@ Route::resource('pdf', PdfController::class)->middleware(['auth'])->names('pdf')
 Route::resource('evaluacion', EvaluacionController::class)->middleware(['auth', 'can:solo.admin'])->names('evaluacion');
 Route::resource('periodo-eval', PeriodoEvalController::class)->middleware(['auth', 'can:solo.admin'])->names('periodo-eval');
 Route::resource('datospdf', ArchivoController::class)->middleware(['auth', 'can:solo.admin'])->names('datospdf');
+Route::put('datospdf/{id}/update-constancia',[ArchivoController::class, 'updateConstancia'])->name('datospdf.updateConstancia')->middleware(['auth', 'can:solo.admin']);
+Route::put('datospdf/{id}/update-memorandum',[ArchivoController::class, 'updateMemorandum'])->name('datospdf.updateMemorandum')->middleware(['auth', 'can:solo.admin']);
 Route::resource('asignaciones', AsignacionesController::class)->middleware(['auth', 'can:solo.admin'])->names('asignaciones');
 //Ruta para el nuevo modal agregar_grupo.blade remplazo de mes_semestre.blade, agregarGrupo evalua si usara create o update
 Route::post('asignaciones/agregar-grupo', [AsignacionesController::class, 'agregarGrupo'])->middleware(['auth', 'can:solo.admin'])->name('asignaciones.agregarGrupo');

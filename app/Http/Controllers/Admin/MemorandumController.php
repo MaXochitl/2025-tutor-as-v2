@@ -50,73 +50,110 @@ class MemorandumController extends Controller
         setlocale(LC_ALL, 'es_ES');
         $diassemana = ['Domingo', 'Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado'];
         $meses = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
-        $hoy = $diassemana[date('w')] . ' ' . date('d') . ' de ' . $meses[date('n') - 1] . ' del ' . date('Y');
-        
-        $inicio = $meses[date('n', strtotime($periodo->inicio)) - 1] . '  ' . date('Y', strtotime($periodo->inicio));
-        $fin = $meses[date('n', strtotime($periodo->fin)) - 1] . '  ' . date('Y', strtotime($periodo->fin));
+        $hoy = date('d') . ' de ' . $meses[date('n') - 1] . ' de ' . date('Y');
+        $inicio = $meses[date('n', strtotime($periodo->inicio)) - 1] . ' ' . date('Y', strtotime($periodo->inicio));
+        $fin = $meses[date('n', strtotime($periodo->fin)) - 1] . ' ' . date('Y', strtotime($periodo->fin));
 
         // Crear doc Word
         $phpWord = new \PhpOffice\PhpWord\PhpWord();
-        
         $phpWord->getSettings()->setThemeFontLang(new \PhpOffice\PhpWord\Style\Language(\PhpOffice\PhpWord\Style\Language::ES_ES));
         
-        $contador = 1;
+        $contador = 0;
 
         foreach ($tutores as $item) {
             $section = $phpWord->addSection([
-                'marginTop' => 1440,
-                'marginBottom' => 1440,
-                'marginLeft' => 1440,
-                'marginRight' => 1440
+            'marginTop' => 1700,//listo
+            'marginBottom' => 1440,
+            'marginLeft'   => 1700,//listo
+            'marginRight'  => 1700,//listo
+            'paperSize' => 'Letter'//tamaño carta
             ]);
 
-            // Espacio para membrete (60px)
-            $section->addTextBreak(2);
+            $textRun = $section->addTextRun([
+                'alignment'   => \PhpOffice\PhpWord\SimpleType\Jc::END,
+                'lineHeight'  => 1,
+                'spaceAfter' => 0,
+                'spaceBefore'=> 0
+            ]);
 
-            // Encabezado del memorandum (alineado a la derecha)
-            $numeroMemo = $contador < 10 ? "0{$contador}" : $contador;
-            $section->addText(
-                "Memorándum Nº OE /{$numeroMemo}/" . date('Y'),
-                ['size' => 11, 'name' => 'Arial'],
-                ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::END]
+            $textRun->addText(
+                'Instituto Tecnológico Superior de Tantoyuca',
+                ['size' => 11, 'name' => 'Gotham-Medium', 'bold' => true]
             );
-            
-            $section->addText(
-                'ASUNTO: El que se indica',
-                ['size' => 11, 'name' => 'Arial', 'bold' => true],
-                ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::END]
+            $textRun->addTextBreak();
+
+            $numeroMemo = $contador > 0 ? "-{$contador}" : '';
+            $textRun->addText(
+                "OFICIO No. O.E/010{$numeroMemo}/" . date('Y'),
+                ['size' => 11, 'name' => 'Gotham-Medium']
             );
-            
-            $section->addText(
-                "Tantoyuca, Ver., {$hoy}",
-                ['size' => 11, 'name' => 'Arial'],
-                ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::END]
+            $textRun->addTextBreak();
+
+            $textRun->addText(
+                "“Experiencia en la Formación de",
+                ['size' => 11, 'name' => 'Gotham-Medium', 'bold' => true]
+            );
+            $textRun->addTextBreak();
+            $textRun->addText(
+                "Profesionistas”.",
+                ['size' => 11, 'name' => 'Gotham-Medium', 'bold' => true]
+            );
+            $textRun->addTextBreak();
+
+            $textRun->addText(
+                'Asunto: ',
+                [
+                    'size' => 11,
+                    'name' => 'Gotham Medium',
+                    'bold' => true
+                ]
             );
 
-            $section->addTextBreak(1);
+            $textRun->addText(
+                'El que se indica',
+                [
+                    'size' => 11,
+                    'name' => 'Gotham Medium',
+                    'bold' => false
+                ]
+            );
+            $textRun->addTextBreak();
+
+            $textRun->addText(
+                "Tantoyuca, Ver. a {$hoy}",
+                ['size' => 11, 'name' => 'Gotham-Medium']
+            );
+
+            $section->addTextBreak();
 
             // Destinatario
+            $textRun = $section->addTextRun([
+                'alignment'   => \PhpOffice\PhpWord\SimpleType\Jc::START,
+                'lineHeight' => 1,
+                'spaceBefore'=> 300,
+                'spaceAfter' => 0
+            ]);
+
             $name = $item->nombre . ' ' . $item->ap_paterno . ' ' . $item->ap_materno;
             $nombreMayus = mb_strtoupper($name, 'UTF-8');
-            $section->addText(
-                $nombreMayus,
-                ['size' => 11, 'name' => 'Arial', 'bold' => true],
-                ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]
-            );
-            
-            $section->addText(
-                $datos[1]->destinatario,
-                ['size' => 11, 'name' => 'Arial', 'bold' => true],
-                ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]
-            );
-            
-            $section->addText(
-                'PRESENTE',
-                ['size' => 11, 'name' => 'Arial', 'bold' => true],
-                ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]
-            );
 
-            $section->addTextBreak(1);
+            $textRun->addText(
+                $nombreMayus,
+                ['size' => 12, 'name' => 'Aptos', 'bold' => true]
+            );
+            $textRun->addTextBreak();
+
+            $textRun->addText(
+                $datos[1]->destinatario,
+                ['size' => 12, 'name' => 'Aptos', 'bold' => true]
+            );
+            $textRun->addTextBreak();
+
+            $textRun->addText(
+                'PRESENTE',
+                ['size' => 12, 'name' => 'Aptos', 'bold' => true]
+            );
+            $textRun->addTextBreak();
 
             // Procesar asignaciones
             $asignacionesPeriodo = $item->asignaciones
@@ -128,64 +165,112 @@ class MemorandumController extends Controller
 
             $count = $asignacionesPeriodo->count();
 
-            if ($count > 1) {
-                $listaSemGrup = $asignacionesPeriodo
-                    ->slice(0, $count - 1)
-                    ->map(fn($a) => $a->semestre . '°' . strtoupper($a->grupo))
-                    ->implode(', ')
-                    . ' y ' .
-                    $asignacionesPeriodo->last()->semestre . '°' .
-                    strtoupper($asignacionesPeriodo->last()->grupo);
-                $esPlural = true;
-            } else {
-                $single = $asignacionesPeriodo->first();
-                if ($single && $single->semestre != 0 && $single->grupo != 'sin asignar') {
-                    $listaSemGrup = $single->semestre . '°' . strtoupper($single->grupo);
-                } else {
-                    $listaSemGrup = 'NO ASIGNADO';
+            // Array para almacenar las partes del texto con su formato
+            $partesTexto = [];
+
+            if ($count > 1) {//tiene mas de una asignacion el tutor
+                // Agrupar por semestre
+                $agrupadosPorSemestre = $asignacionesPeriodo->groupBy('semestre');
+                
+                $partes = [];
+                foreach ($agrupadosPorSemestre as $semestre => $asignaciones) {
+                    $grupos = $asignaciones->map(fn($a) => strtoupper($a->grupo))->toArray();
+                    
+                    $parteSemestre = [];
+                    $parteSemestre[] = ['texto' => $this->semestreATexto($semestre), 'negrita' => true];
+                    
+                    if (count($grupos) > 1) {
+                        // Múltiples grupos del mismo semestre: "QUINTO semestre grupo B y C"
+                        $ultimoGrupo = array_pop($grupos);
+                        $parteSemestre[] = ['texto' => ' semestre grupo ' . implode(', ', $grupos) . ' y ' . $ultimoGrupo, 'negrita' => false];
+                    } else {
+                        // Un solo grupo: "QUINTO semestre grupo B"
+                        $parteSemestre[] = ['texto' => ' semestre grupo ' . $grupos[0], 'negrita' => false];
+                    }
+                    
+                    $partes[] = $parteSemestre;
                 }
-                $esPlural = false;
+                
+                // Unir todas las partes con los conectores adecuados
+                if (count($partes) > 1) {
+                    foreach ($partes as $index => $parte) {
+                        if ($index > 0) {
+                            if ($index == count($partes) - 1) {
+                                // Última parte: agregar " y del "
+                                $partesTexto[] = ['texto' => ' y del ', 'negrita' => false];
+                            } else {
+                                // Partes intermedias: agregar ", del "
+                                $partesTexto[] = ['texto' => ', del ', 'negrita' => false];
+                            }
+                        }
+                        // Agregar las partes del semestre y grupo
+                        foreach ($parte as $subparte) {
+                            $partesTexto[] = $subparte;
+                        }
+                    }
+                } else {
+                    // Solo hay un semestre con múltiples grupos
+                    foreach ($partes[0] as $subparte) {
+                        $partesTexto[] = $subparte;
+                    }
+                }
+            } else {//tiene una sola asignacion el tutor
+                $single = $asignacionesPeriodo->first();
+                if ($single && $single->semestre != 0) {
+                    $partesTexto[] = ['texto' => $this->semestreATexto($single->semestre), 'negrita' => true];
+                    $partesTexto[] = ['texto' => ' semestre grupo ' . strtoupper($single->grupo), 'negrita' => false];
+                } 
             }
 
             // Cuerpo del texto
-            $textoSemestre = $esPlural ? 'de los semestres y grupos' : 'del semestre y grupo';
-            
-            $textRun = $section->addTextRun(['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::BOTH]);
+            $textRun = $section->addTextRun([
+                'alignment'   => \PhpOffice\PhpWord\SimpleType\Jc::BOTH,
+                'lineHeight'  => 1.5,
+                'spaceBefore'=> 240,
+                'spaceAfter' => 0
+            ]);
+
             $textRun->addText(
-                '        Por medio del presente se le otorga la asignación como tutor ' . $textoSemestre . ' ',
-                ['size' => 11, 'name' => 'Arial']
+                'Por medio del presente y en seguimiento a su solicitud recibida en el área de orientación educativa para participar en el programa institucional de tutorías, comprometiéndose con los requisitos que refiere la convocatoria en la que estipula brindar el seguimiento de los alumnos de forma grupal y personalizada, desempeñarse responsablemente con las canalizaciones, reportes mensuales y finales para proporcionar el seguimiento pertinente así como información extraordinaria que el área de orientación educativa requiera, se le otorga el nombramiento como tutor del ',
+                ['size' => 12, 'name' => 'Aptos']
             );
-            
-            if ($listaSemGrup == 'NO ASIGNADO') {
-                $textRun->addText($listaSemGrup, ['size' => 11, 'name' => 'Arial', 'bold' => true]);
-            } else {
-                $textRun->addText($listaSemGrup, ['size' => 11, 'name' => 'Arial']);
+
+            // Agregar las partes del texto con su formato correspondiente
+            foreach ($partesTexto as $parte) {
+                $textRun->addText(
+                    $parte['texto'],
+                    ['size' => 12, 'name' => 'Aptos', 'bold' => $parte['negrita']]
+                );
             }
-            
+
+            $nombreCarrera = mb_strtolower($item->carrera->nombre_carrera, 'UTF-8');
+            $nombreCarrera = mb_convert_case($nombreCarrera, MB_CASE_TITLE, 'UTF-8');
+
             $textRun->addText(
-                ' de la carrera de ' . $item->carrera->nombre_carrera . 
-                " para el periodo {$inicio} - {$fin}. En seguimiento a su solicitud recibida en el área de orientación educativa para participar en el programa institucional de tutorías, Comprometiéndose a cumplir con los requisitos que refiere la convocatoria en la que estipula tener el compromiso en el seguimiento de los alumnos de forma personalizada en tiempos oportunos, desempeñarse responsablemente con los reportes mensuales, finales, así como información extraordinaria que se requiera, contando con las evidencias fotográficas generadas del seguimiento correspondiente para presentarlas al área en caso de ser necesario, realizar las canalizaciones oportunas para el seguimiento pertinente en el área de orientación educativa después de haber atendido personalmente a casos especiales.",
-                ['size' => 11, 'name' => 'Arial']
+                ' de la carrera de ' . $nombreCarrera .
+                " para el periodo escolar {$inicio}-{$fin}.",
+                ['size' => 12, 'name' => 'Aptos']
             );
+            //Fin Cuerpo del texto
 
             $section->addTextBreak(1);
 
             // Despedida
             $section->addText(
                 'Sin otro particular, aprovecho la ocasión para enviarle un cordial saludo.',
-                ['size' => 11, 'name' => 'Arial'],
+                ['size' => 12, 'name' => 'Aptos'],
                 ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::START]
             );
 
             $section->addTextBreak(1);
 
             $section->addText(
-                'ATENTAMENTE',
-                ['size' => 11, 'name' => 'Arial', 'bold' => true],
+                'Atentamente',
+                ['size' => 12, 'name' => 'Aptos', 'bold' => false],
                 ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]
             );
 
-            $section->addTextBreak(3);
+            $section->addTextBreak(2);
 
             // Tabla de firmas
             $table = $section->addTable([
@@ -194,36 +279,26 @@ class MemorandumController extends Controller
             ]);
             
             $table->addRow();
-            $table->addCell(3000)->addText(
+            $table->addCell(3600)->addText(
                 $datos[1]->atentamente_1,
-                ['size' => 10, 'name' => 'Arial'],
+                ['size' => 12, 'name' => 'Aptos'],
                 ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]
             );
-            $table->addCell(3000)->addText(
+            $table->addCell(3800)->addText(
                 $datos[1]->atentamente_2,
-                ['size' => 10, 'name' => 'Arial'],
-                ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]
-            );
-            $table->addCell(3000)->addText(
-                $datos[1]->atentamente_3,
-                ['size' => 10, 'name' => 'Arial'],
+                ['size' => 12, 'name' => 'Aptos'],
                 ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]
             );
 
             $table->addRow();
-            $table->addCell(3000)->addText(
+            $table->addCell(3600)->addText(
                 $datos[1]->cargo,
-                ['size' => 10, 'name' => 'Arial'],
+                ['size' => 12, 'name' => 'Aptos'],
                 ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]
             );
-            $table->addCell(3000)->addText(
+            $table->addCell(3800)->addText(
                 $datos[1]->cargo_2,
-                ['size' => 10, 'name' => 'Arial'],
-                ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]
-            );
-            $table->addCell(3000)->addText(
-                $datos[1]->cargo_3,
-                ['size' => 10, 'name' => 'Arial'],
+                ['size' => 12, 'name' => 'Aptos'],
                 ['alignment' => \PhpOffice\PhpWord\SimpleType\Jc::CENTER]
             );
 
@@ -241,6 +316,30 @@ class MemorandumController extends Controller
         
         // Descargar
         return response()->download($temp_file, $filename)->deleteFileAfterSend(true);
+    }
+
+    private function semestreATexto(int $s): string
+    {
+        return match ($s) {
+            1  => 'PRIMER',
+            2  => 'SEGUNDO',
+            3  => 'TERCER',
+            4  => 'CUARTO',
+            5  => 'QUINTO',
+            6  => 'SEXTO',
+            7  => 'SÉPTIMO',
+            8  => 'OCTAVO',
+            9  => 'NOVENO',
+            10 => 'DÉCIMO',
+            11 => 'UNDÉCIMO',
+            12 => 'DUODÉCIMO',
+            13 => 'DECIMOTERCER',
+            14 => 'DECIMOCUARTO',
+            15 => 'DECIMOQUINTO',
+            16 => 'DECIMOSEXTO',
+            17 => 'DECIMOSÉPTIMO',
+            default => (string) $s,
+        };
     }
 
     /**
