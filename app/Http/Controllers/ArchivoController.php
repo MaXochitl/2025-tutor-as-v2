@@ -69,7 +69,7 @@ class ArchivoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function updateConstancia(Request $request, $id)
     {
 
         $file_format = File_format::find($id);
@@ -80,6 +80,21 @@ class ArchivoController extends Controller
         $file_format->cargo_2 = $request->cargo_2;
         $file_format->atentamente_3 = $request->nombre_3;
         $file_format->cargo_3 = $request->cargo_3;
+        $file_format->save();
+        return redirect()->route('datospdf.index');
+    }
+
+    public function updateMemorandum(Request $request, $id)
+    {
+
+        $file_format = File_format::find($id);
+        $file_format->destinatario = $request->destinatario;
+        $file_format->atentamente_1 = $request->nombre_1;
+        $file_format->cargo = $request->cargo_1;
+        $file_format->atentamente_2 = $request->nombre_2;
+        $file_format->cargo_2 = $request->cargo_2;
+        //no actualizar el destinatario 3
+        //no actualizar el cargo 3
         $file_format->save();
         return redirect()->route('datospdf.index');
     }
