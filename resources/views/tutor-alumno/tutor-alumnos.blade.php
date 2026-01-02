@@ -156,6 +156,17 @@
                         Docente
                         <small class="text-muted ms-1">(visualización)</small>
                     </a>
+                    <a class="nav-link tabs_s" id="nav-act-visual-tab"
+                    data-bs-toggle="tab"
+                    href="#nav-act-visual"
+                    role="tab"
+                    aria-controls="nav-act-visual"
+                    aria-selected="false"
+                    title="Modo solo lectura">
+                        <i class="bi bi-eye-fill text-primary me-1"></i>
+                        Actividades
+                        <small class="text-muted ms-1">(visualización)</small>
+                    </a>
                 </div>
             </nav>
 
@@ -173,6 +184,14 @@
                 {{-- ================= TAB DOCENTE visualizacion ================= --}}
                 <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                     @include('tutor-alumno.docente-visual')
+                </div>
+
+                {{-- ================= TAB VISUALIZACIÓN ================= --}}
+                <div class="tab-pane fade"
+                    id="nav-act-visual"
+                    role="tabpanel"
+                    aria-labelledby="nav-act-visual-tab">
+                    @include('tutor-alumno.actividades-visual')
                 </div>
             </div>
         </div>
