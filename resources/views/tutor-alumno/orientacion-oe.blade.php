@@ -142,7 +142,7 @@
                         <td class="casilla-materias align-top text-center"
                             data-bs-toggle="modal"
                             data-bs-target="#endMatter{{ $alumnos->id }}"
-                            title="Ver materias">
+                            title="Ver materias" style="max-width:150px">
                             <div style="height: 5px; background:{{ $alumnos->lights[4]->semaforos[0]->fondo }};"></div>
                             <div>
                                 {{ ucfirst($alumnos->reporte_final) }}
