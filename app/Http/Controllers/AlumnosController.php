@@ -30,6 +30,7 @@ class AlumnosController extends Controller
         $palabra = '';
         $alumnos = Alumno::orderBy('carrera_id')
             ->orderBy('grupo', 'asc')
+            ->orderBy('id', 'asc') // CLAVE
             ->paginate(20);
 
         return view('alumnos.alumnos', compact('alumnos','palabra'));
