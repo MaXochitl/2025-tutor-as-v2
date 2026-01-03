@@ -1,7 +1,7 @@
 <div class="modal fade" id="oe2Modal{{$alumnos->id}}" tabindex="-1"
     aria-labelledby="oe2ModalLabel{{$alumnos->id}}" aria-hidden="true">
 
-    <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-dialog modal-dialog-centered modal-md">
         <div class="modal-content shadow-lg border-0">
 
             {{-- HEADER --}}
@@ -65,27 +65,16 @@
                             id="seguimiento{{$alumnos->id}}"
                             class="form-control shadow-sm"
                             rows="6"
-                            placeholder="Escribe aquí las observaciones y el seguimiento del alumno durante este mes..."
+                            placeholder="Escribe aquí el seguimiento del alumno..."
                             style="resize: vertical; min-height: 120px;">{{ $alumnos->oe_2 }}</textarea>
                     </div>
 
                     {{-- FOOTER --}}
                     <div class="d-flex justify-content-end gap-2 pt-3 border-top">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-                            Cancelar
-                        </button>
 
                         <button type="submit"
                             class="btn btn-primary px-4 d-flex align-items-center gap-2">
-                            <svg xmlns="http://www.w3.org/2000/svg"
-                                width="17"
-                                height="17"
-                                fill="currentColor"
-                                class="bi bi-save2"
-                                viewBox="0 0 16 16">
-                                <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v4.5h2a.5.5 0 0 1 .354.854l-2.5 2.5a.5.5 0 0 1-.708 0l-2.5-2.5A.5.5 0 0 1 5.5 6.5h2V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1z"/>
-                            </svg>
-                            <span>Guardar Seguimiento</span>
+                            <span>Guardar</span>
                         </button>
                     </div>
                     
