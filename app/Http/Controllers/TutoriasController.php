@@ -23,6 +23,7 @@ use App\Models\Periodo_eval;
 use App\Models\Periodo_semaforo;
 use App\Models\Periodo_view;
 use App\Models\Altera_entrega ;
+use App\Models\Actividades_tutoria;
 use App\Providers\RouteServiceProvider;
 
 class TutoriasController extends Controller
@@ -179,6 +180,12 @@ class TutoriasController extends Controller
         // Tutor (se usa en ambos returns)
         $tutor = Tutor::find($id);
 
+        // Actividades
+        $actividades = Actividades_tutoria::where('tutor_id', $id)
+            ->whereBetween('fecha', [$periodo->inicio, $periodo->fin])
+            ->orderBy('fecha')
+            ->get();
+
         // Contadores
         $hombres  = $this->cuentaSexo($id, 'M', $periodo->id);
         $mujeres  = $this->cuentaSexo($id, 'F', $periodo->id);
@@ -201,6 +208,7 @@ class TutoriasController extends Controller
                 'docente_alumno',
                 'semaforo',
                 'asignado',
+                'actividades',
 
                 // Datos del tutor
                 'tutor',
@@ -220,7 +228,7 @@ class TutoriasController extends Controller
                 'rojo',
 
                 // Asignación
-                'asigno'
+                'asigno',
             ));
             
         } else {
@@ -241,6 +249,7 @@ class TutoriasController extends Controller
                 'docente_alumno',
                 'semaforo',
                 'asignado',
+                'actividades',
 
                 // Datos del tutor
                 'tutor',
@@ -330,6 +339,12 @@ class TutoriasController extends Controller
         // Obtener alumno_entrega para mostrar fechas
         $altera_entrega = Altera_entrega::find(1);
 
+        // Actividades
+        $actividades = Actividades_tutoria::where('tutor_id', $id)
+            ->whereBetween('fecha', [$periodo->inicio, $periodo->fin])
+            ->orderBy('fecha')
+            ->get();
+
         return view('tutor-alumno.tutor-alumnos', compact(
             'alumnos_tutor',
             'semaforo',
@@ -347,7 +362,8 @@ class TutoriasController extends Controller
             'docente_alumno',
             'tutorado',
             'altera_entrega',
-            'tutor'
+            'tutor',
+            'actividades'
         ));
     }
 

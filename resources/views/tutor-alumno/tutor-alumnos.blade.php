@@ -39,79 +39,104 @@
 
     <div class="row img-font-all"
         style="border-radius: 10px;margin-top: 30px;background-image: url({{ $tutor->carrera->fondo }});">
-        <div class="col-6" style="border-radius: 10px; background: white; margin: 5px">
-            <p class="head-alumnos-tutor"><b>Nombre Tutor de grupo: </b>
-                {{ $tutor->nombre . ' ' . $tutor->ap_paterno . ' ' . $tutor->ap_materno }}
-            </p>
-            <p class="head-alumnos-tutor"><b>Carrera: </b> {{ $tutor->carrera->nombre_carrera }}
-            </p>
-            @if ($asigno != 0 && !($asignado[0]->semestre == 0 || $asignado[0]->grupo == 'sin asignar'))
-            <!-- modificado para mostrar multiples grupos asignados por OE, mostrados en orden alfanumerico  -->
-            <p class="head-alumnos-tutor">
-                <b>Semestres y grupos:</b>
-                @foreach ($asignado->sortBy(function($asig) {
-                    return $asig->semestre . str_pad($asig->grupo, 2, '0', STR_PAD_LEFT);
-                }) as $asig)
-                    {{ $asig->semestre }}{{ $asig->grupo }}@if(!$loop->last),@endif
-                @endforeach
-            </p>
-            @else
-            <div class="d-flex align-items-center gap-2 mt-2">
-                <div class="alert alert-warning mb-0 d-flex align-items-center" 
-                    role="alert" style="padding: 6px 20px;">
-                    <b>Semestres y grupos:</b>
-                    <span class="ms-1">Este tutor no tiene grupos asignados.</span>
-                </div>
-                <a href="{{ route('asignaciones.index') }}" class="btn btn-warning">
-                    <i class="bi bi-pencil-square"></i> Asignar
-                </a>
+        <div class="col-6 py-2 px-3"
+            style="border-radius: 10px; background: white; margin: 5px;">
+
+            <!-- Nombre -->
+            <div class="mb-1">
+                <p class="head-alumnos-tutor mb-0">
+                    <b>Nombre Tutor de grupo:</b>
+                    {{ $tutor->nombre . ' ' . $tutor->ap_paterno . ' ' . $tutor->ap_materno }}
+                </p>
             </div>
-            @endif
+
+            <!-- Carrera -->
+            <div class="mb-1">
+                <p class="head-alumnos-tutor mb-0">
+                    <b>Carrera:</b> {{ $tutor->carrera->nombre_carrera }}
+                </p>
+            </div>
+
+            <!-- Semestres y grupos -->
+            <div class="mb-1">
+                @if ($asigno != 0 && !($asignado[0]->semestre == 0 || $asignado[0]->grupo == 'sin asignar'))
+                    <p class="head-alumnos-tutor mb-0">
+                        <b>Semestres y grupos:</b>
+                        @foreach ($asignado->sortBy(function($asig) {
+                            return $asig->semestre . str_pad($asig->grupo, 2, '0', STR_PAD_LEFT);
+                        }) as $asig)
+                            {{ $asig->semestre }}{{ $asig->grupo }}@if(!$loop->last),@endif
+                        @endforeach
+                    </p>
+                @else
+                    <div class="d-flex align-items-center gap-2">
+                        <div class="alert alert-warning mb-0 py-1 px-3 d-flex align-items-center"
+                            role="alert">
+                            <b class="me-1">Semestres y grupos:</b>
+                            <span>Este tutor no tiene grupos asignados.</span>
+                        </div>
+                        <a href="{{ route('asignaciones.index') }}" class="btn btn-warning btn-sm">
+                            <i class="bi bi-pencil-square"></i> Asignar
+                        </a>
+                    </div>
+                @endif
+            </div>
+
             @php
                 $sgAsignados = $asignado->map(function($a){
                     return $a->semestre . '-' . $a->grupo;
                 })->toArray();
             @endphp
-            <p class="head-alumnos-tutor" style="margin-top: 6px"><b>Telefono:</b> {{ $tutor->telefono }} </p>
-            @php
-                $periodo_inicio = date('d/m/Y', strtotime($periodo->inicio));
-                $periodo_fin = date('d/m/Y', strtotime($periodo->fin));
-                echo ' <b>Periodo: </b>' . $periodo_inicio . ' - ' . $periodo_fin;
-            @endphp
+
+            <!-- Teléfono -->
+            <div class="mb-1">
+                <p class="head-alumnos-tutor mb-0">
+                    <b>Teléfono:</b> {{ $tutor->telefono }}
+                </p>
+            </div>
+
+            <!-- Periodo -->
+            <div class="mb-0">
+                <p class="head-alumnos-tutor mb-0">
+                    @php
+                        $periodo_inicio = date('d/m/Y', strtotime($periodo->inicio));
+                        $periodo_fin = date('d/m/Y', strtotime($periodo->fin));
+                        echo '<b>Periodo:</b> ' . $periodo_inicio . ' - ' . $periodo_fin;
+                    @endphp
+                </p>
+            </div>
+
         </div>
-        <div class="col-2" style="border-radius: 10px; background: white; margin: 5px">
-            <table>
-                <tbody>
-                    <tr class="new-row">
-                        <th scope="col">{{ 'Mujeres:' }}</th>
-                        <td>{{ $mujeres }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="col">{{ 'Hombres:' }}</th>
-                        <td>{{ $hombres }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="col">{{ 'Baja Temporal:' }}</th>
-                        <td>{{ $temporal }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="col">{{ 'Baja:' }}</th>
-                        <td>{{ $baja }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="col">{{ 'Verde:' }}</th>
-                        <td>{{ $verde }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="col">{{ 'Amarillo:' }}</th>
-                        <td>{{ $naranja }}</td>
-                    </tr>
-                    <tr>
-                        <th scope="col">{{ 'Rojo:' }}</th>
-                        <td>{{ $rojo }}</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="col-2 py-2 px-3 d-flex flex-column justify-content-center"
+            style="border-radius: 10px; background: white; margin: 5px;">
+
+            <div class="d-flex justify-content-between mb-0">
+                <strong>Mujeres:</strong><span>{{ $mujeres }}</span>
+            </div>
+
+            <div class="d-flex justify-content-between mb-0">
+                <strong>Hombres:</strong><span>{{ $hombres }}</span>
+            </div>
+
+            <div class="d-flex justify-content-between mb-0">
+                <strong>Baja Temporal:</strong><span>{{ $temporal }}</span>
+            </div>
+
+            <div class="d-flex justify-content-between mb-0">
+                <strong>Baja:</strong><span>{{ $baja }}</span>
+            </div>
+
+            <div class="d-flex justify-content-between mb-0">
+                <strong>Verde:</strong><span>{{ $verde }}</span>
+            </div>
+
+            <div class="d-flex justify-content-between mb-0">
+                <strong>Amarillo:</strong><span>{{ $naranja }}</span>
+            </div>
+
+            <div class="d-flex justify-content-between mb-0">
+                <strong>Rojo:</strong><span>{{ $rojo }}</span>
+            </div>
         </div>
     </div>
 </div>
@@ -156,6 +181,17 @@
                         Docente
                         <small class="text-muted ms-1">(visualización)</small>
                     </a>
+                    <a class="nav-link tabs_s" id="nav-act-visual-tab"
+                    data-bs-toggle="tab"
+                    href="#nav-act-visual"
+                    role="tab"
+                    aria-controls="nav-act-visual"
+                    aria-selected="false"
+                    title="Modo solo lectura">
+                        <i class="bi bi-eye-fill text-primary me-1"></i>
+                        Actividades
+                        <small class="text-muted ms-1">(visualización)</small>
+                    </a>
                 </div>
             </nav>
 
@@ -173,6 +209,14 @@
                 {{-- ================= TAB DOCENTE visualizacion ================= --}}
                 <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
                     @include('tutor-alumno.docente-visual')
+                </div>
+
+                {{-- ================= TAB VISUALIZACIÓN ================= --}}
+                <div class="tab-pane fade"
+                    id="nav-act-visual"
+                    role="tabpanel"
+                    aria-labelledby="nav-act-visual-tab">
+                    @include('tutor-alumno.actividades-visual')
                 </div>
             </div>
         </div>

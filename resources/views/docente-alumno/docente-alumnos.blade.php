@@ -121,7 +121,7 @@
 
                 <tbody>
                     @php
-                        $contador = 1;
+                        $contador = $alumnos_tutor->firstItem();
                         $tutor_id = $alumnos_tutor[0]->tutor->id ?? null;
                     @endphp
 

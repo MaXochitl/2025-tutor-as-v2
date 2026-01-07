@@ -1,153 +1,172 @@
 @extends('master.master')
 @section('structure-content')
 
-    <div class="container" style="margin-top: 10px">
-        <div class="row col-md-10 text-center shadow-lg p-3 mb-5 bg-body rounded " style="margin: auto">
-            <h4>Reporte final de: </h4>
-            <h4>{{ $periodo_tutorado->alumno->nombre . ' ' . $periodo_tutorado->alumno->ap_paterno . ' ' . $periodo_tutorado->alumno->ap_materno }}
-            </h4>
+@php
+    $colorId = null;
 
-            <div class="row m-2">
+    foreach ($semaforo as $item) {
+        if ($cantidad_reprobadas >= 1 && strtolower($item->nombre) === 'rojo') {
+            $colorId = $item->id;
+            break;
+        }
 
-                <div class="col">
-                    <div class="d-grid gap-2 col-6 mx-auto">
-                        <label for="">Materias Aprobadas</label>
-                        <a href="" type="button" class="btn btn-primary" data-bs-toggle="modal"
-                            data-bs-target="#materiaModal" data-bs-whatever="@mdo">
-                            Agregar
-                        </a>
-                        @if (count($materia_aprobadas) != 0)
-                            <table class="table table-sm table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Materia</th>
-                                        <th scope="col">Quitar</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($materia_aprobadas as $approved)
-                                        <tr>
-                                            <th scope="row">
-                                                {{ $approved->materia->nombre }}
-                                            </th>
+        if ($cantidad_reprobadas == 0 && strtolower($item->nombre) === 'verde') {
+            $colorId = $item->id;
+        }
+    }
+@endphp
 
-                                            <td>
-                                                <form
-                                                    action="{{ route('removMateria.removMateria', [$periodo_tutorado->id, $approved->id]) }}"
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-                                                    <button type="submit" class="btn btn-outline-danger">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="25"
-                                                            height="25" fill="currentColor" class="bi bi-x-square-fill"
-                                                            viewBox="0 0 16 16">
-                                                            <path
-                                                                d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
-                                                        </svg>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        @endif
-                        @include('modal.materia.add-approved')
+<div class="container my-4">
 
-                    </div>
+    <div class="card shadow-lg border-0 mx-auto" style="max-width: 1100px;">
+        <div class="card-body">
 
-                </div>
-                <div class="col">
-                    <div class="d-grid gap-2 col-6 mx-auto">
-                        <label for="">Materias Reprobadas</label>
-                        <a href="{{ route('alumnos-tutor.create') }} " type="button" class="btn btn-primary"
-                            data-bs-toggle="modal" data-bs-target="#materiaFailed" data-bs-whatever="@mdo">
-                            Agregar
-                        </a>
-                        @if (count($materia_reprobadas) != 0)
-                            <table class="table table-sm table-bordered">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Materia</th>
-                                        <th scope="col">Quitar</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach ($materia_reprobadas as $failed)
-                                        <tr>
-                                            <th scope="row">
-                                                {{ $failed->materia->nombre }}
-                                            </th>
-
-                                            <td>
-                                                <form
-                                                    action="{{ route('removMateria.removMateria', [$periodo_tutorado->id, $failed->id]) }} "
-                                                    method="POST">
-                                                    @csrf
-                                                    @method('DELETE')
-
-                                                    <button type="submit" class="btn btn-outline-danger">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="25"
-                                                            height="25" fill="currentColor" class="bi bi-x-square-fill"
-                                                            viewBox="0 0 16 16">
-                                                            <path
-                                                                d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2zm3.354 4.646L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 1 1 .708-.708z" />
-                                                        </svg>
-                                                    </button>
-                                                </form>
-                                            </td>
-                                        </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        @endif
-                        @include('modal.materia.add-failed')
-                    </div>
-                </div>
+            {{-- HEADER --}}
+            <div class="text-center mb-4">
+                <h4 class="fw-semibold mb-1">Reporte Final De:</h4>
+                <h4 class="fw-bold">
+                    {{ $periodo_tutorado->alumno->nombre . ' ' . $periodo_tutorado->alumno->ap_paterno . ' ' . $periodo_tutorado->alumno->ap_materno }}
+                </h4>
             </div>
-            <div class="form-group  col-md-6 row " style="margin: auto">
-                <form method="POST" action="{{ route('seguimiento-alumno.seguimiento', [$periodo_tutorado->id, 5]) }}">
-                    @csrf
-                    @method('PUT')
 
-                    <div>
-                        <label for="seguimiento">Describe Reporte</label>
-                        <textarea style="text-align: left" name="seguimiento" class="form-control" placeholder="Describe reporte"
-                            id="seguimiento">{{ $periodo_tutorado->reporte_final }}</textarea>
-                    </div>
-                    <div>
-                        <label for="color" class="col-form-label">Color</label>
-                        <select name="color" class="form-select" aria-label="Default select example">
-                            @foreach ($semaforo as $item)
-                                @php
-                                    $selected = '';
-                                    if ($cantidad_reprobadas >= 1 && strtolower($item->nombre) == 'rojo') {
-                                        $selected = 'selected';
-                                    }
-                                @endphp
-                                <option value="{{ $item->id }}" {{ $selected }}>
-                                    {{ $item->nombre }}
-                                </option>
-                            @endforeach
-                        </select>
-                    </div>
-                    <div class="form-group row">
-                        <div style="text-align: center">
-                            <a href="{{ route('reportes_tutor.show', $periodo_tutorado->tutor_id) }}" type="buutton"
-                                class="btn btn-danger" style="margin-top: 20px">Cancelar</a>
-                            <button type="submit" class="btn btn-primary" style="margin-top: 20px">Guardar</button>
+            <div class="row g-4">
+
+                {{-- MATERIAS APROBADAS --}}
+                <div class="col-md-6">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header text-white fw-semibold text-center" style="background-color: #1b396a;">
+                            Materias Aprobadas
+                        </div>
+
+                        <div class="card-body text-center">
+
+                            @if (count($materia_aprobadas) != 0)
+                                <table class="table table-sm align-middle">
+ 
+                                    <tbody>
+                                        @foreach ($materia_aprobadas as $approved)
+                                            <tr>
+                                                <td>{{ $approved->materia->nombre }}</td>
+                                                <td class="text-center">
+                                                    <form
+                                                        action="{{ route('removMateria.removMateria', [$periodo_tutorado->id, $approved->id]) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-outline-danger btn-sm">
+                                                            ✕
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            @else
+                                <p class="text-muted mb-0">No hay materias aprobadas.</p>
+                            @endif
+
+                            <button class="btn btn-success mt-3 mb-3"
+                                data-bs-toggle="modal"
+                                data-bs-target="#materiaModal">
+                                Agregar
+                            </button>
+
+                            @include('modal.materia.add-approved')
                         </div>
                     </div>
-                </form>
+                </div>
 
+                {{-- MATERIAS REPROBADAS --}}
+                <div class="col-md-6">
+                    <div class="card h-100 shadow-sm">
+                        <div class="card-header text-white text-center fw-semibold" style="background-color: #1b396a;">
+                            Materias Reprobadas
+                        </div>
 
+                        <div class="card-body text-center">
+
+                            @if (count($materia_reprobadas) != 0)
+                                <table class="table table-sm align-middle">
+
+                                    <tbody>
+                                        @foreach ($materia_reprobadas as $failed)
+                                            <tr>
+                                                <td>{{ $failed->materia->nombre }}</td>
+                                                <td class="text-center">
+                                                    <form
+                                                        action="{{ route('removMateria.removMateria', [$periodo_tutorado->id, $failed->id]) }}"
+                                                        method="POST">
+                                                        @csrf
+                                                        @method('DELETE')
+                                                        <button class="btn btn-outline-danger btn-sm">
+                                                            ✕
+                                                        </button>
+                                                    </form>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+                                    </tbody>
+                                </table>
+                            @else
+                                <p class="text-muted mb-0">No hay materias reprobadas.</p>
+                            @endif
+
+                            <button class="btn btn-danger mt-3 mb-3"
+                                data-bs-toggle="modal"
+                                data-bs-target="#materiaFailed">
+                                Agregar
+                            </button>
+
+                            @include('modal.materia.add-failed')
+                        </div>
+                    </div>
+                </div>
             </div>
 
+            {{-- REPORTE FINAL --}}
+            <div class="card mt-4 shadow-sm border-0">
+                <div class="card-header bg-light fw-semibold text-center">
+                    Reporte Final
+                </div>
+
+                <div class="card-body">
+                    <form method="POST"
+                        action="{{ route('seguimiento-alumno.seguimiento', [$periodo_tutorado->id, 5]) }}">
+                        @csrf
+                        @method('PUT')
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Descripción del reporte</label>
+                            <textarea name="seguimiento"
+                                id="seguimiento"
+                                class="form-control"
+                                rows="2"
+                                placeholder="Describe el reporte final...">{{ $periodo_tutorado->reporte_final }}</textarea>
+
+                            <input type="hidden" name="color" value="{{ $colorId }}">
+                        </div>
+
+                        <div class="text-center mt-4">
+                            <a href="{{ route('reportes_tutor.show', $periodo_tutorado->tutor_id) }}"
+                                class="btn btn-secondary me-2">
+                                Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary px-4">
+                                Guardar
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
 
         </div>
     </div>
-    <script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
-    <script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
+
+</div>
+
+<script src="https://cdn.datatables.net/1.11.3/js/jquery.dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/1.11.3/js/dataTables.bootstrap5.min.js"></script>
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         
